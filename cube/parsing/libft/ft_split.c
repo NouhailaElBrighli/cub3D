@@ -6,13 +6,14 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:52:33 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/02/04 02:48:10 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/02/08 23:02:20 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../cube.h"
+#include "../parsing.h"
 
-static char	*ft_strndup(char *s, size_t n)
+char	*ft_strndup(char *s, size_t n)
 {
 	char	*a;
 	size_t	i;

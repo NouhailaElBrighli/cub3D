@@ -17,6 +17,7 @@ void	parsing(char *av, t_data *data);
 void	ft_free(char **s);
 char	*get_next_line(int fd);
 void	ft_error(t_data *data);
+char	*ft_strndup(char *s, size_t n);
 
 
 #endif

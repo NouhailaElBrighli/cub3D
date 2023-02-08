@@ -59,7 +59,39 @@ void	read_map(t_data *data, char *av)
 	close(fd);
 }
 
+char	*get_path(char *s)
+{
+	int i;
+	char *path;
 
+	i = 0;
+	path = NULL;
+	while (s[i] && s[i] != ' ' && s[i] != '\n')
+		i++;
+	path = ft_strndup(s, i);
+	printf("|%s|", path);
+	return (path);
+}
+
+void	check_path(t_data *data, char *s, int idx)
+{
+	int fd;
+	char *path;
+
+	while (s[idx] == ' ')
+		idx++;
+	path = get_path(&s[idx]);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		ft_error(data);
+	close(fd);
+	write(1, "found: ", 6);
+}
+
+// void check_RGB(t_data *data,char *s,int idx)
+// {
+	  
+// }
 
 int check_identifier(char *s, t_data *data)
 {
@@ -68,34 +100,26 @@ int check_identifier(char *s, t_data *data)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == ' ')
+		while (s[i] == ' ')
 			i++;
+		if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
+			check_path(data, s, i + 3);
+		else if (ft_strncmp(&s[i], "SO ", ft_strlen("SO ")) == 0)
+			check_path(data, s, i + 3);
+		else if (ft_strncmp(&s[i], "WE ", ft_strlen("WE ")) == 0)
+			check_path(data, s, i + 3);
+		else if (ft_strncmp(&s[i], "EA ", ft_strlen("EA ")) == 0)
+			check_path(data, s, i + 3);
+		// else if (ft_strncmp(&s[i], "F ", ft_strlen("F ")) == 0)
+		// 	check_RGB(data, s, i + 2);
+		// else if (ft_strncmp(&s[i], "C ", ft_strlen("C ")) == 0)
+		// 	check_RGB(data, s, i + 2);
 		else
-		{
-			if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
-				return (i + 3);
-			else
-				ft_error(data);
-		}
+			ft_error(data);
 	}
 	return (0);
 }
 
-void	chek_path(t_data *data, char *s, int idx)
-{
-	while (s[idx])
-	{
-		while (s[idx] == ' ')
-			idx++;
-		int fd = open(&s[idx], O_RDONLY);
-		if (fd == -1)
-			ft_error(data);
-	 	close(fd);
-		// break;
-	}
-	exit(EXIT_FAILURE);
-	(void) data;
-}
 
 void check_texture(t_data *data)
 {
@@ -109,12 +133,9 @@ void check_texture(t_data *data)
 	{
 		if (ft_strncmp(data->map[i], "\n", ft_strlen(data->map[i])) == 0)
 			i++;
-
 		else
-		{
 			idx = check_identifier(data->map[i], data);
-			chek_path(data, data->map[i],idx);
-		}
+		i++;
 	}
 }
 
