@@ -6,6 +6,7 @@ CFLAGS = -Wall -Werror -Wextra
 
 SRC =	main.c\
 		parsing/parsing.c\
+		parsing/free.c\
 		parsing/get_next_line_utils.c\
 		parsing/get_next_line.c\
 		parsing/libft/ft_split.c\

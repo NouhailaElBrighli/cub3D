@@ -1,80 +1,135 @@
 #include "parsing.h"
 #include "../cube.h"
 
-void	ft_free(char **s)
+int	check_file(char *s)
 {
-	int	i;
+	int	fd;
+	int cmp;
 
-	i = 0;
-	while (s[i] != NULL)
-		free(s[i++]);
-	free(s);
+	cmp = ft_strlen(s) - 4;
+	if(ft_strncmp(&s[cmp], ".cub", ft_strlen((&s[cmp]))) != 0)
+	{
+		printf("Invalid Extention\n");
+		return(1);
+	}
+	fd = open(s, O_RDONLY);
+	if(fd == -1)
+	{
+		perror("ERROR");
+		close(fd);
+		return(1);
+	}
+	close(fd);
+	return (0);
 }
 
-int	check_last_one(char **s)
+int	get_size(char *av, t_data *data)
+{
+	int	fd;
+	int	size;
+
+	size = 0;
+	fd = open(av, O_RDONLY);
+	while(get_next_line(fd) != NULL)
+		size++;
+	if (size == 0)
+	{
+		printf("Empty Map");
+		free(data);
+		exit(EXIT_FAILURE);
+	}
+	return (size);
+}
+
+void	read_map(t_data *data, char *av)
+{
+	int		size;
+	int		fd;
+	int		i;
+
+	i = 0;
+	size = get_size(av, data);
+	data->map = malloc(sizeof(char *) * (size + 1));
+	if (!data->map)
+		exit(EXIT_FAILURE);
+	fd = open(av, O_RDONLY);
+	data->map[i] = get_next_line(fd);
+	while (data->map[i] != NULL)
+		data->map[++i] = get_next_line(fd);
+	close(fd);
+}
+
+
+
+int check_identifier(char *s, t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (s[i])
-		i++;
-	i--;
-	if (ft_strncmp(s[i], "cub", ft_strlen("cub")) == 0)
 	{
-		ft_free(s);
-		return (0);
+		if (s[i] == ' ')
+			i++;
+		else
+		{
+			if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
+				return (i + 3);
+			else
+				ft_error(data);
+		}
 	}
-	ft_free(s);
-	printf("Invalid Extention\n");
-	return (1);
-}
-
-int	check_extention(char *av)
-{
-	char	**s;
-
-	s = ft_split(av, '.');
-	if (s == NULL)
-	{
-		ft_free(s);
-		return (1);
-	}
-	if (check_last_one(s) == 1)
-		return (1);
 	return (0);
 }
 
-int get_size(char *av)
+void	chek_path(t_data *data, char *s, int idx)
 {
-	int fd;
-	int size;
-
-	
+	while (s[idx])
+	{
+		while (s[idx] == ' ')
+			idx++;
+		int fd = open(&s[idx], O_RDONLY);
+		if (fd == -1)
+			ft_error(data);
+	 	close(fd);
+		// break;
+	}
+	exit(EXIT_FAILURE);
+	(void) data;
 }
 
-void	read_map(t_data *data, char *av)
+void check_texture(t_data *data)
 {
-	int size;
-	
-	size = get_size(av);
+	int	i;
+	int	j;
+	int idx;
+
+	i = 0;
+	j = 0;
+	while (data->map[i])
+	{
+		if (ft_strncmp(data->map[i], "\n", ft_strlen(data->map[i])) == 0)
+			i++;
+
+		else
+		{
+			idx = check_identifier(data->map[i], data);
+			chek_path(data, data->map[i],idx);
+		}
+	}
+}
+
+void map_parsing(t_data *data)
+{
+	check_texture(data);
 }
 
 void	parsing(char *av, t_data *data)
 {
-	int	fd;
-
-	if (check_extention(av) == 1)
+	if (check_file(av) == 1)
 	{
 		free(data);
 		exit(EXIT_FAILURE);
 	}
-	fd = open(av, O_RDONLY);
-	if(fd == -1)
-	{
-		free(data);
-		perror("ERROR");
-		exit(EXIT_FAILURE);
-	}
-	close(fd);
 	read_map(data, av);
+	map_parsing(data);
 }

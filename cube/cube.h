@@ -7,7 +7,7 @@
 
 typedef struct  s_data
 {
-	char **tab;
+	char **map;
 }t_data;
 
 
