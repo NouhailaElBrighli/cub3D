@@ -5,10 +5,5 @@
 #include <stdlib.h>
 
 
-typedef struct  s_data
-{
-	char **map;
-}t_data;
-
 
 #endif

@@ -2,11 +2,13 @@ NAME = cube
 
 CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address -g3
 
 SRC =	main.c\
 		parsing/parsing.c\
 		parsing/free.c\
+		parsing/test.c\
+		parsing/ft_atoi.c\
 		parsing/get_next_line_utils.c\
 		parsing/get_next_line.c\
 		parsing/libft/ft_split.c\
