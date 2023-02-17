@@ -16,7 +16,7 @@ void	print_tab(char **s)
 	i = 0;
 	while (s[i] != NULL)
 	{
-		printf("s[%d] == %s\n", i, s[i]);
+		printf("s[%d] == %s", i, s[i]);
 		i++;
 	}
 }

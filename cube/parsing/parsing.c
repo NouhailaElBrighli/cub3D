@@ -120,7 +120,9 @@ char	*check_path(t_data *data, char *s, int *id)
 	close(fd);
 	(*id)++;
 	if (s[get_idx(&s[idx])] != '\n')
+	{
 		ft_error(data, "Error\n");
+	}
 	return (path);
 }
 
@@ -280,17 +282,56 @@ int	check_textures(t_data *data)
 		if (ft_strncmp(data->map[i], "\n", ft_strlen(data->map[i])) != 0)
 		{
 			if (check_identifier(data->map[i], data) == 1)
-				return(i);
+				return (i);
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
-// void	check_map(t_data *data)
+int	is_valid(char c)
+{
+	if (c == ' ' || c == '\n' || c == '\0' || c == '1' || c == '0' || c == 'N' || c == 'E' || c == 'S' || c == 'W' || c == '0')
+		return (0);
+	return (-1);
+}
+
+void	check_invalid_character(t_data *data)
+{
+	int	i;
+	int	j;
+
+	i = data->index;
+	j = 0;
+	while (data->map[i])
+	{
+		if (ft_strncmp(data->map[i], "\n", ft_strlen(data->map[i])) == 0)
+			i++;
+		else if (is_valid(data->map[i][j]) == -1)
+		{
+			printf("char == |%c|\n", data->map[i][j]);
+			ft_error(data, "invalid character\n");
+		}
+		else if (data->map[i][j] == '\0')
+		{
+			j = 0;
+			i++;
+		}
+		else
+			j++;
+	}
+}
+
+// void	check_valid_path(t_data *data)
 // {
 
 // }
+
+void	check_map(t_data *data)
+{
+	check_invalid_character(data);
+	// check_valid_path(data);	
+}
 
 void	parsing(char *av, t_data *data)
 {
@@ -302,6 +343,6 @@ void	parsing(char *av, t_data *data)
 	}
 	read_map(data, av);
 	data->index = check_textures(data);
-	// check_map(data);
+	check_map(data);
 	print_data(data);
 }
