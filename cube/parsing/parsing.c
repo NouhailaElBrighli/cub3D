@@ -193,58 +193,54 @@ void	check_RGB(t_data *data,char *s, int idx, int *id, int *color)
 	*id += 1;
 }
 
-void	check_identifier(char *s, t_data *data)
+int	check_identifier(char *s, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] == ' ')
+		i++;
+	if (s[i] == '\n')
+		return(0);
+	if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
 	{
-		while (s[i] == ' ')
-			i++;
-		if (s[i] == '\n')
-			break;
-		if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
-		{
-			data->path[0] = check_path(data, &s[i + 3], &data->id->NO);
-			break;
-		}
-		else if (ft_strncmp(&s[i], "SO ", ft_strlen("SO ")) == 0)
-		{
-			data->path[1] = check_path(data, &s[i + 3], &data->id->SO);
-			break;
-		}
-		else if (ft_strncmp(&s[i], "WE ", ft_strlen("WE ")) == 0)
-		{
-			data->path[2] = check_path(data, &s[i + 3], &data->id->WE);
-			break;
-		}
-		else if (ft_strncmp(&s[i], "EA ", ft_strlen("EA ")) == 0)
-		{
-			data->path[3] = check_path(data, &s[i + 3], &data->id->EA);
-			break;
-		}
-		else if (ft_strncmp(&s[i], "F ", ft_strlen("F ")) == 0)
-		{
-			check_RGB(data, s, i + 2, &data->id->F, data->floor);
-			break;
-		}
-		else if (ft_strncmp(&s[i], "C ", ft_strlen("C ")) == 0)
-		{
-			check_RGB(data, s, i + 2, &data->id->C, data->ceiling);
-			break;
-		}
-		else
-		{
-			check_id(data);
-			break;
-		}
+		data->path[0] = check_path(data, &s[i + 3], &data->id->NO);
+		return(0);
 	}
+	else if (ft_strncmp(&s[i], "SO ", ft_strlen("SO ")) == 0)
+	{
+		data->path[1] = check_path(data, &s[i + 3], &data->id->SO);
+		return(0);
+	}
+	else if (ft_strncmp(&s[i], "WE ", ft_strlen("WE ")) == 0)
+	{
+		data->path[2] = check_path(data, &s[i + 3], &data->id->WE);
+		return(0);
+	}
+	else if (ft_strncmp(&s[i], "EA ", ft_strlen("EA ")) == 0)
+	{
+		data->path[3] = check_path(data, &s[i + 3], &data->id->EA);
+		return(0);
+	}
+	else if (ft_strncmp(&s[i], "F ", ft_strlen("F ")) == 0)
+	{
+		check_RGB(data, s, i + 2, &data->id->F, data->floor);
+		return(0);
+	}
+	else if (ft_strncmp(&s[i], "C ", ft_strlen("C ")) == 0)
+	{
+		check_RGB(data, s, i + 2, &data->id->C, data->ceiling);
+		return(0);
+	}
+	else
+		check_id(data);
+	return(1);
 }
 
 void init_colors(t_data *data)
 {
 	int i;
+
 	i = 0;
 	data->floor = malloc(sizeof(int) * 3);
 	if (!data->floor)
@@ -269,7 +265,7 @@ void	allocate_param(t_data *data)
 	data->path[4] = NULL;
 }
 
-void	check_texture(t_data *data)
+int	check_textures(t_data *data)
 {
 	int	i;
 
@@ -278,10 +274,14 @@ void	check_texture(t_data *data)
 	while (data->map[i])
 	{
 		if (ft_strncmp(data->map[i], "\n", ft_strlen(data->map[i])) != 0)
-			check_identifier(data->map[i], data);
+		{
+			if (check_identifier(data->map[i], data) == 1)
+				return(i);
+		}
 		i++;
 	}
 	check_id(data);//add it after loop
+	return(0);
 }
 
 void	parsing(char *av, t_data *data)
@@ -293,7 +293,7 @@ void	parsing(char *av, t_data *data)
 		exit(EXIT_FAILURE);
 	}
 	read_map(data, av);
-	check_texture(data);
-	print_data(data);
+	data->index = check_textures(data);
+	// print_data(data);
 	printf("everything is ok\n");
 }

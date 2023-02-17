@@ -17,21 +17,13 @@ typedef struct s_identifier
 	int C;
 }t_identifier;
 
-// typedef struct s_param
-// {
-// 	char	**path;
-// 	int		*floor;
-// 	int		*ceiling;
-// }t_param;
-
-
 typedef struct  s_data
 {
 	char	**map;
-	char	**path;
-	int		*floor;
-	int		*ceiling;
-	// t_param *param;
+	char	**path;// textures
+	int		*floor;// rgb
+	int		*ceiling;//rgb
+	int		index; // index start of the map
 	t_identifier	*id;
 }t_data;
 
