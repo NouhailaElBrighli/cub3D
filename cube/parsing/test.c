@@ -51,9 +51,11 @@ void print_data(t_data *data)
 	print_id(data->id);
 	printf("=============path===========\n");
 	print_tab(data->path);
-	printf("-----------floor-----------\n");
+	printf("============floor===========\n");
 	print_colors(data->floor);
-	printf("-----------floor-----------\n");
+	printf("===========ceiling===========\n");
 	print_colors(data->ceiling);
+	printf("=============start the map===========\n");
+	printf("start == %s", data->map[data->index]);
 	// print_param(data->param);
 }

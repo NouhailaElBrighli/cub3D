@@ -258,11 +258,15 @@ void init_colors(t_data *data)
 
 void	allocate_param(t_data *data)
 {
+	int	i;
+
+	i = 0;
 	init_colors(data);
 	data->path = malloc(sizeof(char *) * 5);
 	if (!data->path)
 		exit(EXIT_FAILURE);
-	data->path[4] = NULL;
+	while (i < 5)
+		data->path[i++] = NULL;
 }
 
 int	check_textures(t_data *data)
@@ -280,9 +284,13 @@ int	check_textures(t_data *data)
 		}
 		i++;
 	}
-	check_id(data);//add it after loop
 	return(0);
 }
+
+// void	check_map(t_data *data)
+// {
+
+// }
 
 void	parsing(char *av, t_data *data)
 {
@@ -294,6 +302,6 @@ void	parsing(char *av, t_data *data)
 	}
 	read_map(data, av);
 	data->index = check_textures(data);
-	// print_data(data);
-	printf("everything is ok\n");
+	// check_map(data);
+	print_data(data);
 }
