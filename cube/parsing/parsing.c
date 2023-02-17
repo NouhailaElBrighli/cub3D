@@ -72,6 +72,7 @@ void	read_map(t_data *data, char *av)
 	while (data->map[i] != NULL)
 		data->map[++i] = get_next_line(fd);
 	close(fd);
+
 }
 
 char	*get_path(char *s)
@@ -83,7 +84,7 @@ char	*get_path(char *s)
 	path = NULL;
 	while (s[i] && s[i] != ' ' && s[i] != '\n')
 		i++;
-	path = ft_strndup(s, i);//check to end of the line
+	path = ft_strndup(s, i);
 	return (path);
 }
 
@@ -99,33 +100,28 @@ int	get_idx(char *s)
 	return (i);
 }
 
-void	check_path(t_data *data, char *s, int *id, char *path)
+char	*check_path(t_data *data, char *s, int *id)
 {
-	int fd;
-	int idx;
-	int check;
+	int	fd;
+	int	idx;
+	int	check;
+	char *path;
 
 	idx = 0;
 	while (s[idx] == ' ')
 		idx++;
-	free(path);
 	path = get_path(&s[idx]);
 	check = ft_strlen(path) - 4;
 	if (ft_strncmp(&path[check], ".xpm", ft_strlen(&path[check])) != 0)
-	{
-		free(path);
 		ft_error(data, "Error\n");
-	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
-	{
-		free(path);
 		ft_error(data, "Error\n");
-	}
 	close(fd);
 	(*id)++;
 	if (s[get_idx(&s[idx])] != '\n')
 		ft_error(data, "Error\n");
+	return (path);
 }
 
 void	check_id(t_data *data)
@@ -179,7 +175,6 @@ void	check_RGB(t_data *data,char *s, int idx, int *id, int *color)
 {
 	char	**numbers;
 	char	*s1;
-
 	s1 = NULL;
 	while (s[idx] == ' ')
 		idx++;
@@ -211,32 +206,32 @@ void	check_identifier(char *s, t_data *data)
 			break;
 		if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
 		{
-			check_path(data, &s[i + 3], &data->id->NO, data->param->path[0]);
+			data->path[0] = check_path(data, &s[i + 3], &data->id->NO);
 			break;
 		}
 		else if (ft_strncmp(&s[i], "SO ", ft_strlen("SO ")) == 0)
 		{
-			check_path(data, &s[i + 3], &data->id->SO, data->param->path[1]);
+			data->path[1] = check_path(data, &s[i + 3], &data->id->SO);
 			break;
 		}
 		else if (ft_strncmp(&s[i], "WE ", ft_strlen("WE ")) == 0)
 		{
-			check_path(data, &s[i + 3], &data->id->WE, data->param->path[2]);
+			data->path[2] = check_path(data, &s[i + 3], &data->id->WE);
 			break;
 		}
 		else if (ft_strncmp(&s[i], "EA ", ft_strlen("EA ")) == 0)
 		{
-			check_path(data, &s[i + 3], &data->id->EA, data->param->path[3]);
+			data->path[3] = check_path(data, &s[i + 3], &data->id->EA);
 			break;
 		}
 		else if (ft_strncmp(&s[i], "F ", ft_strlen("F ")) == 0)
 		{
-			check_RGB(data, s, i + 2, &data->id->F, data->param->floor);
+			check_RGB(data, s, i + 2, &data->id->F, data->floor);
 			break;
 		}
 		else if (ft_strncmp(&s[i], "C ", ft_strlen("C ")) == 0)
 		{
-			check_RGB(data, s, i + 2, &data->id->C, data->param->ceiling);
+			check_RGB(data, s, i + 2, &data->id->C, data->ceiling);
 			break;
 		}
 		else
@@ -244,33 +239,34 @@ void	check_identifier(char *s, t_data *data)
 			check_id(data);
 			break;
 		}
-		//check until the end of the line
 	}
 }
 
-void	init_path(char **path)
+void init_colors(t_data *data)
 {
 	int i;
-
 	i = 0;
-	while (i < 4)
-		path[i++] = ft_strdup("");
-	path[i] = NULL;
+	data->floor = malloc(sizeof(int) * 3);
+	if (!data->floor)
+		exit(EXIT_FAILURE);
+	data->ceiling = malloc(sizeof(int) * 3);
+	if (!data->ceiling)
+		exit(EXIT_FAILURE);
+	while(i < 3)
+	{
+		data->floor[i] = 0;
+		data->ceiling[i] = 0;
+		i++;
+	}
 }
 
 void	allocate_param(t_data *data)
 {
-	data->param = malloc(sizeof(sizeof(t_param)));
-	if (!data->param)
+	init_colors(data);
+	data->path = malloc(sizeof(char *) * 5);
+	if (!data->path)
 		exit(EXIT_FAILURE);
-	data->param->floor = malloc(sizeof(int) * 3);
-	if (!data->param->floor)
-		exit(EXIT_FAILURE);
-	data->param->ceiling = malloc(sizeof(int) * 3);
-	if (!data->param->ceiling)
-		exit(EXIT_FAILURE);
-	data->param->path = malloc(sizeof(char *) * 4);
-	init_path(data->param->path);
+	data->path[4] = NULL;
 }
 
 void	check_texture(t_data *data)
@@ -285,9 +281,7 @@ void	check_texture(t_data *data)
 			check_identifier(data->map[i], data);
 		i++;
 	}
-	// print_data(data);
 	check_id(data);//add it after loop
-	printf("everything is ok\n");
 }
 
 void	parsing(char *av, t_data *data)
@@ -299,7 +293,7 @@ void	parsing(char *av, t_data *data)
 		exit(EXIT_FAILURE);
 	}
 	read_map(data, av);
-	print_tab(data->map);
-	// check_texture(data);
+	check_texture(data);
+	print_data(data);
+	printf("everything is ok\n");
 }
-

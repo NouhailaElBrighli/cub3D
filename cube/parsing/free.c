@@ -10,12 +10,11 @@ void	ft_free(char **s)
 	free(s);
 }
 
-void	free_param(t_param *param)
+void	free_param(t_data *data)
 {
-	ft_free(param->path);
-	free(param->floor);
-	free(param->ceiling);
-	free(param);
+	ft_free(data->path);
+	free(data->ceiling);
+	free(data->floor);
 }
 
 void ft_error(t_data *data, char *s)
@@ -24,6 +23,8 @@ void ft_error(t_data *data, char *s)
 	ft_free(data->map);
 	free(data->id);
 	free(data);
-	free_param(data->param);
+	ft_free(data->path);
+	free(data->ceiling);
+	free(data->floor);
 	exit(EXIT_FAILURE);
 }

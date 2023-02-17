@@ -14,7 +14,7 @@ void	print_tab(char **s)
 	int i;
 
 	i = 0;
-	while (s[i])
+	while (s[i] != NULL)
 	{
 		printf("s[%d] == %s\n", i, s[i]);
 		i++;
@@ -28,27 +28,32 @@ void print_colors(int *color)
 	i = 0;
 	while (i < 3)
 	{
-		printf("RGB == %d", color[i]);
+		printf("RGB == %d\n", color[i]);
 		i++;
 	}
 }
 
-void	print_param(t_param *param)
-{
-	printf("-----------path-----------\n");
-	print_tab(param->path);
-	// printf("-----------floor-----------\n");
-	// print_colors(param->floor);
-	// printf("-----------floor-----------\n");
-	// print_colors(param->ceiling);
-}
+// void	print_param(t_param *param)
+// {
+// 	printf("-----------path-----------\n");
+// 	print_tab(param->path);
+// 	// printf("-----------floor-----------\n");
+// 	// print_colors(param->floor);
+// 	// printf("-----------floor-----------\n");
+// 	// print_colors(param->ceiling);
+// }
 
 void print_data(t_data *data)
 {
 	printf("===========map=============\n");
 	print_tab(data->map);
-	// printf("===========id===============\n");
-	// print_id(data->id);
-	// printf("=============param===========\n");
+	printf("===========id===============\n");
+	print_id(data->id);
+	printf("=============path===========\n");
+	print_tab(data->path);
+	printf("-----------floor-----------\n");
+	print_colors(data->floor);
+	printf("-----------floor-----------\n");
+	print_colors(data->ceiling);
 	// print_param(data->param);
 }

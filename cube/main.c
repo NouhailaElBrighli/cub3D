@@ -12,5 +12,5 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	init_identifier(data);
 	parsing(av[1], data);
-
+	
 }

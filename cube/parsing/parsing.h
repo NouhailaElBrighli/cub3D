@@ -17,19 +17,22 @@ typedef struct s_identifier
 	int C;
 }t_identifier;
 
-typedef struct s_param
-{
-	char	**path;
-	int		*floor;
-	int		*ceiling;
-}t_param;
+// typedef struct s_param
+// {
+// 	char	**path;
+// 	int		*floor;
+// 	int		*ceiling;
+// }t_param;
 
 
 typedef struct  s_data
 {
-	char **map;
-	t_param *param;
-	t_identifier *id;
+	char	**map;
+	char	**path;
+	int		*floor;
+	int		*ceiling;
+	// t_param *param;
+	t_identifier	*id;
 }t_data;
 
 
@@ -50,7 +53,7 @@ int		ft_atoi(const char *str);
 
 /*********************TEST***********************/
 
-void	print_id(t_identifier *id);
+void	print_id(t_identifier *id);   
 void	print_tab(char **s);
 void	print_data(t_data *data);
 
