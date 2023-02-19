@@ -33,15 +33,13 @@ void print_colors(int *color)
 	}
 }
 
-// void	print_param(t_param *param)
-// {
-// 	printf("-----------path-----------\n");
-// 	print_tab(param->path);
-// 	// printf("-----------floor-----------\n");
-// 	// print_colors(param->floor);
-// 	// printf("-----------floor-----------\n");
-// 	// print_colors(param->ceiling);
-// }
+void	print_player(t_player *player)
+{
+	printf("player->N == %d\n", player->N);
+	printf("player->S == %d\n", player->S);
+	printf("player->E == %d\n", player->E);
+	printf("player->W == %d\n", player->W);
+}
 
 void print_data(t_data *data)
 {
@@ -57,5 +55,6 @@ void print_data(t_data *data)
 	print_colors(data->ceiling);
 	printf("=============start the map===========\n");
 	printf("start == %s", data->map[data->index]);
-	// print_param(data->param);
+	printf("=============player===========\n");
+	print_player(data->player);
 }

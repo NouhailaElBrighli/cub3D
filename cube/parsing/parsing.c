@@ -88,18 +88,6 @@ char	*get_path(char *s)
 	return (path);
 }
 
-int	get_idx(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] && s[i] != ' ' && s[i] != '\n')
-		i++;
-	while (s[i] == ' ')
-		i++;
-	return (i);
-}
-
 char	*check_path(t_data *data, char *s, int *id)
 {
 	int	fd;
@@ -119,8 +107,12 @@ char	*check_path(t_data *data, char *s, int *id)
 		ft_error(data, "Error\n");
 	close(fd);
 	(*id)++;
-	if (s[get_idx(&s[idx])] != '\n')
+	idx += ft_strlen(path);
+	while (s[idx] == ' ')
+		idx++;
+	if (s[idx] != '\n')
 	{
+		free(path);
 		ft_error(data, "Error\n");
 	}
 	return (path);
@@ -258,6 +250,17 @@ void init_colors(t_data *data)
 	}
 }
 
+void init_player(t_data *data)
+{
+	data->player = malloc(sizeof(t_player));
+	if (!data->player)
+		exit(EXIT_FAILURE);
+	data->player->N = 0;
+	data->player->E = 0;
+	data->player->W = 0;
+	data->player->S = 0;
+}
+
 void	allocate_param(t_data *data)
 {
 	int	i;
@@ -269,6 +272,7 @@ void	allocate_param(t_data *data)
 		exit(EXIT_FAILURE);
 	while (i < 5)
 		data->path[i++] = NULL;
+	init_player(data);
 }
 
 int	check_textures(t_data *data)
@@ -322,15 +326,108 @@ void	check_invalid_character(t_data *data)
 	}
 }
 
-// void	check_valid_path(t_data *data)
-// {
+int	is_space(char c)
+{
+	if (c == ' ')
+		return (1);
+	return (-1);
+}
 
-// }
+int	is_player(char c, t_player *player, int flag)
+{
+	if (c == 'N' || c == 'E' || c == 'W' || c == 'S')
+	{
+		if (flag != 0)
+			return (1);
+		if (c == 'N')
+			player->N++;
+		else if (c == 'E')
+			player->E++;
+		else if (c == 'W')
+			player->W++;
+		else if (c == 'S')
+			player->S++;
+	}
+	return(0);
+}
+
+void	search_player(t_data *data, char *s)
+{
+	int	i;
+
+	i = 0;
+	while(s[i])
+	{
+		is_player(s[i], data->player, 0);
+		i++;
+	}
+}
+
+void	check_t_player(t_data *data)
+{
+	int sum;
+
+	sum = data->player->N + data->player->E + data->player->S + data->player->W;
+	if (sum != 1)
+		ft_error(data, "Player Errro");
+}
+
+void	check_for_player(t_data *data)
+{
+	int i;
+
+	i = data->index;
+	while (data->map[i])
+	{
+		search_player(data, data->map[i]);
+		i++;
+	}
+	check_t_player(data);
+}
+
+void	check_for_space(t_data *data, int i, int j)
+{
+	if (data->map[i][j + 1] == '\n' || data->map[i][j + 1] == '\0' || j == 0)
+		ft_error(data, "invalid map\n");
+	if (data->map[i][j + 1] == ' ' || data->map[i][j - 1] == ' ')
+		ft_error(data, "invalid map\n");
+	if (data->map[i + 1] == NULL)
+		ft_error(data, "invalid map\n");
+	if (ft_strlen(data->map[i - 1]) < j || ft_strlen(data->map[i + 1]) < j)
+		ft_error(data, "invalid map\n");
+	if (data->map[i + 1][j] == '\n' || data->map[i - 1][j] == '\0')
+		ft_error(data, "invalid map\n");
+	if (data->map[i + 1][j] == ' ' || data->map[i - 1][j] == ' ')
+		ft_error(data, "invalid map\n");
+}
+
+void	check_valid_path(t_data *data)
+{
+	int i;
+	int j;
+
+	i = data->index;
+	j = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j] != '\0')
+		{
+			if (data->map[i][j] == '0' || is_player(data->map[i][j], data->player, 1) == 1)
+				check_for_space(data, i, j);
+			j++;
+		}
+		i++;
+	}
+}
+
 
 void	check_map(t_data *data)
 {
 	check_invalid_character(data);
-	// check_valid_path(data);	
+	check_for_player(data);
+	check_valid_path(data);
+	printf("valid\n");
 }
 
 void	parsing(char *av, t_data *data)
@@ -344,5 +441,5 @@ void	parsing(char *av, t_data *data)
 	read_map(data, av);
 	data->index = check_textures(data);
 	check_map(data);
-	print_data(data);
+	// print_data(data);
 }

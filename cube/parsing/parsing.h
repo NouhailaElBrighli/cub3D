@@ -17,6 +17,15 @@ typedef struct s_identifier
 	int C;
 }t_identifier;
 
+
+typedef struct s_player
+{
+	int	N;
+	int E;
+	int W;
+	int S;
+}t_player;
+
 typedef struct	s_data
 {
 	char			**map;
@@ -25,6 +34,7 @@ typedef struct	s_data
 	int				*ceiling;//rgb
 	int				index; // index start of the map
 	t_identifier	*id;
+	t_player		*player;
 }t_data;
 
 
@@ -48,7 +58,7 @@ int		ft_atoi(const char *str);
 void	print_id(t_identifier *id);   
 void	print_tab(char **s);
 void	print_data(t_data *data);
-
+void	print_player(t_player *player);
 /*********************TEST***********************/
 
 
