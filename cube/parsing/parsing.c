@@ -421,15 +421,6 @@ void	check_valid_path(t_data *data)
 	}
 }
 
-
-void	check_map(t_data *data)
-{
-	check_invalid_character(data);
-	check_for_player(data);
-	check_valid_path(data);
-	printf("valid\n");
-}
-
 void	parsing(char *av, t_data *data)
 {
 	if (check_file(av) == 1)
@@ -440,6 +431,8 @@ void	parsing(char *av, t_data *data)
 	}
 	read_map(data, av);
 	data->index = check_textures(data);
-	check_map(data);
-	// print_data(data);
+	check_invalid_character(data);
+	check_for_player(data);
+	check_valid_path(data);
+	printf("valid\n");
 }
