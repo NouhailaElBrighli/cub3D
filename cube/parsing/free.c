@@ -38,5 +38,6 @@ void ft_error(t_data *data, char *s)
 	free(data->floor);
 	free(data->player);
 	free(data);
+	system("leaks cube");
 	exit(EXIT_FAILURE);
 }

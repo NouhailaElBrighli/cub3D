@@ -39,11 +39,17 @@ int	get_size(char *av, t_data *data)
 {
 	int	fd;
 	int	size;
+	char *s;
 
-	size = 0;
+	size = 1;
 	fd = open(av, O_RDONLY);
-	while(get_next_line(fd) != NULL)
+	s = get_next_line(fd);
+	while(s != NULL)
+	{
+		free(s);
+		s = get_next_line(fd);
 		size++;
+	}
 	if (size == 0)
 	{
 		close(fd);
@@ -101,10 +107,16 @@ char	*check_path(t_data *data, char *s, int *id)
 	path = get_path(&s[idx]);
 	check = ft_strlen(path) - 4;
 	if (ft_strncmp(&path[check], ".xpm", ft_strlen(&path[check])) != 0)
+	{
+		free(path);
 		ft_error(data, "Error\n");
+	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
+	{
+		free(path);
 		ft_error(data, "Error\n");
+	}
 	close(fd);
 	(*id)++;
 	idx += ft_strlen(path);
@@ -163,6 +175,7 @@ void	fill_color(int *color, char **numbers)
 		color[i] = ft_atoi(numbers[i]);
 		i++;
 	}
+	ft_free(numbers);
 }
 
 void	check_RGB(t_data *data,char *s, int idx, int *id, int *color)
@@ -196,32 +209,32 @@ int	check_identifier(char *s, t_data *data)
 		i++;
 	if (s[i] == '\n')
 		return(0);
-	if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0)
+	if (ft_strncmp(&s[i], "NO ", ft_strlen("NO ")) == 0 && data->id->NO != 1)
 	{
 		data->path[0] = check_path(data, &s[i + 3], &data->id->NO);
 		return(0);
 	}
-	else if (ft_strncmp(&s[i], "SO ", ft_strlen("SO ")) == 0)
+	else if (ft_strncmp(&s[i], "SO ", ft_strlen("SO ")) == 0 && data->id->SO != 1)
 	{
 		data->path[1] = check_path(data, &s[i + 3], &data->id->SO);
 		return(0);
 	}
-	else if (ft_strncmp(&s[i], "WE ", ft_strlen("WE ")) == 0)
+	else if (ft_strncmp(&s[i], "WE ", ft_strlen("WE ")) == 0 && data->id->WE != 1)
 	{
 		data->path[2] = check_path(data, &s[i + 3], &data->id->WE);
 		return(0);
 	}
-	else if (ft_strncmp(&s[i], "EA ", ft_strlen("EA ")) == 0)
+	else if (ft_strncmp(&s[i], "EA ", ft_strlen("EA ")) == 0 && data->id->EA != 1)
 	{
 		data->path[3] = check_path(data, &s[i + 3], &data->id->EA);
 		return(0);
 	}
-	else if (ft_strncmp(&s[i], "F ", ft_strlen("F ")) == 0)
+	else if (ft_strncmp(&s[i], "F ", ft_strlen("F ")) == 0 && data->id->F != 1)
 	{
 		check_RGB(data, s, i + 2, &data->id->F, data->floor);
 		return(0);
 	}
-	else if (ft_strncmp(&s[i], "C ", ft_strlen("C ")) == 0)
+	else if (ft_strncmp(&s[i], "C ", ft_strlen("C ")) == 0 && data->id->C != 1)
 	{
 		check_RGB(data, s, i + 2, &data->id->C, data->ceiling);
 		return(0);
@@ -365,11 +378,11 @@ void	search_player(t_data *data, char *s)
 
 void	check_t_player(t_data *data)
 {
-	int sum;
+	int	sum;
 
 	sum = data->player->N + data->player->E + data->player->S + data->player->W;
 	if (sum != 1)
-		ft_error(data, "Player Errro");
+		ft_error(data, "Player Errro\n");
 }
 
 void	check_for_player(t_data *data)
