@@ -114,6 +114,7 @@ char	*check_path(t_data *data, char *s, int *id)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
+		printf("path == %s\n", path);
 		free(path);
 		ft_error(data, "Error\n");
 	}
@@ -382,7 +383,7 @@ void	check_t_player(t_data *data)
 
 	sum = data->player->N + data->player->E + data->player->S + data->player->W;
 	if (sum != 1)
-		ft_error(data, "Player Errro\n");
+		ft_error(data, "Player Error\n");
 }
 
 void	check_for_player(t_data *data)

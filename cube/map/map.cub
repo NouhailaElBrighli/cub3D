@@ -1,12 +1,13 @@
 
 
 
-            NO test.xpm
+            NO ./textures/test.xpm
 
-                SO test.xpm
 
-                        WE test.xpm
-                            EA test.xpm          
+                SO ./textures/test.xpm
+
+                        WE ./textures/test.xpm
+                            EA ./textures/test.xpm
 
         F       221,241,11
                 
