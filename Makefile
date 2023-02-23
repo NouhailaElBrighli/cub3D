@@ -8,11 +8,18 @@ SRC =	main.c\
 		parsing/parsing.c\
 		parsing/free.c\
 		parsing/test.c\
-		parsing/ft_atoi.c\
 		parsing/get_next_line_utils.c\
 		parsing/get_next_line.c\
 		parsing/libft/ft_split.c\
 		parsing/libft/libft_utils.c\
+		parsing/init_vars.c\
+		parsing/textures_check.c\
+		parsing/textures_utils.c\
+		parsing/extention.c\
+		parsing/invalid_character.c\
+		parsing/player_check.c\
+		parsing/valid_path.c\
+
 
 OBJ = $(SRC:.c=.o)
 
