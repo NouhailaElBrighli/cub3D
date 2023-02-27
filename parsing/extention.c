@@ -17,4 +17,3 @@ void	check_for_extention(t_data *data,int  check,char *path)
 	}
 	close(fd);
 }
-

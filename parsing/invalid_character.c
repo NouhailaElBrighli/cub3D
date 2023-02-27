@@ -1,6 +1,5 @@
 #include "parsing.h"
 
-
 int	is_valid(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\0' || c == '1' || c == '0' || c == 'N' || c == 'E' || c == 'S' || c == 'W' || c == '0')

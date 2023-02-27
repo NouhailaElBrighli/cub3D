@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <mlx.h>
 
 /**************************player_check***************************/
 void	check_valid_path(t_data *data);
@@ -62,5 +63,8 @@ void	print_id(t_identifier *id);
 void	print_tab(char **s);
 void	print_data(t_data *data);
 void	print_player(t_player *player);
+
+/*********************EXECUTION****************/
+void	execution(t_data *data);
 
 #endif

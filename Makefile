@@ -19,7 +19,7 @@ SRC =	main.c\
 		parsing/invalid_character.c\
 		parsing/player_check.c\
 		parsing/valid_path.c\
-
+		execution/map2D.c\
 
 OBJ = $(SRC:.c=.o)
 
@@ -28,7 +28,7 @@ RM = rm -rf
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-		$(CC)  $(CFLAGS) $(OBJ) -o $(NAME)
+		$(CC) -lmlx -framework OpenGL -framework AppKit $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean :
 		$(RM) $(OBJ)
@@ -37,4 +37,3 @@ fclean : clean
 			$(RM) $(NAME)
 
 re : fclean all
- 

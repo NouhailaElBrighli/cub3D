@@ -1,5 +1,4 @@
 #include "parsing.h"
-#include "../cube.h"
 
 int	check_file(char *s)
 {

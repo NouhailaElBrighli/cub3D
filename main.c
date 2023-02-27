@@ -1,4 +1,3 @@
-#include "cube.h"
 #include "parsing/parsing.h"
 
 int main(int ac, char **av)
@@ -12,4 +11,6 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	init_identifier(data);
 	parsing(av[1], data);
+	execution(data);
+	return (0);
 }

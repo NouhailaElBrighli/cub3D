@@ -1,5 +1,4 @@
-#include "../../cube.h"
-
+#include "../parsing.h"
 
 static int	function(unsigned int res, int n)
 {

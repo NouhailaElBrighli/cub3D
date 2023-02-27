@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 11:52:33 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/02/13 10:31:27 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/02/27 20:10:09 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cube.h"
 #include "../parsing.h"
 
 char	*ft_strndup(char *s, size_t n)
