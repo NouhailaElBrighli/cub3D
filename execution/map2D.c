@@ -60,7 +60,7 @@ void	execution(t_data *data)
 	if (!data->ptr->mlx)
 		return ;
 	data->ptr->img_dim = 50;
-	data->ptr->win = mlx_new_window(data->ptr->mlx, 1251, 450, "cub3D");
+	data->ptr->win = mlx_new_window(data->ptr->mlx, 1250, 450, "cub3D");
 	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 	row = data->index;
