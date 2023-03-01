@@ -39,7 +39,7 @@ void fill_window(t_data *data, char *row, int nbr_row)
 			}
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
 		}
-		if (row[i] == 'N') // TODO player
+		if (row[i] == 'N')
 		{
 			for (int x = 0; x < 50; x++)
 			{
