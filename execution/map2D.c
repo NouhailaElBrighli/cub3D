@@ -39,7 +39,7 @@ void fill_window(t_data *data, char *row, int nbr_row)
 			}
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
 		}
-		if (row[i] == 'N')
+		if (row[i] == 'N') //   ...
 		{
 			for (int x = 0; x < 50; x++)
 			{
@@ -59,7 +59,7 @@ void	execution(t_data *data)
 	data->ptr->mlx = mlx_init();
 	if (!data->ptr->mlx)
 		return ;
-	data->ptr->img_dim = 50;
+	data->ptr->img_dim = 50; // 32 
 	data->ptr->win = mlx_new_window(data->ptr->mlx, 1250, 450, "cub3D");
 	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
