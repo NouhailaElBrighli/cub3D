@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <mlx.h>
+#include <math.h>
 
 /**************************player_check***************************/
 void	check_valid_path(t_data *data);

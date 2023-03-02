@@ -24,6 +24,20 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+void DrawCircle(t_data *data, int x, int y, int r)
+{
+    static const double PI = 3.1415926535;
+    double i, angle, x1, y1;
+
+    for(i = 0; i < 360; i += 0.1)
+    {
+		angle = i;
+		x1 = r * cos(angle * PI / 180);
+		y1 = r * sin(angle * PI / 180);
+		my_mlx_pixel_put(data, x + x1, y + y1, 0xE24666);
+    }
+}
+
 void fill_window(t_data *data, char *row, int nbr_row)
 {
 	int i;
@@ -39,13 +53,9 @@ void fill_window(t_data *data, char *row, int nbr_row)
 			}
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
 		}
-		if (row[i] == 'N') //   ...
+		if (row[i] == 'N')
 		{
-			for (int x = 0; x < 50; x++)
-			{
-				for (int y = 0; y < 50; y++)
-					my_mlx_pixel_put(data, x, y, 0xE24666);
-			}
+			DrawCircle(data, 25, 25, 10);
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
 		}
 	}
