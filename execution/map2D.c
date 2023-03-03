@@ -26,15 +26,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void DrawCircle(t_data *data, int x, int y, int r)
 {
-    static const double PI = 3.1415926535;
-    double i, angle, x1, y1;
+    // static const double PI = 3.1415926535;
+    float i, angle, x1, y1;
 
-	my_mlx_pixel_put(data, 25, 25, 0xFFFFFF); // le centre !!
     for(i = 0; i < 360; i += 0.1)
     {
 		angle = i;
-		x1 = r * cos(angle * PI / 180);
-		y1 = r * sin(angle * PI / 180);
+		x1 = r * cos(angle * M_PI / 180);
+		y1 = r * sin(angle * M_PI / 180);
 		my_mlx_pixel_put(data, x + x1, y + y1, 0xE24666);
     }
 }
@@ -44,6 +43,7 @@ void fill_window(t_data *data, char *row, int nbr_row)
 	int i;
 
 	i = 0;
+	double r = 5.0;
 	while (row[i] != '\0')
 	{
 		if (row[i] == '1')
@@ -60,7 +60,12 @@ void fill_window(t_data *data, char *row, int nbr_row)
 		}
 		else if (row[i] == 'N')
 		{
-			DrawCircle(data, 25, 25, 20);
+
+			while (r != 0)
+			{
+				DrawCircle(data, 25, 25, r);
+				r -= 0.5;
+			}
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
 			free(data->ptr->img);
 			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
