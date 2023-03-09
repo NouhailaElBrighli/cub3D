@@ -44,9 +44,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 void DrawCircle(t_data *data, int x, int y, int r)
 {
-    float i, angle, x1, y1;
+    int i, angle, x1, y1;
 
-    for(i = 0; i < 360; i += 0.1)
+    for(i = 0; i < 360; i += 1)
     {
 		angle = i;
 		x1 = r * cos(angle * M_PI / 180);
@@ -151,7 +151,6 @@ map
 player
 update coordonate of player func
 }*/
-
 
 void	execution(t_data *data)
 {

@@ -6,7 +6,6 @@ void	init_player_coordinates(t_data *data, int x, int y)
 	data->player->y = y;
 }
 
-
 void	init_player_angle(t_player *player)
 {
 	if (player->type->E == 1)
