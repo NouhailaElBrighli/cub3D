@@ -13,5 +13,4 @@ int main(int ac, char **av)
 	parsing(av[1], data);
 	execution(data);
 	return (0);
-
 }

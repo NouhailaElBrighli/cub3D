@@ -82,5 +82,5 @@ void	parsing(char *av, t_data *data)
 	check_invalid_character(data);
 	check_for_player(data);
 	check_valid_path(data);
-	printf("valid\n");
+	// printf("valid\n");
 }

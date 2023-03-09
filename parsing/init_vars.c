@@ -18,10 +18,13 @@ void init_player(t_data *data)
 	data->player = malloc(sizeof(t_player));
 	if (!data->player)
 		exit(EXIT_FAILURE);
-	data->player->N = 0;
-	data->player->E = 0;
-	data->player->W = 0;
-	data->player->S = 0;
+	data->player->type = malloc(sizeof(t_type));
+	if (!data->player)
+		exit(EXIT_FAILURE);
+	data->player->type->N = 0;
+	data->player->type->E = 0;
+	data->player->type->W = 0;
+	data->player->type->S = 0;
 }
 
 

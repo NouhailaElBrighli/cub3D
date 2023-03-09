@@ -7,13 +7,13 @@ int	is_player(char c, t_player *player, int flag)
 		if (flag != 0)
 			return (1);
 		if (c == 'N')
-			player->N++;
+			player->type->N++;
 		else if (c == 'E')
-			player->E++;
+			player->type->E++;
 		else if (c == 'W')
-			player->W++;
+			player->type->W++;
 		else if (c == 'S')
-			player->S++;
+			player->type->S++;
 	}
 	return(0);
 }
@@ -34,7 +34,7 @@ void	check_t_player(t_data *data)
 {
 	int	sum;
 
-	sum = data->player->N + data->player->E + data->player->S + data->player->W;
+	sum = data->player->type->N + data->player->type->E + data->player->type->S + data->player->type->W;
 	if (sum != 1)
 		ft_error(data, "Player Error\n");
 }
