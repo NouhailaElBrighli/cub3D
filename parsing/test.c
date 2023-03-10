@@ -35,10 +35,10 @@ void print_colors(int *color)
 
 void	print_player(t_player *player)
 {
-	printf("player->N == %d\n", player->type->N);
-	printf("player->S == %d\n", player->type->S);
-	printf("player->E == %d\n", player->type->E);
-	printf("player->W == %d\n", player->type->W);
+	printf("player->N == %d\n", player->direction->N);
+	printf("player->S == %d\n", player->direction->S);
+	printf("player->E == %d\n", player->direction->E);
+	printf("player->W == %d\n", player->direction->W);
 }
 
 void print_data(t_data *data)

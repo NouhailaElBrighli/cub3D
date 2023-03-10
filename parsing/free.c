@@ -36,7 +36,7 @@ void ft_error(t_data *data, char *s)
 	free_path(data);
 	free(data->ceiling);
 	free(data->floor);
-	free(data->player->type);
+	free(data->player->direction);
 	free(data->player);
 	free(data);
 	exit(EXIT_FAILURE);

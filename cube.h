@@ -32,7 +32,7 @@ typedef struct s_type
 
 typedef struct s_player
 {
-	t_type *type;
+	t_type *direction;
 	int x;
 	int y;
 	float angle;

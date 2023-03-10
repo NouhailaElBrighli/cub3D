@@ -57,9 +57,9 @@ void DrawCircle(t_data *data, int x, int y, int r)
 
 void DrawLine(t_data *data, int x_start, int y_start)
 {
-	float angle = 45.0f * M_PI / 180;
-	int x_end = x_start + roundf((cos(angle) * 30.0f));// modify
-	int y_end = y_start + roundf((sin(angle) * 30.0f));// modify
+	float angle = 30.0f * M_PI / 180;
+	int x_end = x_start + roundf((cos(angle) * 25.0f));// modify
+	int y_end = y_start + roundf((sin(angle) * 25.0f));// modify
 
 	int dx = x_end - x_start; //==> 27
     int dy = y_end - y_start; //==> 38
@@ -134,8 +134,9 @@ void	Draw_walls(t_data *data, char *row, int nbr_row)
 		{
 			for (int x = 0; x < 50; x++)
 			{
-				for (int y = 0; y < 50; y++)
+				for (int y = 0; y < 50; y++) {
 					my_mlx_pixel_put(data, x, y, 0xFFFFFF);
+				}
 			}
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
 			free(data->ptr->img);
