@@ -63,88 +63,91 @@ void DrawLine(t_data *data, int x_start, int y_start)
 void	Draw_walls(t_data *data, char *row, int nbr_row)
 {
 	int i;
+	// int y;
+	// int x;
 
 	i = 0;
 	while (row[i] != '\0')
 	{
 		if (row[i] == '1')
 		{
-			for (int x = 0; x < 50; x++)
+			fprintf(stderr , "i == %d\n", i);
+			for (int x = i; x < i + 50; x++)
 			{
-				for (int y = 0; y < 50; y++)
-					my_mlx_pixel_put(data, x, y, 0xFFFFFF);
+				for (int y = nbr_row; y < nbr_row + 50; y++)
+					my_mlx_pixel_put(data, x * i, y * nbr_row, 0xFFFFFF);
 			}
-			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
-			mlx_destroy_image(data->ptr->mlx, data->ptr->img);
-			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
-			data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
+			// mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
+			// mlx_destroy_image(data->ptr->mlx, data->ptr->img);
+			// data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
+			// data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 		}
 		i++;
 	}
 }
 
-void	render_map(t_data *data,int dir)
-{
-	int row;
-	// fprintf(stderr, "y == %d\n", data->player->y);
-	// fprintf(stderr, "x == %d\n", data->player->x);	
-	if (dir == UP)
-		data->player->y -= 10;
-	else if (dir == DOWN)
-		data->player->y += 10;
-	else if (dir == LEFT)
-		data->player->x -= 10;
-	else if (dir == RIGHT)
-		data->player->x += 10;
-	mlx_clear_window(data->ptr->mlx, data->ptr->win);
-	row = data->index;
-	while (data->map[row])
-	{
-		Draw_walls(data, data->map[row], row - data->index);
-		row++;
-	}
-	DrawCircle(data, 25, 25, 3.0f);
-	DrawLine(data, 25, 25);
-	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
-	free(data->ptr->img);
-	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
-	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
-}
+// void	render_map(t_data *data,int dir)
+// {
+// 	int row;
+// 	// fprintf(stderr, "y == %d\n", data->player->y);
+// 	// fprintf(stderr, "x == %d\n", data->player->x);	
+// 	if (dir == UP)
+// 		data->player->y -= 10;
+// 	else if (dir == DOWN)
+// 		data->player->y += 10;
+// 	else if (dir == LEFT)
+// 		data->player->x -= 10;
+// 	else if (dir == RIGHT)
+// 		data->player->x += 10;
+// 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
+// 	row = data->index;
+// 	while (data->map[row])
+// 	{
+// 		Draw_walls(data, data->map[row], row - data->index);
+// 		row++;
+// 	}
+// 	DrawCircle(data, 25, 25, 3.0f);
+// 	DrawLine(data, 25, 25);
+// 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
+// 	free(data->ptr->img);
+// 	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
+// 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
+// }
 
 
 int	key_hook(int keycode, t_data *data)
 {
+	// fprintf(stderr, "y == %d\n", data->player->y);
+	// fprintf(stderr, "x == %d\n", data->player->x);
 	if (keycode == 53)
 	{
 		mlx_destroy_window(data->ptr->mlx, data->ptr->win);
 		exit(0);
 	}
-	else if (keycode == 13)
-	{
-		// fprintf(stderr, "y == %d\n", data->player->y);
-		// fprintf(stderr, "x == %d\n", data->player->x);
-		render_map(data, UP);
-		//lfo9
-	}
-	else if (keycode == 1)
-	{
-		render_map(data, DOWN);
-		//lta7t
-	}
-	else if (keycode == 2)
-	{
-		render_map(data, LEFT);
-		//left
-	}
-	else if (keycode == 0)
-	{
-		render_map(data, RIGHT);
-		//right
-	}
-	else
-	{
-		fprintf(stderr, "keycode == %d\n", keycode);
-	}
+	// else if (keycode == 13)
+	// {
+	// 	render_map(data, UP);
+	// 	//lfo9
+	// }
+	// else if (keycode == 1)
+	// {
+	// 	render_map(data, DOWN);
+	// 	//lta7t
+	// }
+	// else if (keycode == 2)
+	// {
+	// 	render_map(data, LEFT);
+	// 	//left
+	// }
+	// else if (keycode == 0)
+	// {
+	// 	render_map(data, RIGHT);
+	// 	//right
+	// }
+	// else
+	// {
+	// 	fprintf(stderr, "keycode == %d\n", keycode);
+	// }
 	return (0);
 }
 
@@ -154,27 +157,28 @@ int	ft_close(t_data *data)
 	exit(0);
 }
 
-void	DrawPlayer(t_data *data, char *row, int nbr_row)
-{
-	int i = 0;
-
-	while (row[i] != '\0')
-	{
-		init_player_coordinates(data, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
-		if (is_player(row[i], data->player, 1) == 1)
-		{
-			DrawCircle(data, 25, 25, 3.0f);
-			DrawLine(data, 25, 25);
-			fprintf(stderr, "y == %d\n", data->player->y);
-			fprintf(stderr, "x == %d\n", data->player->x);
-			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
-			mlx_destroy_image(data->ptr->mlx, data->ptr->img);
-			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
-			data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
-		}
-		i++;
-	}
-}
+// void	DrawPlayer(t_data *data, char *row, int nbr_row)
+// {
+// 	int i = 0;
+// 	while (row[i] != '\0')
+// 	{
+// 		init_player_coordinates(data, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
+// 		if (is_player(row[i], data->player, 1) == 1)
+// 		{
+// 			DrawCircle(data, 25, 25, 3.0f);
+// 			DrawLine(data, 25, 25);
+// 			fprintf(stderr, "y == %d\n", data->player->y);
+// 			fprintf(stderr, "x == %d\n", data->player->x);
+// 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
+// 			mlx_destroy_image(data->ptr->mlx, data->ptr->img);
+// 			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
+// 			data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
+// 			fprintf(stderr, "y == %d\n", data->player->y);
+// 			fprintf(stderr, "x == %d\n", data->player->x);
+// 		}
+// 		i++;
+// 	}
+// }
 
 
 /*int drawing {
@@ -191,24 +195,28 @@ void	execution(t_data *data)
 	data->ptr->mlx = mlx_init();
 	if (!data->ptr->mlx)
 		return ;
-	data->ptr->img_dim = 50; // 32
+	// data->ptr->img_dim = 50; // 32
 	data->ptr->win = mlx_new_window(data->ptr->mlx, 1250, 450, "cub3D");
-	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
+	data->ptr->img = mlx_new_image(data->ptr->mlx, 1250, 450);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 	row = data->index;
-	while (data->map[row])
-	{
+	// while (data->map[row])
+	// {
 		Draw_walls(data, data->map[row], row - data->index);
-		row++;
-	}
-	init_player_angle(data->player);
-	row = data->index;
-	while (data->map[row])
-	{
-		DrawPlayer(data, data->map[row], row - data->index);
-		row++;
-	}
+		// row++;
+	// }
+	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
+	// init_player_angle(data->player);
+	// row = data->index;
+	// int i = 0;
+	// while (data->map[row])
+	// {
+	// 	DrawPlayer(data, data->map[row], row - data->index);
+	// 	row++;
+	// }
 	mlx_hook(data->ptr->win, ON_DESTROY, 1L << 0, ft_close, data);
 	mlx_hook(data->ptr->win, ON_KEYDOWN, 0, key_hook, data);
+	// fprintf(stderr, "y == %d\n", data->player->y);
+	// fprintf(stderr, "x == %d\n", data->player->x);
 	mlx_loop(data->ptr->mlx);
 }

@@ -59,7 +59,7 @@ typedef struct	s_data
 	int				index; // index start of the map
 	t_identifier	*id;
 	t_player		*player;
-
+	int				long_line;
 	t_cub3d			*ptr;
 }t_data;
 
