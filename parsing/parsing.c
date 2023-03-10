@@ -67,6 +67,21 @@ void	read_map(t_data *data, char *av)
 
 }
 
+void	get_long_line(t_data *data)
+{
+	int max;
+	int i;
+
+	i = data->index;
+	max = ft_strlen(data->map[i]);
+	while(data->map[i])
+	{
+		if (ft_strlen(data->map[i]) > max)
+			max = ft_strlen(data->map[i]);
+		i++;
+	}
+	data->long_line = max;
+}
 
 
 void	parsing(char *av, t_data *data)
@@ -82,5 +97,7 @@ void	parsing(char *av, t_data *data)
 	check_invalid_character(data);
 	check_for_player(data);
 	check_valid_path(data);
+	get_long_line(data);
+	// fprintf(stderr, "long_line == %d\n", data->long_line);
 	// printf("valid\n");
 }

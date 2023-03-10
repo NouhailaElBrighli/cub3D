@@ -60,6 +60,7 @@ typedef struct	s_data
 	t_identifier	*id;
 	t_player		*player;
 	int				long_line;
+	int				size;
 	t_cub3d			*ptr;
 }t_data;
 
@@ -68,6 +69,8 @@ enum {
 	DOWN,
 	LEFT,
 	RIGHT,
+	ROT_LEFT,
+	ROT_RIGHT,
 };
 
 void	init_player_angle(t_player *player);
