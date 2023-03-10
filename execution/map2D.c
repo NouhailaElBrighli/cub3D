@@ -1,39 +1,5 @@
 #include "../parsing/parsing.h"
 
-int	key_hook(int keycode, t_data *data)
-{
-	if (keycode == 53)
-	{
-		mlx_destroy_window(data->ptr->mlx, data->ptr->win);
-		exit(0);
-	}
-	if (keycode == 126)
-	{
-		// data->player->x += 
-		//lfo9
-	}
-	if (keycode == 125)
-	{
-		//lta7t
-	}
-	if (keycode == 123)
-	{
-		//left
-	}
-	if (keycode == 124)
-	{
-		//right
-	}
-	fprintf(stderr, "keycode == %d\n", keycode);
-	return (0);
-}
-
-int	ft_close(t_data *data)
-{
-	mlx_destroy_window(data->ptr->mlx, data->ptr->win);
-	exit(0);
-}
-
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
@@ -42,22 +8,26 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void DrawCircle(t_data *data, int x, int y, int r)
+void DrawCircle(t_data *data, int x, int y, float r)
 {
     int i, angle, x1, y1;
 
-    for(i = 0; i < 360; i += 1)
-    {
-		angle = i;
-		x1 = r * cos(angle * M_PI / 180);
-		y1 = r * sin(angle * M_PI / 180);
-		my_mlx_pixel_put(data, x + x1, y + y1, 0xE24666);
-    }
+	while (r != 0)
+	{    	
+		for(i = 0; i < 360; i += 1)
+    	{
+			angle = i;
+			x1 = r * cos(angle * M_PI / 180);
+			y1 = r * sin(angle * M_PI / 180);
+			my_mlx_pixel_put(data, x + x1, y + y1, 0xE24666);
+    	}
+		r -= 0.5;
+	}
 }
 
 void DrawLine(t_data *data, int x_start, int y_start)
 {
-	float angle = 30.0f * M_PI / 180;
+	float angle = data->player->angle * M_PI / 180;
 	int x_end = x_start + roundf((cos(angle) * 25.0f));// modify
 	int y_end = y_start + roundf((sin(angle) * 25.0f));// modify
 
@@ -83,44 +53,11 @@ void DrawLine(t_data *data, int x_start, int y_start)
     float x = (float)x_start;
     float y = (float)y_start;
 
-	// fprintf(stderr, "x_start == %d, x_end == %d\n", x_start, x_end);
-	// fprintf(stderr, "x_incr == %f, y_incr == %f, steps == %d\n", x_incr, y_incr, step);
-	// fprintf(stderr, "y_start == %d, y_end == %d\n", y_start, y_end);
-	// fprintf(stderr, "dx ==  == %d, dy == %d\n", dx, dy);
     for (int i = 0; i < step; i++) {
-		my_mlx_pixel_put(data, round(x), round(y), 0xE24666);// should i round value of x and y
-		// my_mlx_pixel_put(data, roundf(x), roundf(y), 0xE24666);// should i round value of x and y
-		// fprintf(stderr, "(x, y) == (%f, %f)\n", x, y);
+		my_mlx_pixel_put(data, roundf(x), roundf(y), 0xE24666);// should i round value of x and y
         x += x_incr;
         y += y_incr;
     }
-}
-
-void	DrawPlayer(t_data *data, char *row, int nbr_row)
-{
-	int i = 0;
-
-	double r = 3.0;
-	while (row[i] != '\0')
-	{
-		init_player_coordinates(data, i + 25, nbr_row + 25);
-		if (row[i] == 'N')
-		{
-			while (r != 0)
-			{
-				DrawCircle(data, 25, 25, r);
-				r -= 0.5;
-			}
-			DrawLine(data, 25, 25);
-			// my_mlx_pixel_put(data, 0, 0, 0xE24666);
-			// mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
-			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
-			free(data->ptr->img);
-			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
-			data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
-		}
-		i++;
-	}
 }
 
 void	Draw_walls(t_data *data, char *row, int nbr_row)
@@ -134,18 +71,111 @@ void	Draw_walls(t_data *data, char *row, int nbr_row)
 		{
 			for (int x = 0; x < 50; x++)
 			{
-				for (int y = 0; y < 50; y++) {
+				for (int y = 0; y < 50; y++)
 					my_mlx_pixel_put(data, x, y, 0xFFFFFF);
-				}
 			}
 			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
-			free(data->ptr->img);
+			mlx_destroy_image(data->ptr->mlx, data->ptr->img);
 			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
 			data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 		}
 		i++;
 	}
 }
+
+void	render_map(t_data *data,int dir)
+{
+	int row;
+	// fprintf(stderr, "y == %d\n", data->player->y);
+	// fprintf(stderr, "x == %d\n", data->player->x);	
+	if (dir == UP)
+		data->player->y -= 10;
+	else if (dir == DOWN)
+		data->player->y += 10;
+	else if (dir == LEFT)
+		data->player->x -= 10;
+	else if (dir == RIGHT)
+		data->player->x += 10;
+	mlx_clear_window(data->ptr->mlx, data->ptr->win);
+	row = data->index;
+	while (data->map[row])
+	{
+		Draw_walls(data, data->map[row], row - data->index);
+		row++;
+	}
+	DrawCircle(data, 25, 25, 3.0f);
+	DrawLine(data, 25, 25);
+	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
+	free(data->ptr->img);
+	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
+	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
+}
+
+
+int	key_hook(int keycode, t_data *data)
+{
+	if (keycode == 53)
+	{
+		mlx_destroy_window(data->ptr->mlx, data->ptr->win);
+		exit(0);
+	}
+	else if (keycode == 13)
+	{
+		// fprintf(stderr, "y == %d\n", data->player->y);
+		// fprintf(stderr, "x == %d\n", data->player->x);
+		render_map(data, UP);
+		//lfo9
+	}
+	else if (keycode == 1)
+	{
+		render_map(data, DOWN);
+		//lta7t
+	}
+	else if (keycode == 2)
+	{
+		render_map(data, LEFT);
+		//left
+	}
+	else if (keycode == 0)
+	{
+		render_map(data, RIGHT);
+		//right
+	}
+	else
+	{
+		fprintf(stderr, "keycode == %d\n", keycode);
+	}
+	return (0);
+}
+
+int	ft_close(t_data *data)
+{
+	mlx_destroy_window(data->ptr->mlx, data->ptr->win);
+	exit(0);
+}
+
+void	DrawPlayer(t_data *data, char *row, int nbr_row)
+{
+	int i = 0;
+
+	while (row[i] != '\0')
+	{
+		init_player_coordinates(data, i * data->ptr->img_dim, nbr_row * data->ptr->img_dim);
+		if (is_player(row[i], data->player, 1) == 1)
+		{
+			DrawCircle(data, 25, 25, 3.0f);
+			DrawLine(data, 25, 25);
+			fprintf(stderr, "y == %d\n", data->player->y);
+			fprintf(stderr, "x == %d\n", data->player->x);
+			mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, data->player->x, data->player->y);
+			mlx_destroy_image(data->ptr->mlx, data->ptr->img);
+			data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim, data->ptr->img_dim);
+			data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
+		}
+		i++;
+	}
+}
+
 
 /*int drawing {
 map

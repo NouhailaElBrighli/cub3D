@@ -63,6 +63,12 @@ typedef struct	s_data
 	t_cub3d			*ptr;
 }t_data;
 
+enum {
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
+};
 
 void	init_player_angle(t_player *player);
 void	init_player_coordinates(t_data *data, int x, int y);
