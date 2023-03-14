@@ -33,8 +33,10 @@ typedef struct s_type
 typedef struct s_player
 {
 	t_type *direction;
-	int x;
-	int y;
+	int x_win;
+	int y_win;
+	int x_map;
+	int y_map;
 	float angle;
 }t_player;
 
@@ -74,6 +76,7 @@ enum {
 };
 
 void	init_player_angle(t_player *player);
-void	init_player_coordinates(t_data *data, int x, int y);
+void	init_player_coordinates_win(t_data *data, int x, int y);
+void	init_player_coordinates_map(t_data *data, int x, int y);
 
 #endif
