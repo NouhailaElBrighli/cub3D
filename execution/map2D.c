@@ -4,13 +4,11 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	// if ((y * data->ptr->line_length) < 50)
-	// fprintf (stderr, "%d\n", y * data->ptr->line_length);
 	dst = data->ptr->addr + (y * data->ptr->line_length + x * (data->ptr->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
-void	DrawCircle(t_data *data, int x, int y, float r)
+void DrawCircle(t_data *data, int x, int y, float r)
 {
     int i, angle, x1, y1;
 
@@ -27,12 +25,13 @@ void	DrawCircle(t_data *data, int x, int y, float r)
 	}
 }
 
-void	DrawLine(t_data *data, int x_start, int y_start)
+void DrawLine(t_data *data, int x_start, int y_start)
 {
 	float angle = data->player->angle * M_PI / 180;
-	int x_end = x_start + roundf((cos(angle) * 50.0f)); // modify
-	int y_end = y_start + roundf((sin(angle) * 50.0f)); // modify
+	int x_end = x_start + roundf((cos(angle) * 100.0f));// modify
+	int y_end = y_start + roundf((sin(angle) * 100.0f));// modify
 
+	
     int dy = y_end - y_start;
 	int dx = x_end - x_start;
 
@@ -46,12 +45,10 @@ void	DrawLine(t_data *data, int x_start, int y_start)
     float x_incr = (float)dx / step;
     float y_incr = (float)dy / step;
 
-    // Take the initial points as x and y
     float x = (float)x_start;
     float y = (float)y_start;
 
-    for (int i = 0; i < step; i++)
-	{
+    for (int i = 0; i < step; i++) {
 		my_mlx_pixel_put(data, roundf(x), roundf(y), 0xE24666);
         x += x_incr;
         y += y_incr;
@@ -67,100 +64,32 @@ void	Draw_walls(t_data *data, char *row, int nbr_row)
 	{
 		if (row[i] == '1')
 		{
-			for (int x = 0; x < 50; x++)
+			for (int x = 0; x < data->ptr->img_dim; x++)
 			{
-				for (int y = 0; y < 50; y++)
-					my_mlx_pixel_put(data, x + (i * 50), y + (nbr_row * 50), 0xFFFFFF);
+				for (int y = 0; y < data->ptr->img_dim; y++)
+					my_mlx_pixel_put(data, x + (i * data->ptr->img_dim), y + (nbr_row * data->ptr->img_dim), 0xFFFFFF);
 			}
 		}
 		i++;
 	}
 }
 
-int		get_height(t_data *data)
+int get_height(t_data *data)
 {
 	int count = data->index;
 
 	while (data->map[count])
 		count++;
-	return(count - data->index);
+	count -= data->index;
+	return(count);
 }
 
-void	render_map(t_data *data,int dir)
+void	render_2D(t_data *data)
 {
 	int row;
-	int speed = 15;
 
-	if (dir == UP)
-	{
-		int max_y = (data->player->x_map * 50);
-
-		fprintf(stderr, "max_y : %d\n", max_y);
-		fprintf(stderr, "data->player->y_win : %d\n", data->player->y_win);
-		if (data->player->y_win > max_y)
-		{
-			if (data->player->y_win - speed > max_y)
-				data->player->y_win -= speed;
-			else
-				data->player->y_win -= (data->player->y_win - max_y);
-		}
-		if ((data->player->y_win == max_y) && (data->map[data->player->x_map + data->index - 1][data->player->y_map] != '1'))
-			data->player->x_map--;
-	}
-	else if (dir == DOWN)
-	{
-		int max_y = (data->player->x_map + 1) * 50;
-
-		fprintf(stderr, "min_y : %d\n", max_y);
-		fprintf(stderr, "data->player->y_win : %d\n", data->player->y_win);
-		if (data->player->y_win < max_y)
-		{
-			if (data->player->y_win + speed < max_y)
-				data->player->y_win += speed;
-			else
-				data->player->y_win += (max_y - data->player->y_win);
-		}
-		if ((data->player->y_win == max_y) && (data->map[data->player->x_map + data->index + 1][data->player->y_map] != '1'))
-			data->player->x_map++;
-	}
-	else if (dir == LEFT)
-	{
-		int max_x = (data->player->y_map) * 50;
-
-		fprintf(stderr, "min_x : %d\n", max_x);
-		fprintf(stderr, "data->player->x_win : %d\n", data->player->x_win);
-		if (data->player->x_win > max_x)
-		{
-			if (data->player->x_win - speed > max_x)
-				data->player->x_win -= speed;
-			else
-				data->player->x_win -= (data->player->x_win - max_x);
-		}
-		if ((data->player->x_win == max_x) && (data->map[data->player->x_map + data->index][data->player->y_map - 1] != '1'))
-			data->player->y_map--;
-	}
-	else if (dir == RIGHT)
-	{
-		int max_x = (data->player->y_map + 1) * 50;
-
-		fprintf(stderr, "max_x : %d\n", max_x);
-		fprintf(stderr, "data->player->x_win : %d\n", data->player->x_win);
-		if (data->player->x_win < max_x)
-		{
-			if (data->player->x_win + speed < max_x)
-				data->player->x_win += speed;
-			else
-				data->player->x_win += (max_x - data->player->x_win);
-		}
-		if ((data->player->x_win == max_x) && (data->map[data->player->x_map + data->index][data->player->y_map + 1] != '1'))
-			data->player->y_map++;
-	}
-	else if (dir == ROT_LEFT)
-		data->player->angle += 30;
-	else if (dir == ROT_RIGHT)
-		data->player->angle -= 30;
- 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
-	data->ptr->img = mlx_new_image(data->ptr->mlx, 50 * data->long_line, 50 * data->size);
+	mlx_clear_window(data->ptr->mlx, data->ptr->win);
+	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim * data->long_line, data->ptr->img_dim * data->size);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 	row = data->index;
 	while (data->map[row])
@@ -168,12 +97,12 @@ void	render_map(t_data *data,int dir)
 		Draw_walls(data, data->map[row], row - data->index);
 		row++;
 	}
-	DrawCircle(data, data->player->x_win, data->player->y_win, 3.0f);
-	DrawLine(data, data->player->x_win, data->player->y_win);
+	DrawCircle(data, data->player->x, data->player->y, 5.0f);
+	DrawLine(data, data->player->x, data->player->y);
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
-int		key_hook(int keycode, t_data *data)
+int	key_press(int keycode, t_data *data)
 {
 	if (keycode == 53)
 	{
@@ -181,23 +110,38 @@ int		key_hook(int keycode, t_data *data)
 		exit(0);
 	}
 	else if (keycode == 13)
-		render_map(data, UP);
+		data->move_up = 1;
 	else if (keycode == 1)
-		render_map(data, DOWN);
+		data->move_down = 1;
 	else if (keycode == 0)
-		render_map(data, LEFT);
+		data->move_right = 1;
 	else if (keycode == 2)
-		render_map(data, RIGHT);
+		data->move_left = 1;
 	else if (keycode == 124)
-		render_map(data, ROT_LEFT);
+		data->rot_left = 1;
 	else if (keycode == 123)
-		render_map(data, ROT_RIGHT);
-	// else
-	// 	fprintf(stderr, "keycode == %d\n", keycode);
+		data->rot_right = 1;
 	return (0);
 }
 
-int		ft_close(t_data *data)
+int key_release(int keycode, t_data *data)
+{
+	if (keycode == 13)
+		data->move_up = 0;
+	else if (keycode == 1)
+		data->move_down = 0;
+	else if (keycode == 0)
+		data->move_right = 0;
+	else if (keycode == 2)
+		data->move_left = 0;
+	else if (keycode == 124)
+		data->rot_left = 0;
+	else if (keycode == 123)
+		data->rot_right = 0;
+	return(0);
+}
+
+int	ft_close(t_data *data)
 {
 	mlx_destroy_window(data->ptr->mlx, data->ptr->win);
 	exit(0);
@@ -210,16 +154,15 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 	{
 		if (is_player(row[i], data->player, 1) == 1)
 		{
-			init_player_coordinates_win(data, 25 + (i * data->ptr->img_dim), 25 + (nbr_row * data->ptr->img_dim));
-			init_player_coordinates_map(data, nbr_row, i);
-			DrawCircle(data, data->player->x_win, data->player->y_win, 3.0f);
-			DrawLine(data, data->player->x_win, data->player->y_win);
+			init_player_coordinates(data, (data->ptr->img_dim / 2) + (i * data->ptr->img_dim), (data->ptr->img_dim / 2) + (nbr_row * data->ptr->img_dim));
+			DrawCircle(data, data->player->x, data->player->y, 5.0f);
+			DrawLine(data, data->player->x, data->player->y);
 		}
 		i++;
 	}
 }
 
-void	push_image(t_data *data)
+void	draw_2Dmap(t_data *data)
 {
 	int row;
 	
@@ -238,20 +181,59 @@ void	push_image(t_data *data)
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
+int	render_next_frame(t_data *data)
+{
+	if (data->move_up == 1 && data->move_down == 1)
+		return (0);
+	if (data->move_right == 1 && data->move_left == 1)
+		return(0);
+	if (data->rot_left == 1 && data->rot_right == 1)
+		return (0);
+	if (data->rot_right == 1)
+		data->player->angle -= 3;
+	else if (data->rot_left == 1)
+		data->player->angle += 3;
+	if (data->move_up == 1)
+	{
+		data->player->x = data->player->x + roundf((cos(data->player->angle * M_PI / 180) * 2.0f));
+		data->player->y = data->player->y + roundf((sin(data->player->angle * M_PI / 180) * 2.0f));
+	}
+	else if (data->move_down == 1)
+	{
+		data->player->x = data->player->x + roundf((cos((data->player->angle + 180) * M_PI / 180) * 2.0f));
+		data->player->y = data->player->y + roundf((sin((data->player->angle + 180) * M_PI / 180) * 2.0f));
+	}
+	if (data->move_left == 1)
+	{
+		data->player->x = data->player->x + roundf((cos((data->player->angle + 90) * M_PI / 180) * 2.0f));
+		data->player->y = data->player->y + roundf((sin((data->player->angle + 90) * M_PI / 180) * 2.0f));
+	}
+	else if (data->move_right == 1)
+	{
+		data->player->x = data->player->x + roundf((cos((data->player->angle - 90) * M_PI / 180) * 2.0f));
+		data->player->y = data->player->y + roundf((sin((data->player->angle - 90) * M_PI / 180) * 2.0f));
+	}
+	render_2D(data);
+	return(0);
+}
+
 void	execution(t_data *data)
 {
 	data->ptr = malloc(sizeof(t_cub3d));
 	data->ptr->mlx = mlx_init();
 	if (!data->ptr->mlx)
 		return ;
+	init_move_and_rot(data);
+	init_player_angle(data->player);
 	data->ptr->img_dim = 50;
 	data->size = get_height(data);
-	data->ptr->win = mlx_new_window(data->ptr->mlx, 50 * data->long_line, 50 * 9, "cub3D");
-	data->ptr->img = mlx_new_image(data->ptr->mlx, 50 * data->long_line, 50 * data->size);
+	data->ptr->win = mlx_new_window(data->ptr->mlx, data->ptr->img_dim * data->long_line, data->ptr->img_dim * data->size, "cub3D");
+	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim * data->long_line, data->ptr->img_dim * data->size);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
-	init_player_angle(data->player);
-	push_image(data);
+	draw_2Dmap(data);
 	mlx_hook(data->ptr->win, ON_DESTROY, 1L << 0, ft_close, data);
-	mlx_hook(data->ptr->win, ON_KEYDOWN, 0, key_hook, data);
+	mlx_hook(data->ptr->win, KEY_PRESS, 0, key_press, data);
+	mlx_hook(data->ptr->win, KEY_RELEASE, 0, key_release, data);
+	mlx_loop_hook(data->ptr->mlx, render_next_frame, data);
 	mlx_loop(data->ptr->mlx);
 }

@@ -2,8 +2,8 @@
 #define CUBE_H
 
 enum {
-	ON_KEYDOWN = 2,
-	ON_KEYUP = 3,
+	KEY_PRESS = 2,
+	KEY_RELEASE = 3,
 	ON_MOUSEDOWN = 4,
 	ON_MOUSEUP = 5,
 	ON_MOUSEMOVE = 6,
@@ -33,11 +33,11 @@ typedef struct s_type
 typedef struct s_player
 {
 	t_type *direction;
-	int x_win;
-	int y_win;
-	int x_map;
-	int y_map;
-	float angle;
+	int x;
+	int y;
+	double angle;
+	int x_end;
+	int y_end;
 }t_player;
 
 typedef struct s_cub3d
@@ -64,6 +64,12 @@ typedef struct	s_data
 	int				long_line;
 	int				size;
 	t_cub3d			*ptr;
+	int				move_left;
+	int				move_right;
+	int				move_up;
+	int				move_down;
+	int				rot_left;
+	int				rot_right;
 }t_data;
 
 enum {
@@ -76,7 +82,7 @@ enum {
 };
 
 void	init_player_angle(t_player *player);
-void	init_player_coordinates_win(t_data *data, int x, int y);
-void	init_player_coordinates_map(t_data *data, int x, int y);
+void	init_player_coordinates(t_data *data, int x, int y);
+void	init_move_and_rot(t_data *data);
 
 #endif
