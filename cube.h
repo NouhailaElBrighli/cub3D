@@ -33,11 +33,9 @@ typedef struct s_type
 typedef struct s_player
 {
 	t_type *direction;
-	int x;
-	int y;
+	double x;
+	double y;
 	double angle;
-	int x_end;
-	int y_end;
 }t_player;
 
 typedef struct s_cub3d

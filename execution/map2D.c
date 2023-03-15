@@ -8,9 +8,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void DrawCircle(t_data *data, int x, int y, float r)
+void DrawCircle(t_data *data, double x, double y, double r)
 {
-    int i, angle, x1, y1;
+    double i, angle, x1, y1;
 
 	while (r != 0)
 	{    	
@@ -19,17 +19,17 @@ void DrawCircle(t_data *data, int x, int y, float r)
 			angle = i;
 			x1 = r * cos(angle * M_PI / 180);
 			y1 = r * sin(angle * M_PI / 180);
-			my_mlx_pixel_put(data, x + x1, y + y1, 0xE24666);
+			my_mlx_pixel_put(data, round(x + x1), round(y + y1), 0xE24666);
     	}
 		r -= 0.5;
 	}
 }
 
-void DrawLine(t_data *data, int x_start, int y_start)
+void DrawLine(t_data *data, double x_start, double y_start)
 {
-	float angle = data->player->angle * M_PI / 180;
-	int x_end = x_start + roundf((cos(angle) * 100.0f));// modify
-	int y_end = y_start + roundf((sin(angle) * 100.0f));// modify
+	double angle = data->player->angle * M_PI / 180;
+	double x_end = x_start + round((cos(angle) * 100));// modify
+	double y_end = y_start + round((sin(angle) * 100));// modify
 
 	
     int dy = y_end - y_start;
@@ -42,14 +42,14 @@ void DrawLine(t_data *data, int x_start, int y_start)
     else
         step = abs(dy);
  
-    float x_incr = (float)dx / step;
-    float y_incr = (float)dy / step;
+    double x_incr = (double)dx / step;
+    double y_incr = (double)dy / step;
 
-    float x = (float)x_start;
-    float y = (float)y_start;
+    double x = (double)x_start;
+    double y = (double)y_start;
 
     for (int i = 0; i < step; i++) {
-		my_mlx_pixel_put(data, roundf(x), roundf(y), 0xE24666);
+		my_mlx_pixel_put(data, round(x), round(y), 0xE24666);
         x += x_incr;
         y += y_incr;
     }
@@ -97,7 +97,7 @@ void	render_2D(t_data *data)
 		Draw_walls(data, data->map[row], row - data->index);
 		row++;
 	}
-	DrawCircle(data, data->player->x, data->player->y, 5.0f);
+	DrawCircle(data, data->player->x, data->player->y, 5);
 	DrawLine(data, data->player->x, data->player->y);
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
@@ -155,7 +155,7 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 		if (is_player(row[i], data->player, 1) == 1)
 		{
 			init_player_coordinates(data, (data->ptr->img_dim / 2) + (i * data->ptr->img_dim), (data->ptr->img_dim / 2) + (nbr_row * data->ptr->img_dim));
-			DrawCircle(data, data->player->x, data->player->y, 5.0f);
+			DrawCircle(data, data->player->x, data->player->y, 5);
 			DrawLine(data, data->player->x, data->player->y);
 		}
 		i++;
@@ -181,8 +181,17 @@ void	draw_2Dmap(t_data *data)
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
+int	sum_move_rot(t_data *data)
+{
+	return (data->move_down + data->move_left + data->move_right + data->move_up + data->rot_left + data->rot_right);
+}
+
+
 int	render_next_frame(t_data *data)
 {
+	double	angle;
+	if (sum_move_rot(data) == 0)
+		return(0);
 	if (data->move_up == 1 && data->move_down == 1)
 		return (0);
 	if (data->move_right == 1 && data->move_left == 1)
@@ -195,23 +204,27 @@ int	render_next_frame(t_data *data)
 		data->player->angle += 3;
 	if (data->move_up == 1)
 	{
-		data->player->x = data->player->x + roundf((cos(data->player->angle * M_PI / 180) * 2.0f));
-		data->player->y = data->player->y + roundf((sin(data->player->angle * M_PI / 180) * 2.0f));
+		angle = data->player->angle * M_PI / 180;
+		data->player->x = data->player->x + cos(angle) * 2;
+		data->player->y = data->player->y + sin(angle) * 2;
 	}
 	else if (data->move_down == 1)
 	{
-		data->player->x = data->player->x + roundf((cos((data->player->angle + 180) * M_PI / 180) * 2.0f));
-		data->player->y = data->player->y + roundf((sin((data->player->angle + 180) * M_PI / 180) * 2.0f));
+		angle = (data->player->angle + 180) * M_PI / 180;
+		data->player->x = data->player->x + cos(angle) * 2;
+		data->player->y = data->player->y + sin(angle) * 2;
 	}
 	if (data->move_left == 1)
 	{
-		data->player->x = data->player->x + roundf((cos((data->player->angle + 90) * M_PI / 180) * 2.0f));
-		data->player->y = data->player->y + roundf((sin((data->player->angle + 90) * M_PI / 180) * 2.0f));
+		angle = (data->player->angle + 90) * M_PI / 180;
+		data->player->x = data->player->x + cos(angle) * 2;
+		data->player->y = data->player->y + sin(angle) * 2;
 	}
 	else if (data->move_right == 1)
 	{
-		data->player->x = data->player->x + roundf((cos((data->player->angle - 90) * M_PI / 180) * 2.0f));
-		data->player->y = data->player->y + roundf((sin((data->player->angle - 90) * M_PI / 180) * 2.0f));
+		angle = (data->player->angle - 90) * M_PI / 180;
+		data->player->x = data->player->x + cos(angle) * 2;
+		data->player->y = data->player->y + sin(angle) * 2;
 	}
 	render_2D(data);
 	return(0);
