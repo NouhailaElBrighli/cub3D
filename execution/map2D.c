@@ -8,7 +8,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void DrawCircle(t_data *data, double x, double y, double r)
+void	DrawCircle(t_data *data, double x, double y, double r)
 {
     double i, angle, x1, y1;
 
@@ -25,11 +25,11 @@ void DrawCircle(t_data *data, double x, double y, double r)
 	}
 }
 
-void DrawLine(t_data *data, double x_start, double y_start)
+void	DrawLine(t_data *data, double x_start, double y_start)
 {
 	double angle = data->player->angle * M_PI / 180;
-	double x_end = x_start + round((cos(angle) * 100));// modify
-	double y_end = y_start + round((sin(angle) * 100));// modify
+	double x_end = x_start + round((cos(angle) * 40));// modify
+	double y_end = y_start + round((sin(angle) * 40));// modify
 
 	
     int dy = y_end - y_start;
@@ -64,17 +64,17 @@ void	Draw_walls(t_data *data, char *row, int nbr_row)
 	{
 		if (row[i] == '1')
 		{
-			for (int x = 0; x < data->ptr->img_dim; x++)
+			for (int x = 0; x < data->ptr->tile_size; x++)
 			{
-				for (int y = 0; y < data->ptr->img_dim; y++)
-					my_mlx_pixel_put(data, x + (i * data->ptr->img_dim), y + (nbr_row * data->ptr->img_dim), 0xFFFFFF);
+				for (int y = 0; y < data->ptr->tile_size; y++)
+					my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFFFFF);
 			}
 		}
 		i++;
 	}
 }
 
-int get_height(t_data *data)
+int		get_height(t_data *data)
 {
 	int count = data->index;
 
@@ -89,7 +89,7 @@ void	render_2D(t_data *data)
 	int row;
 
 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
-	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim * data->long_line, data->ptr->img_dim * data->size);
+	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->tile_size * data->long_line, data->ptr->tile_size * data->size);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 	row = data->index;
 	while (data->map[row])
@@ -102,29 +102,7 @@ void	render_2D(t_data *data)
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
-int	key_press(int keycode, t_data *data)
-{
-	if (keycode == 53)
-	{
-		mlx_destroy_window(data->ptr->mlx, data->ptr->win);
-		exit(0);
-	}
-	else if (keycode == 13)
-		data->move_up = 1;
-	else if (keycode == 1)
-		data->move_down = 1;
-	else if (keycode == 0)
-		data->move_right = 1;
-	else if (keycode == 2)
-		data->move_left = 1;
-	else if (keycode == 124)
-		data->rot_left = 1;
-	else if (keycode == 123)
-		data->rot_right = 1;
-	return (0);
-}
-
-int key_release(int keycode, t_data *data)
+int		key_release(int keycode, t_data *data)
 {
 	if (keycode == 13)
 		data->move_up = 0;
@@ -141,7 +119,7 @@ int key_release(int keycode, t_data *data)
 	return(0);
 }
 
-int	ft_close(t_data *data)
+int		ft_close(t_data *data)
 {
 	mlx_destroy_window(data->ptr->mlx, data->ptr->win);
 	exit(0);
@@ -154,7 +132,8 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 	{
 		if (is_player(row[i], data->player, 1) == 1)
 		{
-			init_player_coordinates(data, (data->ptr->img_dim / 2) + (i * data->ptr->img_dim), (data->ptr->img_dim / 2) + (nbr_row * data->ptr->img_dim));
+			init_player_coordinates(data, (data->ptr->tile_size / 2) + (i * data->ptr->tile_size), (data->ptr->tile_size / 2) + (nbr_row * data->ptr->tile_size));
+			init_player_coordinates_map(data, nbr_row, i);
 			DrawCircle(data, data->player->x, data->player->y, 5);
 			DrawLine(data, data->player->x, data->player->y);
 		}
@@ -181,15 +160,36 @@ void	draw_2Dmap(t_data *data)
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
-int	sum_move_rot(t_data *data)
+int		sum_move_rot(t_data *data)
 {
 	return (data->move_down + data->move_left + data->move_right + data->move_up + data->rot_left + data->rot_right);
 }
 
+// if (dir == UP)
+// {
+// 	int max_y = (data->player->x_map * 50);
+//
+// 	fprintf(stderr, "max_y : %d\n", max_y);
+// 	fprintf(stderr, "data->player->y_win : %d\n", data->player->y_win);
+//
+// 	if (data->player->y_win > max_y)
+// 	{
+// 		if (data->player->y_win - speed > max_y)
+// 			data->player->y_win -= speed;
+// 		else
+// 			data->player->y_win -= (data->player->y_win - max_y);
+// 	}
+// 	if ((data->player->y_win == max_y) && (data->map[data->player->x_map + data->index - 1][data->player->y_map] != '1'))
+// 		data->player->x_map--;
+// }
 
-int	render_next_frame(t_data *data)
+int		render_next_frame(t_data *data)
 {
 	double	angle;
+	int		speed = 5;
+	double		x;
+	double		y;
+
 	if (sum_move_rot(data) == 0)
 		return(0);
 	if (data->move_up == 1 && data->move_down == 1)
@@ -204,30 +204,327 @@ int	render_next_frame(t_data *data)
 		data->player->angle += 3;
 	if (data->move_up == 1)
 	{
+		// fprintf(stderr, "data->player->x  = %f\n", data->player->x);
+		// fprintf(stderr, "data->player->y = %f\n\n", data->player->y);
+		// int x1 = (int)data->player->x;
+		// int x2 = (int)data->player->y;
+		// fprintf(stderr, "x1  = %d\n", x1 / 50);
+		// fprintf(stderr, "x2 = %d\n", x2 / 50);
+		
+		x = data->player->x;
+		y = data->player->y;
+
+		fprintf(stderr, "avant x = %f\n", x);
+		fprintf(stderr, "avant y = %f\n\n", y);
+
 		angle = data->player->angle * M_PI / 180;
-		data->player->x = data->player->x + cos(angle) * 2;
-		data->player->y = data->player->y + sin(angle) * 2;
+		x = data->player->x + cos(angle) * speed;
+		y = data->player->y + sin(angle) * speed;
+
+		fprintf(stderr, "apres x = %f\n", x);
+		fprintf(stderr, "apres y = %f\n\n", y);
+
+
+		int x1 = (int)x;
+		int y1 = (int)y;
+
+		fprintf(stderr, "x1 = %d\n", x1);
+		fprintf(stderr, "y1 = %d\n\n", y1);
+
+		x1 = x / 50;
+		y1 = y / 50;
+		fprintf(stderr, "x1 / 50 = %d\n", x1);
+		fprintf(stderr, "y1 / 50 = %d\n\n", y1);
+
+		fprintf(stderr, "player %c\n", data->map[y1 + data->index][x1]);
+		if (data->map[y1 + data->index][x1] != '1')
+		{
+ 			data->player->x = x;
+ 			data->player->y = y;
+		}
+		// fprintf(stderr, "x = %f\n", x);
+		// fprintf(stderr, "y = %f\n\n", y);
+		//
+		// fprintf(stderr, "x_map = %d\n", data->player->x_map);
+		// fprintf(stderr, "y_map = %d\n\n", data->player->y_map);
+		// if no wall 
+			// data->player->x = x;
+			// data->player->y = y;
+		//
+		// int max_y = (data->player->x_map * data->ptr->tile_size);
+		// fprintf(stderr, "max_y %d\n", max_y);
+		// fprintf(stderr, "old position_y %f\n\n", data->player->y);
+		//
+		// if (data->player->y > max_y)
+		// {
+		// 	angle = data->player->angle * M_PI / 180;
+		// 	x = data->player->x + cos(angle) * speed;
+		// 	y = data->player->y + sin(angle) * speed;
+		// 	if (y > max_y)
+		// 	{
+		// 		data->player->x = x;
+		// 		data->player->y = y;
+		// 	}
+		// 	else
+		// 	{
+		// 		while (max_y > y)
+		// 		{
+		// 			// fprintf(stderr, "ici ...\n");
+		// 			speed--;
+		// 			y = data->player->y + sin(angle) * speed;
+		// 		}
+		// 		data->player->x = data->player->x + cos(angle) * speed;
+		// 		data->player->y = data->player->y + sin(angle) * speed;
+		// 	}
+		// 	fprintf(stderr, "new position_y %f\n\n", data->player->y);
+		// 	// fprintf(stderr, "roundf  %d\n", round(data->player->y));
+		// }
+		// if ((int)data->player->y == max_y)
+		// {
+		// 	speed = 10;
+		// 	fprintf(stderr, "wall !!...\n");
+		// 	fprintf(stderr, "old position_x %f\n\n", data->player->x);
+		// 	fprintf(stderr, "old position_y %f\n\n", data->player->y);
+		//	
+		// 	x = data->player->x;
+		// 	y = data->player->y;
+		//
+		// 	x = data->player->x + cos(angle) * speed;
+		// 	y = data->player->y + sin(angle) * speed;
+		//
+		// 	fprintf(stderr, "new position_x %f\n\n", x);
+		// 	fprintf(stderr, "new position_y %f\n\n", y);
+		// 	// fprintf(stderr, "x %d\n\n", (int)x / 50);
+		// 	// fprintf(stderr, "y %d\n\n", (int)y / 50);
+		// 	return 0;
+		// 	fprintf(stderr, "ouiiii !!...\n");
+		// 	// fprintf(stderr, "x = %f\n", roundf(x));
+		// 	// fprintf(stderr, "y = %f\n", round(y));
+		// 	if (data->map[1][2] != 1)
+		// 	{
+		// 		max_y--;
+		// 		// data->player->x = data->player->x + cos(angle) * speed;
+		// 		// data->player->y = data->player->y + sin(angle) * speed;
+		// 	}
+		// }
+		//
+		// fprintf(stderr, "new position_x %f\n", data->player->x);
+		// fprintf(stderr, "new position_y %f\n", data->player->y);
 	}
 	else if (data->move_down == 1)
 	{
+		x = data->player->x;
+		y = data->player->y;
+
+		fprintf(stderr, "avant x = %f\n", x);
+		fprintf(stderr, "avant y = %f\n\n", y);
+
 		angle = (data->player->angle + 180) * M_PI / 180;
-		data->player->x = data->player->x + cos(angle) * 2;
-		data->player->y = data->player->y + sin(angle) * 2;
+		x = data->player->x + cos(angle) * speed;
+		y = data->player->y + sin(angle) * speed;
+
+		fprintf(stderr, "apres x = %f\n", x);
+		fprintf(stderr, "apres y = %f\n\n", y);
+
+
+		int x1 = (int)x;
+		int y1 = (int)y;
+
+		fprintf(stderr, "x1 = %d\n", x1);
+		fprintf(stderr, "y1 = %d\n\n", y1);
+
+		x1 = x / 50;
+		y1 = y / 50;
+		fprintf(stderr, "x1 / 50 = %d\n", x1);
+		fprintf(stderr, "y1 / 50 = %d\n\n", y1);
+
+		fprintf(stderr, "player %c\n", data->map[y1 + data->index][x1]);
+		if (data->map[y1 + data->index][x1] != '1')
+		{
+ 			data->player->x = x;
+ 			data->player->y = y;
+		}
+
+		// int max_y = (data->player->x_map + 1) * data->ptr->tile_size;
+		//
+		// // fprintf(stderr, "max_y : %d\n", max_y);
+		// // fprintf(stderr, "old position_y %f\n\n", data->player->y);
+		//
+		// if (data->player->y < max_y)
+		// {
+			// angle = (data->player->angle + 180) * M_PI / 180;
+			// data->player->x = data->player->x + cos(angle) * speed;
+			// data->player->y = data->player->y + sin(angle) * speed;
+		// 	if (y < max_y)
+		// 	{
+		// 		data->player->x = x;
+		// 		data->player->y = y;
+		// 	}
+		// 	else
+		// 	{
+		// 		while (y > max_y)
+		// 		{
+		// 			speed--;
+		// 			y = data->player->y + sin(angle) * speed;
+		// 		}
+		// 		data->player->x = data->player->x + cos(angle) * speed;
+		// 		data->player->y = data->player->y + sin(angle) * speed;
+		// 	}
+		// }
+		// if ((roundf(data->player->y) == max_y) && (data->map[data->player->x_map + data->index + 1][data->player->y_map] != '1'))
+		// 	data->player->x_map++;
+		//
+		// // fprintf(stderr, "new position_y %f\n\n", data->player->y);
 	}
 	if (data->move_left == 1)
 	{
+
+		x = data->player->x;
+		y = data->player->y;
+
+		fprintf(stderr, "avant x = %f\n", x);
+		fprintf(stderr, "avant y = %f\n\n", y);
+
 		angle = (data->player->angle + 90) * M_PI / 180;
-		data->player->x = data->player->x + cos(angle) * 2;
-		data->player->y = data->player->y + sin(angle) * 2;
+		x = data->player->x + cos(angle) * speed;
+		y = data->player->y + sin(angle) * speed;
+
+		fprintf(stderr, "apres x = %f\n", x);
+		fprintf(stderr, "apres y = %f\n\n", y);
+
+
+		int x1 = (int)x;
+		int y1 = (int)y;
+
+		fprintf(stderr, "x1 = %d\n", x1);
+		fprintf(stderr, "y1 = %d\n\n", y1);
+
+		x1 = x / 50;
+		y1 = y / 50;
+		fprintf(stderr, "x1 / 50 = %d\n", x1);
+		fprintf(stderr, "y1 / 50 = %d\n\n", y1);
+
+		fprintf(stderr, "player %c\n", data->map[y1 + data->index][x1]);
+		if (data->map[y1 + data->index][x1] != '1')
+		{
+ 			data->player->x = x;
+ 			data->player->y = y;
+		}
+		// int max_x = (data->player->y_map + 1) * data->ptr->tile_size;
+		
+		// fprintf(stderr, "max_x : %d\n", max_x);
+		// fprintf(stderr, "data->player->x : %f\n", data->player->x);
+
+		// if (data->player->x < max_x)
+		// {
+		// 	angle = (data->player->angle + 90) * M_PI / 180;
+		// 	x = data->player->x + cos(angle) * speed;
+		// 	y = data->player->y + sin(angle) * speed;
+		// 	if (x < max_x)
+		// 	{
+		// 		data->player->x = x;
+		// 		data->player->y = y;
+		// 	}
+		// 	else
+		// 	{
+		// 		while (x > max_x)
+		// 		{
+		// 			speed--;
+		// 			x = data->player->x + cos(angle) * speed;
+		// 		}
+		// 		data->player->x = data->player->x + cos(angle) * speed;
+		// 		data->player->y = data->player->y + sin(angle) * speed;
+		// 	}
+		// }
+		// if ((roundf(data->player->x) == max_x) && (data->map[data->player->x_map + data->index][data->player->y_map + 1] != '1'))
+		// 	data->player->y_map++;
 	}
 	else if (data->move_right == 1)
 	{
+		x = data->player->x;
+		y = data->player->y;
+
+		fprintf(stderr, "avant x = %f\n", x);
+		fprintf(stderr, "avant y = %f\n\n", y);
+
 		angle = (data->player->angle - 90) * M_PI / 180;
-		data->player->x = data->player->x + cos(angle) * 2;
-		data->player->y = data->player->y + sin(angle) * 2;
+		x = data->player->x + cos(angle) * speed;
+		y = data->player->y + sin(angle) * speed;
+
+		fprintf(stderr, "apres x = %f\n", x);
+		fprintf(stderr, "apres y = %f\n\n", y);
+
+
+		int x1 = (int)x;
+		int y1 = (int)y;
+
+		fprintf(stderr, "x1 = %d\n", x1);
+		fprintf(stderr, "y1 = %d\n\n", y1);
+
+		x1 = x / 50;
+		y1 = y / 50;
+		fprintf(stderr, "x1 / 50 = %d\n", x1);
+		fprintf(stderr, "y1 / 50 = %d\n\n", y1);
+
+		fprintf(stderr, "player %c\n", data->map[y1 + data->index][x1]);
+		if (data->map[y1 + data->index][x1] != '1')
+		{
+ 			data->player->x = x;
+ 			data->player->y = y;
+		}
+		// int max_x = (data->player->y_map) * data->ptr->tile_size;
+
+		// fprintf(stderr, "max_x : %d\n", max_x);
+		// fprintf(stderr, "data->player->x : %f\n", data->player->x);
+
+		// if (data->player->x > max_x) 
+		// {
+		// 	angle = (data->player->angle - 90) * M_PI / 180;
+		// 	x = data->player->x + cos(angle) * speed;
+		// 	y = data->player->y + sin(angle) * speed;
+		// 	if (x > max_x)
+		// 	{
+		// 		data->player->x = x;
+		// 		data->player->y = y;
+		// 	}
+		// 	else
+		// 	{
+		// 		while (max_x > x)
+		// 		{
+		// 			speed--;
+		// 			x = data->player->x + cos(angle) * speed;
+		// 		}
+		// 		data->player->x = data->player->x + cos(angle) * speed;
+		// 		data->player->y = data->player->y + sin(angle) * speed;
+		// 	}
+		// }
+		// if ((roundf(data->player->x) == max_x) && (data->map[data->player->x_map + data->index][data->player->y_map - 1] != '1'))
+		// 	data->player->y_map--;
 	}
 	render_2D(data);
 	return(0);
+}
+
+int		key_press(int keycode, t_data *data)
+{
+	if (keycode == 53)
+	{
+		mlx_destroy_window(data->ptr->mlx, data->ptr->win);
+		exit(0);
+	}
+	else if (keycode == 13)
+		data->move_up = 1;
+	else if (keycode == 1)
+		data->move_down = 1;
+	else if (keycode == 0)
+		data->move_right = 1;
+	else if (keycode == 2)
+		data->move_left = 1;
+	else if (keycode == 124)
+		data->rot_left = 1;
+	else if (keycode == 123)
+		data->rot_right = 1;
+	return (0);
 }
 
 void	execution(t_data *data)
@@ -238,10 +535,10 @@ void	execution(t_data *data)
 		return ;
 	init_move_and_rot(data);
 	init_player_angle(data->player);
-	data->ptr->img_dim = 50;
+	data->ptr->tile_size = 50;
 	data->size = get_height(data);
-	data->ptr->win = mlx_new_window(data->ptr->mlx, data->ptr->img_dim * data->long_line, data->ptr->img_dim * data->size, "cub3D");
-	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->img_dim * data->long_line, data->ptr->img_dim * data->size);
+	data->ptr->win = mlx_new_window(data->ptr->mlx, data->ptr->tile_size * data->long_line, data->ptr->tile_size * data->size, "cub3D");
+	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->tile_size * data->long_line, data->ptr->tile_size * data->size);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
 	draw_2Dmap(data);
 	mlx_hook(data->ptr->win, ON_DESTROY, 1L << 0, ft_close, data);

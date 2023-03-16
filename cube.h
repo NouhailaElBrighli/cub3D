@@ -36,13 +36,15 @@ typedef struct s_player
 	double x;
 	double y;
 	double angle;
+	int x_map;
+	int y_map;
 }t_player;
 
 typedef struct s_cub3d
 {
 	int		bits_per_pixel;
 	int		line_length;
-	int		img_dim;
+	int		tile_size;
 	int		endian;
 	char	*addr;
     void    *mlx;
@@ -81,6 +83,7 @@ enum {
 
 void	init_player_angle(t_player *player);
 void	init_player_coordinates(t_data *data, int x, int y);
+void	init_player_coordinates_map(t_data *data, int x, int y);
 void	init_move_and_rot(t_data *data);
 
 #endif

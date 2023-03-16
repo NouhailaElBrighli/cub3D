@@ -6,6 +6,13 @@ void	init_player_coordinates(t_data *data, int x, int y)
 	data->player->y = y;
 }
 
+void	init_player_coordinates_map(t_data *data, int x, int y)
+{
+	data->player->x_map = x;
+	data->player->y_map = y;
+}
+
+
 void	init_move_and_rot(t_data *data)
 {
 	data->move_up = 0;
