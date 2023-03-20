@@ -28,8 +28,8 @@ void	DrawCircle(t_data *data, double x, double y, double r)
 void	DrawLine(t_data *data, double x_start, double y_start)
 {
 	double angle = data->player->angle * M_PI / 180;
-	double x_end = x_start + round((cos(angle) * 40));// modify
-	double y_end = y_start + round((sin(angle) * 40));// modify
+	double x_end = x_start + round((cos(angle) * 40)); // modify
+	double y_end = y_start + round((sin(angle) * 40)); // modify
 
 	
     int dy = y_end - y_start;
@@ -99,6 +99,11 @@ void	render_2D(t_data *data)
 	}
 	DrawCircle(data, data->player->x, data->player->y, 5);
 	DrawLine(data, data->player->x, data->player->y);
+	data->player->angle -= 30;
+	DrawLine(data, data->player->x, data->player->y);
+	data->player->angle += 60;
+	DrawLine(data, data->player->x, data->player->y);
+	data->player->angle -= 30;
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
@@ -136,6 +141,7 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 			init_player_coordinates_map(data, nbr_row, i);
 			DrawCircle(data, data->player->x, data->player->y, 5);
 			DrawLine(data, data->player->x, data->player->y);
+			// casting_rays(data); // TODO calling my function here 
 		}
 		i++;
 	}

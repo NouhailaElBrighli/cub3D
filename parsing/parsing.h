@@ -67,5 +67,10 @@ void	print_player(t_player *player);
 
 /*********************EXECUTION****************/
 void	execution(t_data *data);
+void	init_player_angle(t_player *player);
+void	init_player_coordinates(t_data *data, int x, int y);
+void	init_player_coordinates_map(t_data *data, int x, int y);
+void	init_move_and_rot(t_data *data);
+void    casting_rays(t_data *data);
 
 #endif

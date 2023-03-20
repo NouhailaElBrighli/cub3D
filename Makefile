@@ -21,6 +21,7 @@ SRC =	main.c\
 		parsing/valid_path.c\
 		execution/map2D.c\
 		execution/init.c\
+		execution/rays.c\
 
 OBJ = $(SRC:.c=.o)
 
