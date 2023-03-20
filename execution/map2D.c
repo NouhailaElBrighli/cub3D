@@ -25,9 +25,9 @@ void	DrawCircle(t_data *data, double x, double y, double r)
 	}
 }
 
-void	DrawLine(t_data *data, double x_start, double y_start)
+void	DrawLine(t_data *data, double angle ,double x_start, double y_start)
 {
-	double angle = data->player->angle * M_PI / 180;
+
 	double x_end = x_start + round((cos(angle) * 40)); // modify
 	double y_end = y_start + round((sin(angle) * 40)); // modify
 
@@ -84,6 +84,25 @@ int		get_height(t_data *data)
 	return(count);
 }
 
+void	DrawRays(t_data *data)
+{
+	int i;
+
+	i = 0;
+	data->rays = malloc(sizeof(t_rays));
+	if (!data->rays)
+		exit(EXIT_FAILURE);
+	data->rays->angle = data->player->angle - (data->FOV  / 2);
+	DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
+	while (i < (data->long_line * data->ptr->tile_size))
+	{
+		// DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
+		data->rays->angle += (double)data->FOV / (data->long_line * data->ptr->tile_size); // typdecast obligatoir
+		i++;
+	}
+	DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
+}
+
 void	render_2D(t_data *data)
 {
 	int row;
@@ -98,12 +117,8 @@ void	render_2D(t_data *data)
 		row++;
 	}
 	DrawCircle(data, data->player->x, data->player->y, 5);
-	DrawLine(data, data->player->x, data->player->y);
-	data->player->angle -= 30;
-	DrawLine(data, data->player->x, data->player->y);
-	data->player->angle += 60;
-	DrawLine(data, data->player->x, data->player->y);
-	data->player->angle -= 30;
+	DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y);
+	DrawRays(data);
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
@@ -130,6 +145,7 @@ int		ft_close(t_data *data)
 	exit(0);
 }
 
+
 void	DrawPlayer(t_data *data, char *row, int nbr_row)
 {
 	int i = 0;
@@ -141,14 +157,9 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 			init_player_coordinates(data, (data->ptr->tile_size / 2) + (i * data->ptr->tile_size), (data->ptr->tile_size / 2) + (nbr_row * data->ptr->tile_size));
 			init_player_coordinates_map(data, nbr_row, i);
 			DrawCircle(data, data->player->x, data->player->y, 5);
-			DrawLine(data, data->player->x, data->player->y);
-			
-			data->player->angle -= 30;
-			DrawLine(data, data->player->x, data->player->y);
-			data->player->angle += 60;
-			DrawLine(data, data->player->x, data->player->y);
-			data->player->angle -= 30;
-			// casting_rays(data); // TODO calling my function here 
+			DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y);
+			DrawRays(data);
+			// break;
 		}
 		i++;
 	}
@@ -181,7 +192,7 @@ int		sum_move_rot(t_data *data)
 int		render_next_frame(t_data *data)
 {
 	double	angle;
-	int		speed = 5;
+	int		speed = 3;
 	double	x;
 	double	y;
 	int		x1;
@@ -201,8 +212,6 @@ int		render_next_frame(t_data *data)
 		data->player->angle += 3;
 	if (data->move_up == 1)
 	{
-		x = data->player->x;
-		y = data->player->y;
 		angle = data->player->angle * M_PI / 180;
 		x = data->player->x + cos(angle) * speed;
 		y = data->player->y + sin(angle) * speed;
@@ -216,9 +225,6 @@ int		render_next_frame(t_data *data)
 	}
 	else if (data->move_down == 1)
 	{
-		x = data->player->x;
-		y = data->player->y;
-
 		angle = (data->player->angle + 180) * M_PI / 180;
 		x = data->player->x + cos(angle) * speed;
 		y = data->player->y + sin(angle) * speed;
@@ -232,8 +238,6 @@ int		render_next_frame(t_data *data)
 	}
 	if (data->move_left == 1)
 	{
-		x = data->player->x;
-		y = data->player->y;
 		angle = (data->player->angle + 90) * M_PI / 180;
 		x = data->player->x + cos(angle) * speed;
 		y = data->player->y + sin(angle) * speed;
@@ -247,8 +251,6 @@ int		render_next_frame(t_data *data)
 	}
 	else if (data->move_right == 1)
 	{
-		x = data->player->x;
-		y = data->player->y;
 		angle = (data->player->angle - 90) * M_PI / 180;
 		x = data->player->x + cos(angle) * speed;
 		y = data->player->y + sin(angle) * speed;
@@ -295,6 +297,7 @@ void	execution(t_data *data)
 	init_move_and_rot(data);
 	init_player_angle(data->player);
 	data->ptr->tile_size = 50;
+	data->FOV = 60;
 	data->size = get_height(data);
 	data->ptr->win = mlx_new_window(data->ptr->mlx, data->ptr->tile_size * data->long_line, data->ptr->tile_size * data->size, "cub3D");
 	data->ptr->img = mlx_new_image(data->ptr->mlx, data->ptr->tile_size * data->long_line, data->ptr->tile_size * data->size);

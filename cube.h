@@ -29,7 +29,6 @@ typedef struct s_type
 	int S;
 }t_type;
 
-
 typedef struct s_player
 {
 	t_type *direction;
@@ -52,6 +51,12 @@ typedef struct s_cub3d
     void	*img;
 }t_cub3d;
 
+
+typedef struct s_rays
+{
+	double angle;
+}t_rays;
+
 typedef struct	s_data
 {
 	char			**map;
@@ -64,6 +69,8 @@ typedef struct	s_data
 	int				long_line;
 	int				size;
 	t_cub3d			*ptr;
+	t_rays			*rays;
+	int				FOV;
 	int				move_left;
 	int				move_right;
 	int				move_up;
@@ -71,6 +78,8 @@ typedef struct	s_data
 	int				rot_left;
 	int				rot_right;
 }t_data;
+
+
 
 enum {
 	UP,
