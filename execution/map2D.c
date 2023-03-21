@@ -25,13 +25,43 @@ void	DrawCircle(t_data *data, double x, double y, double r)
 	}
 }
 
+int get_exact_length_of_the_line(t_data *data, double angle ,double x_start, double y_start)
+{
+	double len = 0;
+	double x_end;
+	double y_end;
+	int x_end_in_map;
+	int y_end_in_map;
+
+	while (1)
+	{
+		x_end = x_start + round((cos(angle) * len));
+		y_end = y_start + round((sin(angle) * len));
+
+		fprintf(stderr, "x_end : %f\n", x_end);
+		fprintf(stderr, "y_end : %f\n", y_end);
+		x_end_in_map = (x_end / 50);
+		y_end_in_map = (y_end / 50);
+		// fprintf(stderr, "x_end_in_map : %d\n", x_end_in_map);
+		// fprintf(stderr, "y_end_in_map : %d\n", y_end_in_map);
+		if (data->map[y_end_in_map + data->index][x_end_in_map] == '1')
+		{
+			// fprintf(stderr, "wall !!!!!!!!!!!!!!!!!!!!!!\n");
+			len -= 1;
+			break ;
+		}
+		len += 1;
+	}
+	return (len);
+}
+
 void	DrawLine(t_data *data, double angle ,double x_start, double y_start)
 {
+	double len = get_exact_length_of_the_line(data, angle, x_start, y_start);
+	fprintf(stderr, "len returned : %f\n", len);
+	double x_end = x_start + round((cos(angle) * len));
+	double y_end = y_start + round((sin(angle) * len));
 
-	double x_end = x_start + round((cos(angle) * 40)); // modify
-	double y_end = y_start + round((sin(angle) * 40)); // modify
-
-	
     int dy = y_end - y_start;
 	int dx = x_end - x_start;
 
@@ -41,14 +71,15 @@ void	DrawLine(t_data *data, double angle ,double x_start, double y_start)
         step = abs(dx);
     else
         step = abs(dy);
- 
+
     double x_incr = (double)dx / step;
     double y_incr = (double)dy / step;
 
     double x = (double)x_start;
     double y = (double)y_start;
 
-    for (int i = 0; i < step; i++) {
+    for (int i = 0; i < step; i++)
+	{
 		my_mlx_pixel_put(data, round(x), round(y), 0xE24666);
         x += x_incr;
         y += y_incr;
@@ -96,7 +127,7 @@ void	DrawRays(t_data *data)
 	DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
 	while (i < (data->long_line * data->ptr->tile_size))
 	{
-		// DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
+		DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
 		data->rays->angle += (double)data->FOV / (data->long_line * data->ptr->tile_size); // typdecast obligatoir
 		i++;
 	}
@@ -144,7 +175,6 @@ int		ft_close(t_data *data)
 	mlx_destroy_window(data->ptr->mlx, data->ptr->win);
 	exit(0);
 }
-
 
 void	DrawPlayer(t_data *data, char *row, int nbr_row)
 {
