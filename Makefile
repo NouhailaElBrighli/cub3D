@@ -22,6 +22,9 @@ SRC =	main.c\
 		execution/map2D.c\
 		execution/init.c\
 		execution/rays.c\
+		execution/utils.c\
+		execution/drawing.c\
+		execution/hook.c\
 
 OBJ = $(SRC:.c=.o)
 

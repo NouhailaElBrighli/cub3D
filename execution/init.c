@@ -34,3 +34,13 @@ void	init_player_angle(t_player *player)
 	if (player->direction->S == 1)
 		player->angle = 90.0f;
 }
+
+void	init(t_data *data)
+{
+	init_move_and_rot(data);
+	init_player_angle(data->player);
+	data->size = get_height(data);
+	data->ptr->tile_size = 40;
+	data->FOV = 60;
+	data->player->speed = 3;
+}

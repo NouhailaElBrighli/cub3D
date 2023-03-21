@@ -31,12 +31,13 @@ typedef struct s_type
 
 typedef struct s_player
 {
-	t_type *direction;
-	double x;
-	double y;
-	double angle;
-	int x_map;
-	int y_map;
+	t_type	*direction;
+	double	x;
+	double	y;
+	double	angle;
+	int		x_map;
+	int		y_map;
+	double	speed;
 }t_player;
 
 typedef struct s_cub3d
@@ -86,8 +87,8 @@ enum {
 	DOWN,
 	LEFT,
 	RIGHT,
-	ROT_LEFT,
-	ROT_RIGHT,
 };
+
+
 
 #endif
