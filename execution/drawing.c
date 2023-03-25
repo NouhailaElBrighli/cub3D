@@ -17,9 +17,9 @@ void	Draw_Wall_3D(t_data *data, double len)
 
 	angle = (double)(data->player->angle - data->rays->angle) * M_PI / 180;
 	exact_len = cos(angle) * len;
-	// if (len == 0)
-	// 	data->walls->height = data->win_height;
-	// else
+	if (len == 0)
+		data->walls->height = data->win_height;
+	else
 		data->walls->height = (double)((data->ptr->tile_size * data->dis_3d) / exact_len);
 	data->walls->y_start = (data->win_height / 2) - (data->walls->height / 2);
 	y_end = data->walls->y_start + data->walls->height;
