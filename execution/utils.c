@@ -30,7 +30,6 @@ int		sum_move_rot(t_data *data)
 	return (data->move_down + data->move_left + data->move_right + data->move_up + data->rot_left + data->rot_right);
 }
 
-
 int	check_invalid_moves(t_data *data)
 {
 	if ((data->move_up == 1 && data->move_down == 1 )|| (data->move_right == 1 && data->move_left == 1) || (data->rot_left == 1 && data->rot_right == 1))

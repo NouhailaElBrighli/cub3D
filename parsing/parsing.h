@@ -69,12 +69,12 @@ void	print_player(t_player *player);
 void	execution(t_data *data);
 void	init_player_angle(t_player *player);
 void	init_player_coordinates(t_data *data, int x, int y);
-void	init_player_coordinates_map(t_data *data, int x, int y);
+// void	init_player_coordinates_map(t_data *data, int x, int y);
 void	init_move_and_rot(t_data *data);
 void    casting_rays(t_data *data);
 double	get_exact_length_of_the_line(t_data *data, double angle ,double x_start, double y_start);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	DrawLine(t_data *data, double angle ,double x_start, double y_start);
+int		DrawLine(t_data *data, double angle ,double x_start, double y_start);
 void	DrawCircle(t_data *data, double x, double y, double r);
 void	Draw_walls(t_data *data, char *row, int nbr_row);
 void	DrawRays(t_data *data);
@@ -90,5 +90,7 @@ int		render_next_frame(t_data *data);
 int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
 double	get_exact_length_of_the_line(t_data *data, double angle ,double x_start, double y_start);
+void	scale(t_data *data);
+void	init_rays_and_walls(t_data *data);
 
 #endif
