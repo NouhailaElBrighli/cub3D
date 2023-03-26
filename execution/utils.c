@@ -7,23 +7,64 @@ double	get_exact_length_of_the_line(t_data *data, double angle ,double x_start, 
 	double y_end;
 	int x_end_in_map;
 	int y_end_in_map;
+	int			max_x;
+	int			max_y;
 
 	while (1)
 	{
 		x_end = x_start + (cos(angle) * len);
 		y_end = y_start + (sin(angle) * len);
-		x_end_in_map = (int)(x_end / data->ptr->tile_size);
-		y_end_in_map = (int)(y_end / data->ptr->tile_size);
+		x_end_in_map = (int)(x_end) / data->ptr->tile_size;
+		y_end_in_map = (int)(y_end) / data->ptr->tile_size;
 		if (data->map[y_end_in_map + data->index][x_end_in_map] == '1')
 		{
 			len -= 1;
 			break ;
 		}
+		else if (data->map[y_end_in_map + 1 + data->index][x_end_in_map] == '1' && data->map[y_end_in_map + data->index][x_end_in_map +  1] == '1')
+		{
+			max_x = (x_end_in_map + 1) * data->ptr->tile_size - 1;    
+			max_y = (y_end_in_map + 1) * data->ptr->tile_size - 1;
+			if ((int)x_end >= max_x && (int)y_end >= max_y)
+			{
+				len -= 1;
+				break;
+			}
+		}
+		else if (data->map[y_end_in_map - 1 + data->index][x_end_in_map] == '1' && data->map[y_end_in_map + data->index][x_end_in_map -  1] == '1')
+		{
+			max_x = x_end_in_map * data->ptr->tile_size + 1;    
+			max_y = y_end_in_map * data->ptr->tile_size + 1;
+			if ((int)x_end <= max_x && (int)y_end <= max_y)
+			{
+				len -= 1;
+				break;
+			}
+		}
+		else if (data->map[y_end_in_map + data->index][x_end_in_map - 1] == '1' && data->map[y_end_in_map + 1 + data->index][x_end_in_map] == '1')
+		{
+			max_x = x_end_in_map * data->ptr->tile_size + 1;    
+			max_y = (y_end_in_map + 1) * data->ptr->tile_size - 1;
+			if ((int)x_end <= max_x && (int)y_end >= max_y)
+			{
+				len -= 1;
+				break;
+			}
+		}
+		else if (data->map[y_end_in_map - 1 + data->index][x_end_in_map] == '1' && data->map[y_end_in_map + data->index][x_end_in_map + 1] == '1')
+		{
+			max_x = (x_end_in_map + 1) * data->ptr->tile_size - 1;    
+			max_y = y_end_in_map * data->ptr->tile_size + 1;
+			if ((int)x_end >= max_x && (int)y_end <= max_y)
+			{
+				len -= 1;
+				break;
+			}
+		}
 		len += 1;
 	}
 	return (len);
 }
-
 
 int		sum_move_rot(t_data *data)
 {

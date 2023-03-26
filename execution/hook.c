@@ -37,7 +37,7 @@ int		key_press(int keycode, t_data *data)
 	return (0);
 }
 
-void	set_player_cordinates_and_check_collision(t_data *data, int flag)
+void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 {
 	double		x;
 	double		y;
@@ -159,4 +159,3 @@ int		render_next_frame(t_data *data)
 	render_2D(data);
 	return (0);
 }
-
