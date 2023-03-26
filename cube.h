@@ -66,7 +66,7 @@ typedef struct s_rays
 {
 	double	angle;
 	int		num_rays;
-	double	len;
+	int		len;
 }t_rays;
 
 typedef struct	s_data

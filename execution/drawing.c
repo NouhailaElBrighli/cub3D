@@ -15,52 +15,53 @@ void	Draw_Wall_3D(t_data *data, double len)
 	double	exact_len;
 	double angle;
 
-	angle = (double)(data->player->angle - data->rays->angle) * M_PI / 180;
+	angle = (data->rays->angle - data->player->angle) * M_PI / 180;
+	// printf("exact len == %f, len == %f\n", exact_len, len);
 	exact_len = cos(angle) * len;
-	if (len == 0)
-		data->walls->height = data->win_height;
+	if (exact_len == 0)
+		data->walls->height = (double)data->win_height;
 	else
-		data->walls->height = (double)((data->ptr->tile_size * data->dis_3d) / exact_len);
+		data->walls->height = (((double)data->ptr->tile_size * data->dis_3d) / exact_len);
 	data->walls->y_start = (data->win_height / 2) - (data->walls->height / 2);
 	y_end = data->walls->y_start + data->walls->height;
 	draw_line_of_wall(data , data->walls->y_start, data->walls->x_start, y_end);
 	data->walls->x_start++;
 }
 
-// int	DrawLine(t_data *data, double angle ,double x_start, double y_start)
-// {
-// 	double x_end;
-// 	double y_end;
+int	DrawLine(t_data *data, double angle ,double x_start, double y_start)
+{
+	double x_end;
+	double y_end;
 
-// 	data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
+	data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
 
-// 	x_end = x_start + (cos(angle) * data->rays->len);
-// 	y_end = y_start + (sin(angle) * data->rays->len);
+	x_end = x_start + (cos(angle) * data->rays->len);
+	y_end = y_start + (sin(angle) * data->rays->len);
 
-//     double dy = y_end - y_start;
-// 	double dx = x_end - x_start;
+    double dy = y_end - y_start;
+	double dx = x_end - x_start;
 
-//     int step;
+    int step;
 
-//     if (fabs(dx) > fabs(dy))
-//         step = fabs(dx);
-//     else
-//         step = fabs(dy);
+    if (fabs(dx) > fabs(dy))
+        step = fabs(dx);
+    else
+        step = fabs(dy);
 
-//     double x_incr = dx / step;
-//     double y_incr = dy / step;
+    double x_incr = dx / step;
+    double y_incr = dy / step;
 
-//     double x = x_start;
-//     double y = y_start;
+    double x = x_start;
+    double y = y_start;
 
-//     for (int i = 0; i <= step; i++)
-// 	{
-// 		my_mlx_pixel_put(data, x, y, 0xE24666);//don't round the value
-//         x += x_incr;
-//         y += y_incr;
-//     }
-// 	return (data->rays->len);
-// }
+    for (int i = 0; i <= step; i++)
+	{
+		my_mlx_pixel_put(data, x, y, 0xE24666);//don't round the value
+        x += x_incr;
+        y += y_incr;
+    }
+	return (data->rays->len);
+}
 
 void	DrawCircle(t_data *data, double x, double y, double r)
 {
@@ -103,12 +104,12 @@ void	DrawRays(t_data *data)
 	int i;
 
 	i = 0;
-	data->rays->angle = data->player->angle - (data->FOV  / 2);
+	data->rays->angle = data->player->angle - ((double)data->FOV  / 2);
 	while (i < data->rays->num_rays)
 	{
 		DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
 		Draw_Wall_3D(data, data->rays->len);
-		data->rays->angle += (double)data->FOV / (double)data->rays->num_rays; // typecast obligator
+		data->rays->angle += (double)data->FOV/ data->rays->num_rays; // typecast obligator
 		i++;
 	}
 	// Draw_Walls_3d(data);

@@ -38,11 +38,11 @@ void	init(t_data *data)
 	data->size = get_height(data);
 	data->ptr->tile_size = 40;
 	data->FOV = 60;
-	data->player->speed = 2;
+	data->player->speed = 4;
 	data->win_width = data->long_line * data->ptr->tile_size;
 	data->win_height = data->size * data->ptr->tile_size;
 	data->scale = 0.2;
-	data->dis_3d = data->win_width / (2 * tan((double)data->FOV * M_PI / 180));
+	data->dis_3d = (double)data->win_width / (2 * tan((double)data->FOV * M_PI / 180));
 }
 
 void	init_rays_and_walls(t_data *data)
