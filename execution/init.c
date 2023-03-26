@@ -11,12 +11,12 @@ void	init_player_coordinates(t_data *data, int x, int y)
 
 void	init_move_and_rot(t_data *data)
 {
-	data->move_up = 0;
-	// data->move_down = 0;
-	data->move_right = 0;
-	data->move_left = 0;
-	data->rot_left = 0;
-	data->rot_right = 0;
+	// data->move_up = 0;
+	// // data->move_down = 0;
+	// data->move_right = 0;
+	// data->move_left = 0;
+	// data->rot_left = 0;
+	// data->rot_right = 0;
 }
 
 void	init_player_angle(t_player *player)
