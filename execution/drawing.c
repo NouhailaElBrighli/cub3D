@@ -27,40 +27,40 @@ void	Draw_Wall_3D(t_data *data, double len)
 	data->walls->x_start++;
 }
 
-int	DrawLine(t_data *data, double angle ,double x_start, double y_start)
-{
-	double x_end;
-	double y_end;
+// int	DrawLine(t_data *data, double angle ,double x_start, double y_start)
+// {
+// 	double x_end;
+// 	double y_end;
 
-	data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
+// 	data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
 
-	x_end = x_start + (cos(angle) * data->rays->len);
-	y_end = y_start + (sin(angle) * data->rays->len);
+// 	x_end = x_start + (cos(angle) * data->rays->len);
+// 	y_end = y_start + (sin(angle) * data->rays->len);
 
-    double dy = y_end - y_start;
-	double dx = x_end - x_start;
+//     double dy = y_end - y_start;
+// 	double dx = x_end - x_start;
 
-    int step;
+//     int step;
 
-    if (fabs(dx) > fabs(dy))
-        step = fabs(dx);
-    else
-        step = fabs(dy);
+//     if (fabs(dx) > fabs(dy))
+//         step = fabs(dx);
+//     else
+//         step = fabs(dy);
 
-    double x_incr = dx / step;
-    double y_incr = dy / step;
+//     double x_incr = dx / step;
+//     double y_incr = dy / step;
 
-    double x = x_start;
-    double y = y_start;
+//     double x = x_start;
+//     double y = y_start;
 
-    for (int i = 0; i <= step; i++)
-	{
-		my_mlx_pixel_put(data, x, y, 0xE24666);//don't round the value
-        x += x_incr;
-        y += y_incr;
-    }
-	return (data->rays->len);
-}
+//     for (int i = 0; i <= step; i++)
+// 	{
+// 		my_mlx_pixel_put(data, x, y, 0xE24666);//don't round the value
+//         x += x_incr;
+//         y += y_incr;
+//     }
+// 	return (data->rays->len);
+// }
 
 void	DrawCircle(t_data *data, double x, double y, double r)
 {
