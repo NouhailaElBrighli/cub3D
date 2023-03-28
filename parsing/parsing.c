@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:39 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/28 21:52:04 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/28 22:14:37 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,12 @@ void	get_long_line(t_data *data)
 		if (ft_strlen(data->map[i]) >= max)
 		{
 			max = ft_strlen(data->map[i]);
-			if (data->map[i][ft_strlen(data->map[i]) - 1] == '\n')
-				max--;
 			j = i;
 		}
 		i++;
 	}
+	if (data->map[j][ft_strlen(data->map[j]) - 1] == '\n')
+		max--;
 	data->long_line = max;
 }
 

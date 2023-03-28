@@ -96,21 +96,6 @@ void	Draw_walls(t_data *data, char *row, int nbr_row)
 					my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFFFFF);
 			}
 		}
-		// else if (row[i] == '0')
-		// {
-		// 	for (int x = 0; x < data->ptr->tile_size; x++)
-		// 	{
-		// 		for (int y = 0; y < data->ptr->tile_size; y++)
-		// 		{
-		// 			if (x == 0)
-		// 				my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFC300 );
-		// 			else if (y == data->ptr->tile_size - 1)
-	    //             	my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFC300 );
-		// 			else
-		// 				my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0x00000);
-		// 		}
-		// 	}
-		// }
 		i++;
 	}
 }

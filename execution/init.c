@@ -36,12 +36,11 @@ void	init(t_data *data)
 	init_move_and_rot(data);
 	init_player_angle(data->player);
 	data->size = data->end_of_map - data->index + 1;
-	// data->size = get_height(data);
 	data->ptr->tile_size = 40;
 	data->FOV = 60;
 	data->player->speed = 4;
-	data->win_width = data->long_line * data->ptr->tile_size;
 	data->win_height = data->size * data->ptr->tile_size;
+	data->win_width = data->long_line * data->ptr->tile_size;
 	data->scale = 1;
 	data->dis_3d = (double)data->win_width / (2 * tan((double)data->FOV * M_PI / 180));
 }

@@ -35,13 +35,13 @@ void	draw_2Dmap(t_data *data)
 	int row;
 
 	row = data->index;
-	while (data->map[row])
+	while (data->map[row] && row <= data->end_of_map)
 	{
 		DrawPlayer(data, data->map[row], row - data->index);
 		row++;
 	}
 	row = data->index;
-	while (data->map[row])
+	while (data->map[row] && row <= data->end_of_map)
 	{
 		Draw_walls(data, data->map[row], row - data->index);
 		row++;
