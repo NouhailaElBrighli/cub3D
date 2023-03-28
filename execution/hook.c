@@ -17,7 +17,6 @@ int		key_release(int keycode, t_data *data)
 	return (0);
 }
 
-
 int		key_press(int keycode, t_data *data)
 {
 	if (keycode == 53)
@@ -65,8 +64,9 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 	y_next = y + (sin(angle) * data->player->speed);
 	// fprintf(stderr, "x_next = %f\n", x_next);
 	// fprintf(stderr, "y_next = %f\n", y_next);
-	x1 = (int)x_next / data->ptr->tile_size;
+	x1 = (int)x_next / data->ptr->tile_size; // TODO enlever le cast de int !!
 	y1 = ((int)y_next / data->ptr->tile_size);
+	
 	if (data->map[y1 + data->index][x1] == '1')
 	{
 		// fprintf(stderr, "STOP BITCH .. !\n");
@@ -79,8 +79,8 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 		// fprintf(stderr, "y = %f\n", y);
 		// fprintf(stderr, "x1 = %d\n", x1);
 		// fprintf(stderr, "y1 = %d\n", y1);
-		max_x = (x1 + 1) * data->ptr->tile_size - 10;    
-		max_y = (y1 + 1) * data->ptr->tile_size - 10;
+		max_x = (x1 + 1) * data->ptr->tile_size - 5;    
+		max_y = (y1 + 1) * data->ptr->tile_size - 5;
 		// fprintf(stderr, "max_x = %d\n", max_x);
 		// fprintf(stderr, "max_y = %d\n", max_y);
 		if ((int)x > max_x && (int)y > max_y)
@@ -95,8 +95,8 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 		// fprintf(stderr, "y = %f\n", y);
 		// fprintf(stderr, "x1 = %d\n", x1);
 		// fprintf(stderr, "y1 = %d\n", y1);
-		max_x = x1 * data->ptr->tile_size + 10;    
-		max_y = y1 * data->ptr->tile_size + 10;
+		max_x = x1 * data->ptr->tile_size + 5;    
+		max_y = y1 * data->ptr->tile_size + 5;
 		// fprintf(stderr, "max_x = %f\n", max_x);
 		// fprintf(stderr, "max_y = %f\n", max_y);
 		if ((int)x < max_x && (int)y < max_y)
@@ -111,8 +111,8 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 		// fprintf(stderr, "y = %f\n", y);
 		// fprintf(stderr, "x1 = %d\n", x1);
 		// fprintf(stderr, "y1 = %d\n", y1);
-		max_x = (x1) * data->ptr->tile_size + 10;    
-		max_y = (y1 + 1) * data->ptr->tile_size - 10;
+		max_x = (x1) * data->ptr->tile_size + 5;    
+		max_y = (y1 + 1) * data->ptr->tile_size - 5;
 		// fprintf(stderr, "max_x = %f\n", max_x);
 		// fprintf(stderr, "max_y = %f\n", max_y);
 		if ((int)x < max_x && (int)y > max_y)
@@ -127,8 +127,8 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 		// fprintf(stderr, "y = %f\n", y);
 		// fprintf(stderr, "x1 = %d\n", x1);
 		// fprintf(stderr, "y1 = %d\n", y1);
-		max_x = (x1 + 1) * data->ptr->tile_size - 10;    
-		max_y = y1 * data->ptr->tile_size + 10;
+		max_x = (x1 + 1) * data->ptr->tile_size - 5;    
+		max_y = y1 * data->ptr->tile_size + 5;
 		// fprintf(stderr, "max_x = %f\n", max_x);
 		// fprintf(stderr, "max_y = %f\n", max_y);
 		if ((int)x > max_x && (int)y < max_y)

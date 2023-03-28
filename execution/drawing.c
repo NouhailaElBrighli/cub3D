@@ -28,15 +28,16 @@ void	Draw_Wall_3D(t_data *data, double len)
 	data->walls->x_start++;
 }
 
-int	DrawLine(t_data *data, double angle ,double x_start, double y_start)
+void	DrawLine(t_data *data,  double angle ,double x_start, double y_start)
 {
-	double x_end;
-	double y_end;
+	double x_end = 0;
+	double y_end = 0;
+	
+	// data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
+	// x_end = x_start + (cos(angle) * data->rays->len);
+	// y_end = y_start + (sin(angle) * data->rays->len);
 
-	data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
-
-	x_end = x_start + (cos(angle) * data->rays->len);
-	y_end = y_start + (sin(angle) * data->rays->len);
+	get_xend_yend(data, &x_end, &y_end, angle);
 
     double dy = y_end - y_start;
 	double dx = x_end - x_start;
@@ -56,11 +57,11 @@ int	DrawLine(t_data *data, double angle ,double x_start, double y_start)
 
     for (int i = 0; i <= step; i++)
 	{
-		my_mlx_pixel_put(data, x, y, 0xE24666);//don't round the value
+		my_mlx_pixel_put(data, round(x), round(y), 0xE24666); //don't round the value
         x += x_incr;
         y += y_incr;
     }
-	return (data->rays->len);
+	// return (data->rays->len);
 }
 
 void	DrawCircle(t_data *data, double x, double y, double r)
@@ -91,10 +92,25 @@ void	Draw_walls(t_data *data, char *row, int nbr_row)
 		{
 			for (int x = 0; x < data->ptr->tile_size; x++)
 			{
-				for (int y = 0; y < data->ptr->tile_size; y++)	
+				for (int y = 0; y < data->ptr->tile_size; y++)
 					my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFFFFF);
 			}
 		}
+		// else if (row[i] == '0')
+		// {
+		// 	for (int x = 0; x < data->ptr->tile_size; x++)
+		// 	{
+		// 		for (int y = 0; y < data->ptr->tile_size; y++)
+		// 		{
+		// 			if (x == 0)
+		// 				my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFC300 );
+		// 			else if (y == data->ptr->tile_size - 1)
+	    //             	my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0xFFC300 );
+		// 			else
+		// 				my_mlx_pixel_put(data, x + (i * data->ptr->tile_size), y + (nbr_row * data->ptr->tile_size), 0x00000);
+		// 		}
+		// 	}
+		// }
 		i++;
 	}
 }
@@ -104,15 +120,14 @@ void	DrawRays(t_data *data)
 	int i;
 
 	i = 0;
-	data->rays->angle = data->player->angle - ((double)data->FOV  / 2);
+	data->rays->angle = data->player->angle - ((double)data->FOV / 2);
 	while (i < data->rays->num_rays)
 	{
 		DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
-		Draw_Wall_3D(data, data->rays->len);
-		data->rays->angle += (double)data->FOV/ data->rays->num_rays; // typecast obligator
+		// Draw_Wall_3D(data, data->rays->distance); // uncomment this
+		data->rays->angle += (double)data->FOV / data->rays->num_rays; //typecast obligator
 		i++;
 	}
-	// Draw_Walls_3d(data);
 	data->walls->x_start = 1;
 }
 
@@ -142,4 +157,3 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 		i++;
 	}
 }
-

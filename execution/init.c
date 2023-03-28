@@ -41,7 +41,7 @@ void	init(t_data *data)
 	data->player->speed = 4;
 	data->win_width = data->long_line * data->ptr->tile_size;
 	data->win_height = data->size * data->ptr->tile_size;
-	data->scale = 0.2;
+	data->scale = 1;
 	data->dis_3d = (double)data->win_width / (2 * tan((double)data->FOV * M_PI / 180));
 }
 
