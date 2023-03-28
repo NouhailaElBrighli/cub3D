@@ -42,7 +42,14 @@ double distanceBetweenPoints(double x1, double y1, double x2, double y2)
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
 
-void	get_xend_yend(t_data *data, double *x_end, double *y_end, double rayAngle)
+typedef struct s_point
+{
+	double x;
+	double y;
+}t_point;
+
+
+void horizontal_intersection(t_data *data, double rayAngle, t_point *h_p)
 {
 	// TODO horizontal_intersection
 
@@ -107,19 +114,36 @@ void	get_xend_yend(t_data *data, double *x_end, double *y_end, double rayAngle)
 			nextHorzTouchY += ystep;
 		}
 	}
+	h_p->x = nextHorzTouchX;
+	h_p->y = nextHorzTouchY;
+}
 
-	// TODO vertical_intersection 
-	
+void vertical_intersection(t_data *data, double rayAngle, t_point *v_p)
+{
+	double 	xstep;
+	double 	ystep;
+	double	xintercept;
+	double	yintercept;
+	int		isRayFacingUp;
+	int		isRayFacingDown;
+	int		isRayFacingLeft;
+	int		isRayFacingRight;
 	int 	foundVertWallHit = 0;
 	double vertWallHitX = 0;
     double vertWallHitY = 0;
 	rayAngle = normalizeAngle(rayAngle);
+	
+	isRayFacingDown = rayAngle > 0 && rayAngle < M_PI;
+	isRayFacingUp   = !isRayFacingDown;
+	isRayFacingRight = (rayAngle < (0.5 * M_PI)) || (rayAngle > (1.5 * M_PI));
+	isRayFacingLeft = !isRayFacingRight;
 
 	// find our first intersection 
 	xintercept = floor(data->player->x / data->ptr->tile_size) * data->ptr->tile_size;
 	xintercept += isRayFacingRight ? data->ptr->tile_size : 0;
 	
 	yintercept = data->player->y + ((xintercept - data->player->x) * tan(rayAngle));
+
 
 	xstep = data->ptr->tile_size;
 	xstep *= isRayFacingLeft ? -1 : 1;
@@ -156,55 +180,33 @@ void	get_xend_yend(t_data *data, double *x_end, double *y_end, double rayAngle)
 			nextVertTouchY += ystep;
 		}
 	}
-	
-	// TODO Calculate both horizontal and vertical hit distances and choose the smallest one
+	v_p->x = nextVertTouchX;
+	v_p->y = nextVertTouchY;
+}
 
-	double horzHitDistance = distanceBetweenPoints(data->player->x, data->player->y, nextHorzTouchX, nextHorzTouchY);
-    double vertHitDistance = distanceBetweenPoints(data->player->x, data->player->y, nextVertTouchX, nextVertTouchY);
+void	get_xend_yend(t_data *data, double *x_end, double *y_end, double rayAngle)
+{
+	t_point	v_p;
+	t_point	h_p;
+	double	horizontal_distance;
+	double	vertical_distance;
 
-
-    if (vertHitDistance < horzHitDistance)
+	horizontal_intersection(data, rayAngle, &h_p);
+	vertical_intersection(data, rayAngle, &v_p);
+	horizontal_distance = distanceBetweenPoints(data->player->x, data->player->y, h_p.x, h_p.y);
+    vertical_distance = distanceBetweenPoints(data->player->x, data->player->y, v_p.x, v_p.y);
+    if (vertical_distance < horizontal_distance)
 	{
-		*x_end = nextVertTouchX;
-		*y_end = nextVertTouchY;
-		data->rays->distance = vertHitDistance;
+		*x_end = v_p.x;
+		*y_end = v_p.y;
+		data->rays->distance = vertical_distance;
 		// fprintf(stderr, "distance == %f", data->rays->distance);
     }
 	else
 	{
-		*x_end = nextHorzTouchX;
-		*y_end = nextHorzTouchY;
-		data->rays->distance = horzHitDistance;
+		*x_end = h_p.x;
+		*y_end = h_p.y;
+		data->rays->distance = horizontal_distance;
 		// fprintf(stderr, "distance == %f", data->rays->distance);
     }
 }
-
-
-/*
-	void	cast_ray(t_game *g, double angle, t_ray *ray)
-	{
-		t_point	v_inter;
-		t_point	h_inter;
-		double	h_distance;
-		double	v_distance;
-
-		h_distance = 0;
-		v_distance = 0;
-		find_horizontal_intersection(g, angle, &h_inter);
-		find_vertical_intersection(g, angle, &v_inter);
-		h_distance = get_distance(h_inter, g->player->pos);
-		v_distance = get_distance(v_inter, g->player->pos);
-		ray->distance = get_min(h_distance, v_distance);
-		if (ray->distance == h_distance)
-		{
-			ray->inter_x = h_inter.x;
-			ray->inter_y = h_inter.y;
-		}
-		else
-		{
-			ray->inter_x = v_inter.x;
-			ray->inter_y = v_inter.y;
-		}
-	}
-
-*/
