@@ -55,18 +55,22 @@ typedef struct s_cub3d
 
 typedef struct s_walls
 {
-	int	height;
+	double	height;
 	int	x_start;
 	int	y_start;
 }t_walls;
 
-
-
 typedef struct s_rays
 {
 	double	angle;
+	double	wallHitX;
+    double	wallHitY;
+    double	distance;
+    // int		wasHitVertical;
+    // int		wallHitContent;
 	int		num_rays;
-	int		len;
+	int		ray_nbr;
+	double	len;
 }t_rays;
 
 typedef struct	s_data
@@ -84,7 +88,7 @@ typedef struct	s_data
 	t_cub3d			*ptr;
 	t_rays			*rays;
 	t_walls			*walls;
-	double				FOV;
+	int				FOV;
 	int				move_left;
 	int				move_right;
 	int				move_up;
@@ -92,12 +96,10 @@ typedef struct	s_data
 	int				rot_left;
 	int				rot_right;
 	double			scale;
-	int				dis_3d;
+	double			dis_3d;
 	int				win_width;
 	int				win_height;
 }t_data;
-
-
 
 enum {
 	UP,
@@ -105,7 +107,5 @@ enum {
 	LEFT,
 	RIGHT,
 };
-
-
 
 #endif

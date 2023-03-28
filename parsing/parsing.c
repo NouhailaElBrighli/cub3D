@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:39 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/28 20:48:54 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/28 21:52:04 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,4 @@ void	parsing(char *av, t_data *data)
 	check_for_player(data);
 	check_valid_path(data);
 	get_long_line(data);
-	printf("there is no error\n");
 }

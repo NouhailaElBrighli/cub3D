@@ -25,7 +25,7 @@ void	render_2D(t_data *data)
 		row++;
 	}
 	DrawCircle(data, data->player->x, data->player->y, data->player->radius);
-	DrawLine(data, data->player->angle,data->player->x, data->player->y);
+	// DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, );
 	DrawRays(data);
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
