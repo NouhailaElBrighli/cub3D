@@ -119,6 +119,7 @@ double distanceBetweenPoints(double x1, double y1, double x2, double y2)
 void find_the_fucking_point(t_data *data, double *x_end, double *y_end, double rayAngle)
 {
 	// TODO horizontal_intersection
+
 	double 	xstep;
 	double 	ystep;
 	double	xintercept;
@@ -154,50 +155,39 @@ void find_the_fucking_point(t_data *data, double *x_end, double *y_end, double r
 	double nextHorzTouchX = xintercept;
     double nextHorzTouchY = yintercept;
 
-	// // Increment xstep and ystep until we find a wall
-	int row = data->index;
-	while (data->map[row])
-	{
-		fprintf(stderr, "%s", data->map[row]);
-		// Draw_walls(data, data->map[row], row - data->index);
-		row++;
-	}
-	
-	// while (nextHorzTouchX >= 0 && nextHorzTouchX <= data->win_width
-	// && nextHorzTouchY >= 0 && nextHorzTouchY <= data->win_height)
-	// {
-	// 	double xToCheck = nextHorzTouchX;
-    //     double yToCheck = nextHorzTouchY + (isRayFacingUp ? - 1 : 0);
-	// 	int a = xToCheck / data->ptr->tile_size;
-	// 	int b = yToCheck / data->ptr->tile_size;
+	// Increment xstep and ystep until we find a wall
 
-	// 	if (data->map[b + data->index][a] == '1')
-	// 	{
-	// 		// horzWallHitX = nextHorzTouchX;
-    //         // horzWallHitY = nextHorzTouchY;
-	// 		// foundHorzWallHit = 1;
-	// 		break;
-	// 	}
-	// 	else
-	// 	{
-	// 		nextHorzTouchX += xstep;
-	// 		nextHorzTouchY += ystep;
-	// 	}
-	// }
-	*x_end = nextHorzTouchX;
-	*y_end = nextHorzTouchY;
+	while (nextHorzTouchX >= 0 && nextHorzTouchX <= data->win_width
+	&& nextHorzTouchY >= 0 && nextHorzTouchY <= data->win_height)
+	{
+		double xToCheck = nextHorzTouchX;
+        double yToCheck = nextHorzTouchY + (isRayFacingUp ? - 1 : 0);
+		int a = xToCheck / data->ptr->tile_size;
+		int b = yToCheck / data->ptr->tile_size;
+		if ((b >= data->size) || (a >= ft_strlen(data->map[b + data->index])))
+		{
+			break;
+		}
+		if (data->map[b + data->index][a] == '1')
+		{
+			horzWallHitX = nextHorzTouchX;
+            horzWallHitY = nextHorzTouchY;
+			foundHorzWallHit = 1;
+			break;
+		}
+		else
+		{
+			nextHorzTouchX += xstep;
+			nextHorzTouchY += ystep;
+		}
+	}
 
 	// TODO vertical_intersection 
-	/*
+	
 	int 	foundVertWallHit = 0;
 	double vertWallHitX = 0;
     double vertWallHitY = 0;
 	rayAngle = normalizeAngle(rayAngle);
-	
-	isRayFacingDown = rayAngle > 0 && rayAngle < M_PI;
-	isRayFacingUp   = !isRayFacingDown;
-	isRayFacingRight = (rayAngle < (0.5 * M_PI)) || (rayAngle > (1.5 * M_PI));
-	isRayFacingLeft = !isRayFacingRight;
 
 	// find our first intersection 
 	xintercept = floor(data->player->x / data->ptr->tile_size) * data->ptr->tile_size;
@@ -219,44 +209,48 @@ void find_the_fucking_point(t_data *data, double *x_end, double *y_end, double r
 	// Increment xstep and ystep until we find a wall
 	while (nextVertTouchX >= 0 && nextVertTouchX <= data->win_width && nextVertTouchY >= 0 && nextVertTouchY <= data->win_height)
 	{
-		float xToCheck = nextVertTouchX + (isRayFacingLeft ? -1 : 0);
-		float yToCheck = nextVertTouchY;
-		
-		if (data->map[(int)(yToCheck / data->ptr->tile_size) + data->index][(int)(xToCheck / data->ptr->tile_size)] == '1')
+		double xToCheck = nextVertTouchX + (isRayFacingLeft ? -1 : 0);
+		double yToCheck = nextVertTouchY;
+		int a = xToCheck / data->ptr->tile_size;
+		int b = yToCheck / data->ptr->tile_size;
+		if ((b >= data->size) || (a >= ft_strlen(data->map[b + data->index])))
+		{
+			break;
+		}
+		if (data->map[b + data->index][a] == '1')
 		{
 			vertWallHitX = nextVertTouchX;
             vertWallHitY = nextVertTouchY;
 			foundVertWallHit = 1;
 			break;
 		} 
-			else
-			{
-				nextVertTouchX += xstep;
-				nextVertTouchY += ystep;
-			}
+		else
+		{
+			nextVertTouchX += xstep;
+			nextVertTouchY += ystep;
+		}
 	}
-	*/
+	
 	// TODO Calculate both horizontal and vertical hit distances and choose the smallest one
 
-    // double horzHitDistance = foundHorzWallHit ? distanceBetweenPoints(data->player->x, data->player->y, horzWallHitX, horzWallHitY) : INT_MAX;
-    // double vertHitDistance = foundVertWallHit ? distanceBetweenPoints(data->player->x, data->player->y, vertWallHitX, vertWallHitY) : INT_MAX;
+    double horzHitDistance = foundHorzWallHit ? distanceBetweenPoints(data->player->x, data->player->y, horzWallHitX, horzWallHitY) : INT_MAX;
+    double vertHitDistance = foundVertWallHit ? distanceBetweenPoints(data->player->x, data->player->y, vertWallHitX, vertWallHitY) : INT_MAX;
 
-	// *y_end = horzHitDistance;
-	// *x_end = vertHitDistance;
-    // if (vertHitDistance < horzHitDistance)
-	// {
-	// 	*x_end = nextVertTouchX;
-	// 	*y_end = nextVertTouchY;
-	// 	data->rays->distance = vertHitDistance;
-	// 	// fprintf(stderr, "distance == %f", data->rays->distance);
-    // }
-	// else
-	// {
-	// 	*x_end = nextHorzTouchX;
-	// 	*y_end = nextHorzTouchY;
-	// 	data->rays->distance = horzHitDistance;
-	// 	// fprintf(stderr, "distance == %f", data->rays->distance);
-    // }
+
+    if (vertHitDistance < horzHitDistance)
+	{
+		*x_end = nextVertTouchX;
+		*y_end = nextVertTouchY;
+		data->rays->distance = vertHitDistance;
+		// fprintf(stderr, "distance == %f", data->rays->distance);
+    }
+	else
+	{
+		*x_end = nextHorzTouchX;
+		*y_end = nextHorzTouchY;
+		data->rays->distance = horzHitDistance;
+		// fprintf(stderr, "distance == %f", data->rays->distance);
+    }
 }
 
 /*void  horizontal_intersection(t_data *data, double *x_end, double *y_end, double rayAngle)
