@@ -9,6 +9,7 @@ void print_id(t_identifier *id)
 	printf("C == %d\n", id->C);
 	printf("F == %d\n", id->F);
 }
+
 void	print_tab(char **s)
 {
 	int i;
@@ -16,7 +17,7 @@ void	print_tab(char **s)
 	i = 0;
 	while (s[i] != NULL)
 	{
-		printf("s[%d] == %s", i, s[i]);
+		printf("s[%d] == |%s|\n", i, s[i]);
 		i++;
 	}
 }
@@ -28,7 +29,7 @@ void print_colors(int *color)
 	i = 0;
 	while (i < 3)
 	{
-		printf("RGB == %d\n", color[i]);
+		printf("rgb == %d\n", color[i]);
 		i++;
 	}
 }

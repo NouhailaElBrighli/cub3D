@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   textures_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/28 20:50:02 by nel-brig          #+#    #+#             */
+/*   Updated: 2023/03/28 20:51:07 by nel-brig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 char	*get_path(char *s)
@@ -7,7 +19,7 @@ char	*get_path(char *s)
 
 	i = 0;
 	path = NULL;
-	while (s[i] && s[i] != ' ' && s[i] != '\n')
+	while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '\n')
 		i++;
 	path = ft_strndup(s, i);
 	return (path);
@@ -15,8 +27,8 @@ char	*get_path(char *s)
 
 void	check_id(t_data *data)
 {
-	if(data->id->NO != 1 || data->id->SO != 1 || data->id->WE != 1 
-			|| data->id->EA != 1 || data->id->F != 1 || data->id->C != 1)
+	if (data->id->NO != 1 || data->id->SO != 1 || data->id->WE != 1
+		|| data->id->EA != 1 || data->id->F != 1 || data->id->C != 1)
 		ft_error(data, "Error\n");
 }
 
@@ -34,12 +46,12 @@ int	tab_size(char **s)
 
 void	fill_color(int *color, char **numbers)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < 3)
 	{
-		color[i] = ft_atoi(numbers[i]);
+		color[i] = ft_atoi(numbers[i], i);
 		i++;
 	}
 	ft_free(numbers);
@@ -53,9 +65,9 @@ int	check_range(char **numbers)
 	i = 0;
 	while (numbers[i])
 	{
-		num = ft_atoi(numbers[i]);
+		num = ft_atoi(numbers[i], i);
 		if (num < 0 || num > 255)
-			return(-1);
+			return (-1);
 		i++;
 	}
 	return (0);

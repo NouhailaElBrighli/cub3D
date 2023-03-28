@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/28 20:11:02 by nel-brig          #+#    #+#             */
+/*   Updated: 2023/03/28 20:11:50 by nel-brig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing.h"
 
 static int	function(unsigned int res, int n)
@@ -9,7 +21,7 @@ static int	function(unsigned int res, int n)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *str, int idx)
 {
 	int				n;
 	int				i;
@@ -18,21 +30,22 @@ int	ft_atoi(const char *str)
 	n = 1;
 	i = 0;
 	res = 0;
-	while(str[i] == ' ')
-		i++;
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		res = res * 10 + str[i] - '0';
 		i++;
 	}
-
-	if (str[i] != '\0' && str[i] != '\n' && str[i] != ' ')
-		return(-1);
+	if (idx == 2)
+	{
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
+			i++;
+	}
+	if (str[i] != '\0' && str[i] != '\n')
+		return (-1);
 	if ((res > 4294967295 && n == 1) || (res > 4294967295 && n == -1))
 		return (function (res, n));
 	return (res * n);
 }
-
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

@@ -55,22 +55,18 @@ typedef struct s_cub3d
 
 typedef struct s_walls
 {
-	double	height;
+	int	height;
 	int	x_start;
 	int	y_start;
 }t_walls;
 
+
+
 typedef struct s_rays
 {
 	double	angle;
-	double	wallHitX;
-    double	wallHitY;
-    double	distance;
-    // int		wasHitVertical;
-    // int		wallHitContent;
 	int		num_rays;
-	int		ray_nbr;
-	double	len;
+	int		len;
 }t_rays;
 
 typedef struct	s_data
@@ -80,6 +76,7 @@ typedef struct	s_data
 	int				*floor; // rgb
 	int				*ceiling; //rgb
 	int				index; // index start of the map
+	int				end_of_map;
 	t_identifier	*id;
 	t_player		*player;
 	int				long_line;
@@ -87,7 +84,7 @@ typedef struct	s_data
 	t_cub3d			*ptr;
 	t_rays			*rays;
 	t_walls			*walls;
-	int				FOV;
+	double				FOV;
 	int				move_left;
 	int				move_right;
 	int				move_up;
@@ -95,10 +92,12 @@ typedef struct	s_data
 	int				rot_left;
 	int				rot_right;
 	double			scale;
-	double			dis_3d;
+	int				dis_3d;
 	int				win_width;
 	int				win_height;
 }t_data;
+
+
 
 enum {
 	UP,
@@ -106,5 +105,7 @@ enum {
 	LEFT,
 	RIGHT,
 };
+
+
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_check.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/28 20:45:28 by nel-brig          #+#    #+#             */
+/*   Updated: 2023/03/28 20:46:32 by nel-brig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 int	is_player(char c, t_player *player, int flag)
@@ -15,7 +27,7 @@ int	is_player(char c, t_player *player, int flag)
 		else if (c == 'S')
 			player->direction->S++;
 	}
-	return(0);
+	return (0);
 }
 
 void	search_player(t_data *data, char *s)
@@ -23,7 +35,7 @@ void	search_player(t_data *data, char *s)
 	int	i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		is_player(s[i], data->player, 0);
 		i++;
@@ -34,14 +46,15 @@ void	check_t_player(t_data *data)
 {
 	int	sum;
 
-	sum = data->player->direction->N + data->player->direction->E + data->player->direction->S + data->player->direction->W;
+	sum = data->player->direction->N + data->player->direction->E
+		+ data->player->direction->S + data->player->direction->W;
 	if (sum != 1)
 		ft_error(data, "Player Error\n");
 }
 
 void	check_for_player(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = data->index;
 	while (data->map[i])

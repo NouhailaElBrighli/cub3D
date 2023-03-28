@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_vars.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/28 20:51:43 by nel-brig          #+#    #+#             */
+/*   Updated: 2023/03/28 20:53:03 by nel-brig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 void	init_identifier(t_data *data)
 {
 	data->id = malloc(sizeof(t_identifier));
-	if(!data->id)
+	if (!data->id)
 		exit(EXIT_FAILURE);
 	data->id->NO = 0;
 	data->id->SO = 0;
@@ -13,7 +25,7 @@ void	init_identifier(t_data *data)
 	data->id->C = 0;
 }
 
-void init_player(t_data *data)
+void	init_player(t_data *data)
 {
 	data->player = malloc(sizeof(t_player));
 	if (!data->player)
@@ -27,10 +39,9 @@ void init_player(t_data *data)
 	data->player->direction->S = 0;
 }
 
-
-void init_colors(t_data *data)
+void	init_colors(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->floor = malloc(sizeof(int) * 3);
@@ -39,7 +50,7 @@ void init_colors(t_data *data)
 	data->ceiling = malloc(sizeof(int) * 3);
 	if (!data->ceiling)
 		exit(EXIT_FAILURE);
-	while(i < 3)
+	while (i < 3)
 	{
 		data->floor[i] = 0;
 		data->ceiling[i] = 0;

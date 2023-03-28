@@ -1,21 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/28 20:13:39 by nel-brig          #+#    #+#             */
+/*   Updated: 2023/03/28 20:48:54 by nel-brig         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 int	check_file(char *s)
 {
 	int	fd;
-	int cmp;
+	int	cmp;
 
 	cmp = ft_strlen(s) - 4;
-	if(ft_strncmp(&s[cmp], ".cub", ft_strlen((&s[cmp]))) != 0)
+	if (ft_strncmp(&s[cmp], ".cub", ft_strlen((&s[cmp]))) != 0)
 	{
 		printf("Invalid Extention\n");
-		return(1);
+		return (1);
 	}
 	fd = open(s, O_RDONLY);
-	if(fd == -1)
+	if (fd == -1)
 	{
 		perror("ERROR");
-		return(1);
+		return (1);
 	}
 	close(fd);
 	return (0);
@@ -30,7 +42,7 @@ int	get_size(char *av, t_data *data)
 	size = 1;
 	fd = open(av, O_RDONLY);
 	s = get_next_line(fd);
-	while(s != NULL)
+	while (s != NULL)
 	{
 		free(s);
 		s = get_next_line(fd);
@@ -64,25 +76,30 @@ void	read_map(t_data *data, char *av)
 	while (data->map[i] != NULL)
 		data->map[++i] = get_next_line(fd);
 	close(fd);
-
 }
 
 void	get_long_line(t_data *data)
 {
-	int max;
-	int i;
+	int	max;
+	int	i;
+	int	j;
 
 	i = data->index;
 	max = ft_strlen(data->map[i]);
-	while(data->map[i])
+	j = i;
+	while (i <= data->end_of_map)
 	{
-		if (ft_strlen(data->map[i]) > max)
+		if (ft_strlen(data->map[i]) >= max)
+		{
 			max = ft_strlen(data->map[i]);
+			if (data->map[i][ft_strlen(data->map[i]) - 1] == '\n')
+				max--;
+			j = i;
+		}
 		i++;
 	}
 	data->long_line = max;
 }
-
 
 void	parsing(char *av, t_data *data)
 {
@@ -94,10 +111,10 @@ void	parsing(char *av, t_data *data)
 	}
 	read_map(data, av);
 	data->index = check_textures(data);
+	data->end_of_map = find_end(data);
 	check_invalid_character(data);
 	check_for_player(data);
 	check_valid_path(data);
 	get_long_line(data);
-	// fprintf(stderr, "long_line == %d\n", data->long_line);
-	// printf("valid\n");
+	printf("there is no error\n");
 }
