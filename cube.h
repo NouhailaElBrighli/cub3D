@@ -98,6 +98,12 @@ typedef struct	s_data
 	int				win_height;
 }t_data;
 
+typedef struct s_point
+{
+	double x;
+	double y;
+}t_point;
+
 enum
 {
 	UP,
