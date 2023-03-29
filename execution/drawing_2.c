@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 04:23:41 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 06:21:12 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 08:53:31 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,13 @@ void	draw_rays(t_data *data)
 	int	i;
 
 	i = 0;
-	data->ray->angle = data->player->angle - ((double)data->FOV / 2);
+	data->ray->angle = data->player->angle - ((double)data->fov / 2);
 	while (i < (double)data->win_width)
 	{
 		drawline(data, data->ray->angle * M_PI / \
 		180, data->player->x, data->player->y, 0);
-		draw_wall_3d(data, data->ray->distance);
-		data->ray->angle += (double)data->FOV / \
+		// draw_wall_3d(data, data->ray->distance);
+		data->ray->angle += (double)data->fov / \
 		(double)data->win_width;
 		i++;
 	}

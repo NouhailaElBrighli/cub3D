@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:51:43 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/28 20:53:03 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/29 07:06:01 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	init_player(t_data *data)
 	data->player->direction = malloc(sizeof(t_type));
 	if (!data->player)
 		exit(EXIT_FAILURE);
-	data->player->direction->N = 0;
-	data->player->direction->E = 0;
-	data->player->direction->W = 0;
-	data->player->direction->S = 0;
+	data->player->direction->nort = 0;
+	data->player->direction->east = 0;
+	data->player->direction->west = 0;
+	data->player->direction->south = 0;
 }
 
 void	init_colors(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 06:24:17 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 06:58:29 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ typedef struct s_identifier
 
 typedef struct s_type
 {
-	int	N;
-	int E;
-	int W;
-	int S;
+	int	nort;
+	int	east;
+	int	west;
+	int	south;
 }t_type;
 
 typedef struct s_player
@@ -61,35 +61,35 @@ typedef struct s_cub3d
 	int		tile_size;
 	int		endian;
 	char	*addr;
-    void    *mlx;
-    void	*win;
-    void	*img;
+	void	*mlx;
+	void	*win;
+	void	*img;
 }t_cub3d;
 
 typedef struct s_walls
 {
 	double	height;
-	int	x_start;
-	int	y_start;
+	int		x_start;
+	int		y_start;
 }t_walls;
 
 typedef struct s_ray
 {
 	double	angle;
-    double	distance;
+	double	distance;
 	int		ray_up;
 	int		ray_down;
 	int		ray_left;
 	int		ray_right;
 }t_ray;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	char			**map;
-	char			**path; // textures
-	int				*floor; // rgb
-	int				*ceiling; //rgb
-	int				index; // index start of the map
+	char			**path;
+	int				*floor;
+	int				*ceiling;
+	int				index;
 	int				end_of_map;
 	t_identifier	*id;
 	t_player		*player;
@@ -98,7 +98,7 @@ typedef struct	s_data
 	t_cub3d			*ptr;
 	t_ray			*ray;
 	t_walls			*walls;
-	int				FOV;
+	int				fov;
 	int				move_left;
 	int				move_right;
 	int				move_up;
@@ -113,8 +113,8 @@ typedef struct	s_data
 
 typedef struct s_point
 {
-	double x;
-	double y;
+	double	x;
+	double	y;
 }t_point;
 
 enum
@@ -131,7 +131,7 @@ typedef struct s_drawline_data
 	double	y_incr;
 	double	x_end;
 	double	y_end;
-    int		step;
+	int		step;
 	double	dy;
 	double	dx;
 	double	x;

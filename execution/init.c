@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 03:59:32 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 08:15:33 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	init_move_and_rot(t_data *data)
 
 void	init_player_angle(t_player *player)
 {
-	if (player->direction->E == 1)
+	if (player->direction->east == 1)
 		player->angle = 180.0f;
-	if (player->direction->N == 1)
+	if (player->direction->nort == 1)
 		player->angle = 270;
-	if (player->direction->W == 1)
+	if (player->direction->west == 1)
 		player->angle = 0.0f;
-	if (player->direction->S == 1)
+	if (player->direction->south == 1)
 		player->angle = 90.0f;
 }
 
@@ -49,13 +49,13 @@ void	init(t_data *data)
 	init_player_angle(data->player);
 	data->size = data->end_of_map - data->index + 1;
 	data->ptr->tile_size = 40;
-	data->FOV = 60;
+	data->fov = 60;
 	data->player->speed = 4;
 	data->win_height = data->size * data->ptr->tile_size;
 	data->win_width = data->long_line * data->ptr->tile_size;
-	data->scale = 0.2;
+	data->scale = 1;
 	data->dis_3d = (double)data->win_width
-		/ (2 * tan((double)data->FOV * M_PI / 180));
+		/ (2 * tan((double)data->fov * M_PI / 180));
 }
 
 void	init_rays_and_walls(t_data *data)
@@ -63,7 +63,7 @@ void	init_rays_and_walls(t_data *data)
 	data->ray = malloc(sizeof(t_ray));
 	if (!data->ray)
 		exit(EXIT_FAILURE);
-	data->ray->angle = data->player->angle - (data->FOV / 2);
+	data->ray->angle = data->player->angle - (data->fov / 2);
 	data->walls = malloc(sizeof(t_walls));
 	if (!data->walls)
 		exit(EXIT_FAILURE);

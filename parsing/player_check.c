@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:45:28 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/28 20:46:32 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/29 07:03:59 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	is_player(char c, t_player *player, int flag)
 		if (flag != 0)
 			return (1);
 		if (c == 'N')
-			player->direction->N++;
+			player->direction->nort++;
 		else if (c == 'E')
-			player->direction->E++;
+			player->direction->east++;
 		else if (c == 'W')
-			player->direction->W++;
+			player->direction->west++;
 		else if (c == 'S')
-			player->direction->S++;
+			player->direction->south++;
 	}
 	return (0);
 }
@@ -46,8 +46,8 @@ void	check_t_player(t_data *data)
 {
 	int	sum;
 
-	sum = data->player->direction->N + data->player->direction->E
-		+ data->player->direction->S + data->player->direction->W;
+	sum = data->player->direction->nort + data->player->direction->east
+		+ data->player->direction->south + data->player->direction->west;
 	if (sum != 1)
 		ft_error(data, "Player Error\n");
 }

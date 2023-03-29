@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 05:52:19 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 06:32:44 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 08:41:43 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ double	normalize_angle(double ray_angle)
 {
 	ray_angle = remainder(ray_angle, M_PI * 2);
 	if (ray_angle <= 0)
+	{
 		ray_angle += (M_PI * 2);
+	}
 	return (ray_angle);
 }
 
@@ -59,7 +61,7 @@ void	horizontal_intersection(t_data *data, double ray_angle, t_point *h_p)
 		&& y >= 0 && y <= data->win_height)
 	{
 		xto_check = x;
-        yto_check = y + (data->ray->ray_up ? - 1 : 0);
+		yto_check = (y + (data->ray->ray_up ? - 1 : 0));
 		a = xto_check / data->ptr->tile_size;
 		b = yto_check / data->ptr->tile_size;
 		if ((b >= data->size) || (a >= ft_strlen(data->map[b + data->index])))
@@ -85,7 +87,7 @@ void	vertical_intersection(t_data *data, double ray_angle, t_point *v_p)
 	int		b;
 	int		a;
 	double	yto_check;
-	double	xToCheck;
+	double	xto_check;
 
 	ray_angle = normalize_angle(ray_angle);
 	x = floor(data->player->x / data->ptr->tile_size) * data->ptr->tile_size;
@@ -98,9 +100,9 @@ void	vertical_intersection(t_data *data, double ray_angle, t_point *v_p)
 	ystep *= (data->ray->ray_down && ystep < 0) ? -1 : 1;
 	while (x >= 0 && x <= data->win_width && y >= 0 && y <= data->win_height)
 	{
-		xToCheck = x + (data->ray->ray_left ? -1 : 0);
+		xto_check = x + (data->ray->ray_left ? -1 : 0);
 		yto_check = y;
-		a = xToCheck / data->ptr->tile_size;
+		a = xto_check / data->ptr->tile_size;
 		b = yto_check / data->ptr->tile_size;
 		if ((b >= data->size) || (a >= ft_strlen(data->map[b + data->index])))
 			break ;

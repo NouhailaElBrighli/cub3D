@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:59:43 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 04:01:26 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 08:42:03 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 	if (flag == UP)
 		angle = data->player->angle * M_PI / 180;
 	else if (flag == DOWN)
-		angle = (data->player->angle - 180)* M_PI / 180;
+		angle = (data->player->angle - 180) * M_PI / 180;
 	else if (flag == LEFT)
 		angle = (data->player->angle + 90) * M_PI / 180;
 	else
@@ -74,41 +74,32 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 	y_next = y + (sin(angle) * data->player->speed);
 	x1 = (int)x_next / data->ptr->tile_size;
 	y1 = ((int)y_next / data->ptr->tile_size);
-	
 	if (data->map[y1 + data->index][x1] == '1')
-	{
 		return ;
-	}
-	if (data->map[y1 + 1 + data->index][x1] == '1' && data->map[y1 + data->index][x1 +  1] == '1')
+	if (data->map[y1 + 1 + data->index][x1] == '1' && data->map[y1 + data->index][x1 + 1] == '1')
 	{
-		max_x = (x1 + 1) * data->ptr->tile_size - 5;    
-		max_y = (y1 + 1) * data->ptr->tile_size - 5;
+		max_x = ((x1 + 1) * data->ptr->tile_size - 5);
+		max_y = ((y1 + 1) * data->ptr->tile_size - 5);
 		if ((int)x > max_x && (int)y > max_y)
-		{
 			return ;
-		}
 	}
-	if (data->map[y1 - 1 + data->index][x1] == '1' && data->map[y1 + data->index][x1 -  1] == '1')
+	if (data->map[y1 - 1 + data->index][x1] == '1' && data->map[y1 + data->index][x1 - 1] == '1')
 	{
-		max_x = x1 * data->ptr->tile_size + 5;    
-		max_y = y1 * data->ptr->tile_size + 5;
+		max_x = (x1 * data->ptr->tile_size + 5);
+		max_y = (y1 * data->ptr->tile_size + 5);
 		if ((int)x < max_x && (int)y < max_y)
-		{
 			return ;
-		}
 	}
 	if (data->map[y1 + data->index][x1 - 1] == '1' && data->map[y1 + 1 + data->index][x1] == '1')
 	{
-		max_x = (x1) * data->ptr->tile_size + 5;    
+		max_x = (x1) * data->ptr->tile_size + 5;
 		max_y = (y1 + 1) * data->ptr->tile_size - 5;
 		if ((int)x < max_x && (int)y > max_y)
-		{
 			return ;
-		}
 	}
 	if (data->map[y1 - 1 + data->index][x1] == '1' && data->map[y1 + data->index][x1 + 1] == '1')
 	{
-		max_x = (x1 + 1) * data->ptr->tile_size - 5;    
+		max_x = (x1 + 1) * data->ptr->tile_size - 5;
 		max_y = y1 * data->ptr->tile_size + 5;
 		if ((int)x > max_x && (int)y < max_y)
 		{
