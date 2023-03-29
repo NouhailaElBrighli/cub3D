@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:36:37 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 04:00:57 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/29 04:20:49 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ int	get_height(t_data *data)
 		count++;
 	count -= data->index;
 	return (count);
+}
+
+void	scale(t_data *data)
+{
+	data->player->radius *= data->scale;
+	data->player->speed *= data->scale;
 }
 
 int	ft_close(t_data *data)

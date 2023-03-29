@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:51:43 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/29 04:00:57 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/28 20:53:03 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	init_identifier(t_data *data)
 	data->id = malloc(sizeof(t_identifier));
 	if (!data->id)
 		exit(EXIT_FAILURE);
-	data->id->no = 0;
-	data->id->so = 0;
-	data->id->ea = 0;
-	data->id->we = 0;
-	data->id->f = 0;
-	data->id->c = 0;
+	data->id->NO = 0;
+	data->id->SO = 0;
+	data->id->EA = 0;
+	data->id->WE = 0;
+	data->id->F = 0;
+	data->id->C = 0;
 }
 
 void	init_player(t_data *data)
@@ -33,10 +33,10 @@ void	init_player(t_data *data)
 	data->player->direction = malloc(sizeof(t_type));
 	if (!data->player)
 		exit(EXIT_FAILURE);
-	data->player->direction->n = 0;
-	data->player->direction->e = 0;
-	data->player->direction->w = 0;
-	data->player->direction->s = 0;
+	data->player->direction->N = 0;
+	data->player->direction->E = 0;
+	data->player->direction->W = 0;
+	data->player->direction->S = 0;
 }
 
 void	init_colors(t_data *data)

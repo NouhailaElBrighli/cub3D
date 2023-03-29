@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:53:28 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/29 03:41:02 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 04:38:39 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,19 @@ void	init_player_coordinates(t_data *data, int x, int y);
 void	init_move_and_rot(t_data *data);
 void	casting_rays(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void	DrawCircle(t_data *data, double x, double y, double r);
-void	drawline(t_data *data, double angle, double x_start, double y_start, int flag);
+void	draw_circle(t_data *data, double x, double y, double r);
+void	drawline(t_data *data, double angle, double x_start,
+			double y_start, int flag);
 void	draw_walls(t_data *data, char *row, int nbr_row);
-void	DrawRays(t_data *data);
-void	DrawPlayer(t_data *data, char *row, int nbr_row);
+void	draw_rays(t_data *data);
+void	draw_player(t_data *data, char *row, int nbr_row);
 void	init(t_data *data);
 int		get_height(t_data *data);
 int		ft_close(t_data *data);
 int		get_height(t_data *data);
 int		check_invalid_moves(t_data *data);
 int		sum_move_rot(t_data *data);
-void	render_2D(t_data *data);
+void	render_2d(t_data *data);
 int		render_next_frame(t_data *data);
 int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
@@ -93,5 +94,5 @@ void	scale(t_data *data);
 void	init_rays_and_walls(t_data *data);
 void	get_xend_yend(t_data *data, double *x_end, double *y_end,
 			double ray_angle);
-
+void	draw_wall_3d(t_data *data, double len);
 #endif

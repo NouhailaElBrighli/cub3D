@@ -7,7 +7,6 @@ CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3
 SRC =	main.c\
 		parsing/parsing.c\
 		parsing/free.c\
-		parsing/test.c\
 		parsing/get_next_line_utils.c\
 		parsing/get_next_line.c\
 		parsing/libft/ft_split.c\
@@ -22,7 +21,8 @@ SRC =	main.c\
 		execution/map2D.c\
 		execution/init.c\
 		execution/utils.c\
-		execution/drawing.c\
+		execution/drawing_1.c\
+		execution/drawing_2.c\
 		execution/hook.c\
 		execution/raycasting.c\
 

@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:19:17 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/29 04:00:57 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/28 20:34:18 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,24 @@ int	is_path(t_data *data, char *s)
 	int	i;
 
 	i = 0;
-	if (ft_strncmp(&s[i], "NO", ft_strlen("NO")) == 0 && data->id->no != 1)
+	if (ft_strncmp(&s[i], "NO", ft_strlen("NO")) == 0 && data->id->NO != 1)
 	{
-		data->path[0] = check_path(data, &s[i + 2], &data->id->no);
+		data->path[0] = check_path(data, &s[i + 2], &data->id->NO);
 		return (1);
 	}
-	else if (ft_strncmp(&s[i], "SO", ft_strlen("SO")) == 0 && data->id->so != 1)
+	else if (ft_strncmp(&s[i], "SO", ft_strlen("SO")) == 0 && data->id->SO != 1)
 	{
-		data->path[1] = check_path(data, &s[i + 2], &data->id->so);
+		data->path[1] = check_path(data, &s[i + 2], &data->id->SO);
 		return (1);
 	}
-	else if (ft_strncmp(&s[i], "WE", ft_strlen("WE")) == 0 && data->id->we != 1)
+	else if (ft_strncmp(&s[i], "WE", ft_strlen("WE")) == 0 && data->id->WE != 1)
 	{
-		data->path[2] = check_path(data, &s[i + 2], &data->id->we);
+		data->path[2] = check_path(data, &s[i + 2], &data->id->WE);
 		return (1);
 	}
-	else if (ft_strncmp(&s[i], "EA", ft_strlen("EA")) == 0 && data->id->ea != 1)
+	else if (ft_strncmp(&s[i], "EA", ft_strlen("EA")) == 0 && data->id->EA != 1)
 	{
-		data->path[3] = check_path(data, &s[i + 2], &data->id->ea);
+		data->path[3] = check_path(data, &s[i + 2], &data->id->EA);
 		return (1);
 	}
 	return (0);
@@ -90,14 +90,14 @@ int	check_identifier(char *s, t_data *data)
 		return (0);
 	if (is_path(data, &s[i]))
 		return (0);
-	else if (ft_strncmp(&s[i], "F", ft_strlen("F")) == 0 && data->id->f != 1)
+	else if (ft_strncmp(&s[i], "F", ft_strlen("F")) == 0 && data->id->F != 1)
 	{
-		check_rgb(data, &s[i + 1], &data->id->f, data->floor);
+		check_rgb(data, &s[i + 1], &data->id->F, data->floor);
 		return (0);
 	}
-	else if (ft_strncmp(&s[i], "C", ft_strlen("C")) == 0 && data->id->c != 1)
+	else if (ft_strncmp(&s[i], "C", ft_strlen("C")) == 0 && data->id->C != 1)
 	{
-		check_rgb(data, &s[i + 1], &data->id->c, data->ceiling);
+		check_rgb(data, &s[i + 1], &data->id->C, data->ceiling);
 		return (0);
 	}
 	else

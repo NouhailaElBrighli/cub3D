@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 04:00:33 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/29 06:24:17 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,29 @@ enum
 {
 	KEY_PRESS = 2,
 	KEY_RELEASE = 3,
+	ON_MOUSEDOWN = 4,
+	ON_MOUSEUP = 5,
+	ON_MOUSEMOVE = 6,
+	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
 
 typedef struct s_identifier
 {
-	int	no;
-	int	so;
-	int	we;
-	int	ea;
-	int	f;
-	int	c;
+	int	NO;
+	int	SO;
+	int	WE;
+	int	EA;
+	int	F;
+	int	C;
 }t_identifier;
 
 typedef struct s_type
 {
-	int	n;
-	int e;
-	int w;
-	int s;
+	int	N;
+	int E;
+	int W;
+	int S;
 }t_type;
 
 typedef struct s_player
@@ -73,10 +77,10 @@ typedef struct s_ray
 {
 	double	angle;
     double	distance;
-	int		rayUp;
-	int		rayDown;
-	int		rayLeft;
-	int		rayRight;
+	int		ray_up;
+	int		ray_down;
+	int		ray_left;
+	int		ray_right;
 }t_ray;
 
 typedef struct	s_data
@@ -120,5 +124,18 @@ enum
 	LEFT,
 	RIGHT,
 };
+
+typedef struct s_drawline_data
+{
+	double	x_incr;
+	double	y_incr;
+	double	x_end;
+	double	y_end;
+    int		step;
+	double	dy;
+	double	dx;
+	double	x;
+	double	y;
+}t_drawline_data;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:50:02 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/29 04:00:57 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/28 20:51:07 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ char	*get_path(char *s)
 
 void	check_id(t_data *data)
 {
-	if (data->id->no != 1 || data->id->so != 1 || data->id->we != 1
-		|| data->id->ea != 1 || data->id->f != 1 || data->id->c != 1)
+	if (data->id->NO != 1 || data->id->SO != 1 || data->id->WE != 1
+		|| data->id->EA != 1 || data->id->F != 1 || data->id->C != 1)
 		ft_error(data, "Error\n");
 }
 
