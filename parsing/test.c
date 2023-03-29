@@ -2,12 +2,12 @@
 
 void print_id(t_identifier *id)
 {
-	printf("NO == %d\n", id->NO);
-	printf("SO == %d\n", id->SO);
-	printf("WE == %d\n", id->WE);
-	printf("EA == %d\n", id->EA);
-	printf("C == %d\n", id->C);
-	printf("F == %d\n", id->F);
+	printf("NO == %d\n", id->no);
+	printf("SO == %d\n", id->so);
+	printf("WE == %d\n", id->we);
+	printf("EA == %d\n", id->ea);
+	printf("C == %d\n", id->c);
+	printf("F == %d\n", id->f);
 }
 
 void	print_tab(char **s)
@@ -36,10 +36,10 @@ void print_colors(int *color)
 
 void	print_player(t_player *player)
 {
-	printf("player->N == %d\n", player->direction->N);
-	printf("player->S == %d\n", player->direction->S);
-	printf("player->E == %d\n", player->direction->E);
-	printf("player->W == %d\n", player->direction->W);
+	printf("player->n == %d\n", player->direction->n);
+	printf("player->s == %d\n", player->direction->s);
+	printf("player->e == %d\n", player->direction->e);
+	printf("player->w == %d\n", player->direction->w);
 }
 
 void print_data(t_data *data)

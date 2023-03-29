@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 03:25:19 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 04:00:33 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,25 @@ enum
 {
 	KEY_PRESS = 2,
 	KEY_RELEASE = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
 
 typedef struct s_identifier
 {
-	int	NO;
-	int	SO;
-	int	WE;
-	int	EA;
-	int	F;
-	int	C;
+	int	no;
+	int	so;
+	int	we;
+	int	ea;
+	int	f;
+	int	c;
 }t_identifier;
 
 typedef struct s_type
 {
-	int	N;
-	int E;
-	int W;
-	int S;
+	int	n;
+	int e;
+	int w;
+	int s;
 }t_type;
 
 typedef struct s_player

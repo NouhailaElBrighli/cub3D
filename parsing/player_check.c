@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:45:28 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/28 20:46:32 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/29 04:00:57 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ int	is_player(char c, t_player *player, int flag)
 		if (flag != 0)
 			return (1);
 		if (c == 'N')
-			player->direction->N++;
+			player->direction->n++;
 		else if (c == 'E')
-			player->direction->E++;
+			player->direction->e++;
 		else if (c == 'W')
-			player->direction->W++;
+			player->direction->w++;
 		else if (c == 'S')
-			player->direction->S++;
+			player->direction->s++;
 	}
 	return (0);
 }
@@ -46,8 +46,8 @@ void	check_t_player(t_data *data)
 {
 	int	sum;
 
-	sum = data->player->direction->N + data->player->direction->E
-		+ data->player->direction->S + data->player->direction->W;
+	sum = data->player->direction->n + data->player->direction->e
+		+ data->player->direction->s + data->player->direction->w;
 	if (sum != 1)
 		ft_error(data, "Player Error\n");
 }

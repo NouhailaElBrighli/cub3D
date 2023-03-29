@@ -21,13 +21,13 @@ void	init_move_and_rot(t_data *data)
 
 void	init_player_angle(t_player *player)
 {
-	if (player->direction->E == 1)
+	if (player->direction->e == 1)
 		player->angle = 180.0f;
-	if (player->direction->N == 1)
+	if (player->direction->n == 1)
 		player->angle = 270;
-	if (player->direction->W == 1)
+	if (player->direction->w == 1)
 		player->angle = 0.0f;
-	if (player->direction->S == 1)
+	if (player->direction->s == 1)
 		player->angle = 90.0f;
 }
 
