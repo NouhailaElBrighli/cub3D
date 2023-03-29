@@ -22,11 +22,11 @@ void	render_2D(t_data *data)
 	row = data->index;
 	while (data->map[row])
 	{
-		Draw_walls(data, data->map[row], row - data->index);
+		draw_walls(data, data->map[row], row - data->index);
 		row++;
 	}
 	DrawCircle(data, data->player->x, data->player->y, data->player->radius);
-	DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, 1);
+	drawline(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, 1);
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
@@ -43,7 +43,7 @@ void	draw_2Dmap(t_data *data)
 	row = data->index;
 	while (data->map[row] && row <= data->end_of_map)
 	{
-		Draw_walls(data, data->map[row], row - data->index);
+		draw_walls(data, data->map[row], row - data->index);
 		row++;
 	}
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);

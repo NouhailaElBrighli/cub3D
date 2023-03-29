@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   drawing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/29 03:12:00 by namine            #+#    #+#             */
+/*   Updated: 2023/03/29 03:44:29 by namine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/parsing.h"
 
 int	create_trgb(int t, int r, int g, int b)
@@ -40,13 +52,13 @@ void	draw_line_floor(t_data *data, int y_start, int x_start)
 	}
 }
 
-void	Draw_Wall_3D(t_data *data, double len)
+void	draw_wall_3d(t_data *data, double len)
 {
 	int 	y_end;
 	double	exact_len;
 	double angle;
 
-	angle = (data->rays->angle - data->player->angle) * M_PI / 180;
+	angle = (data->ray->angle - data->player->angle) * M_PI / 180;
 	exact_len = cos(angle) * len;
 	// if (exact_len == 0)
 	// 	data->walls->height = (double)data->win_height;
@@ -60,33 +72,35 @@ void	Draw_Wall_3D(t_data *data, double len)
 	data->walls->x_start++;
 }
 
-void	DrawLine(t_data *data,  double angle ,double x_start, double y_start, int flag)
+void	drawline(t_data *data, double angle, double x_start, double y_start, int flag)
 {
-	double x_end = 0;
-	double y_end = 0;
+	double	x_end;
+	double	y_end;
+	double	dy;
+	double	dx;
+	double	x_incr;
+	double	y_incr;
+	double	x;
+	double	y;
+    int		step;
 
+	x_end = 0;
+	y_end = 0;
 	get_xend_yend(data, &x_end, &y_end, angle);
-
-    double dy = y_end - y_start;
-	double dx = x_end - x_start;
-
-    int step;
-
+    dy = y_end - y_start;
+	dx = x_end - x_start;
     if (fabs(dx) > fabs(dy))
         step = fabs(dx);
     else
         step = fabs(dy);
-
-    double x_incr = dx / step;
-    double y_incr = dy / step;
-
-    double x = x_start;
-    double y = y_start;
-
+    x_incr = dx / step;
+    y_incr = dy / step;
+    x = x_start;
+    y = y_start;
     for (int i = 0; i <= step; i++)
 	{
 		if (flag == 1)
-			my_mlx_pixel_put(data, round(x), round(y), 0xE24666); //don't round the value
+			my_mlx_pixel_put(data, round(x), round(y), 0xE24666);
         x += x_incr;
         y += y_incr;
     }
@@ -109,7 +123,7 @@ void	DrawCircle(t_data *data, double x, double y, double r)
 	}
 }
 
-void	Draw_walls(t_data *data, char *row, int nbr_row)
+void	draw_walls(t_data *data, char *row, int nbr_row)
 {
 	int i;
 
@@ -133,13 +147,12 @@ void	DrawRays(t_data *data)
 	int i;
 
 	i = 0;
-	data->rays->angle = data->player->angle - ((double)data->FOV / 2);
-	data->walls->x_start = 0;
-	while (i < data->rays->num_rays)
+	data->ray->angle = data->player->angle - ((double)data->FOV / 2);
+	while (i < (double)data->win_width)
 	{
-		DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y, 0);
-		Draw_Wall_3D(data, data->rays->distance); // uncomment this
-		data->rays->angle += (double)data->FOV / data->rays->num_rays; //typecast obligator
+		drawline(data, data->ray->angle * M_PI / 180, data->player->x, data->player->y, 0);
+		draw_wall_3d(data, data->ray->distance); // uncomment this
+		data->ray->angle += (double)data->FOV / (double)data->win_width; //typecast obligator
 		i++;
 	}
 	data->walls->x_start = 1;
@@ -164,7 +177,7 @@ void	DrawPlayer(t_data *data, char *row, int nbr_row)
 			init_player_coordinates(data, (data->ptr->tile_size / 2) + (i * data->ptr->tile_size), (data->ptr->tile_size / 2) + (nbr_row * data->ptr->tile_size));
 			scale(data);
 			DrawCircle(data, data->player->x, data->player->y, data->player->radius);
-			DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, 1);
+			drawline(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, 0);
 			DrawRays(data);
 			break;
 		}

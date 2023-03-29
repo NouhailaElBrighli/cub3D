@@ -1,7 +1,20 @@
-#ifndef CUBE_H
-#define CUBE_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cube.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
+/*   Updated: 2023/03/29 03:25:19 by namine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-enum {
+#ifndef CUBE_H
+# define CUBE_H
+
+enum
+{
 	KEY_PRESS = 2,
 	KEY_RELEASE = 3,
 	ON_MOUSEDOWN = 4,
@@ -13,12 +26,12 @@ enum {
 
 typedef struct s_identifier
 {
-	int NO;
-	int SO;
-	int WE;
-	int EA;
-	int F;
-	int C;
+	int	NO;
+	int	SO;
+	int	WE;
+	int	EA;
+	int	F;
+	int	C;
 }t_identifier;
 
 typedef struct s_type
@@ -60,18 +73,15 @@ typedef struct s_walls
 	int	y_start;
 }t_walls;
 
-typedef struct s_rays
+typedef struct s_ray
 {
 	double	angle;
-	double	wallHitX;
-    double	wallHitY;
     double	distance;
-    // int		wasHitVertical;
-    // int		wallHitContent;
-	int		num_rays;
-	int		ray_nbr;
-	double	len;
-}t_rays;
+	int		rayUp;
+	int		rayDown;
+	int		rayLeft;
+	int		rayRight;
+}t_ray;
 
 typedef struct	s_data
 {
@@ -86,7 +96,7 @@ typedef struct	s_data
 	int				long_line;
 	int				size;
 	t_cub3d			*ptr;
-	t_rays			*rays;
+	t_ray			*ray;
 	t_walls			*walls;
 	int				FOV;
 	int				move_left;
@@ -101,7 +111,14 @@ typedef struct	s_data
 	int				win_height;
 }t_data;
 
-enum {
+typedef struct s_point
+{
+	double x;
+	double y;
+}t_point;
+
+enum
+{
 	UP,
 	DOWN,
 	LEFT,

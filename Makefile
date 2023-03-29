@@ -4,8 +4,6 @@ CC = gcc
 
 CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3
 
-#CFLAGS =  -fsanitize=address -g3
-
 SRC =	main.c\
 		parsing/parsing.c\
 		parsing/free.c\
@@ -26,6 +24,7 @@ SRC =	main.c\
 		execution/utils.c\
 		execution/drawing.c\
 		execution/hook.c\
+		execution/raycasting.c\
 
 OBJ = $(SRC:.c=.o)
 

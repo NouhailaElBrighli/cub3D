@@ -47,11 +47,11 @@ void	init(t_data *data)
 
 void	init_rays_and_walls(t_data *data)
 {
-	data->rays = malloc(sizeof(t_rays));
-	if (!data->rays)
+	data->ray = malloc(sizeof(t_ray));
+	if (!data->ray)
 		exit(EXIT_FAILURE);
-	data->rays->angle = data->player->angle - (data->FOV  / 2);
-	data->rays->num_rays = data->win_width;
+	data->ray->angle = data->player->angle - (data->FOV  / 2);
+	// data->rays->num_rays = data->win_width;
 	data->walls = malloc(sizeof(t_walls));
 	if (!data->walls)
 		exit(EXIT_FAILURE);
