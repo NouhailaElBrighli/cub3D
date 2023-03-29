@@ -41,17 +41,17 @@ void	init(t_data *data)
 	data->player->speed = 4;
 	data->win_height = data->size * data->ptr->tile_size;
 	data->win_width = data->long_line * data->ptr->tile_size;
-	data->scale = 1;
+	data->scale = 0.2;
 	data->dis_3d = (double)data->win_width / (2 * tan((double)data->FOV * M_PI / 180));
 }
 
 void	init_rays_and_walls(t_data *data)
 {
-	data->ray = malloc(sizeof(t_ray));
-	if (!data->ray)
+	data->rays = malloc(sizeof(t_rays));
+	if (!data->rays)
 		exit(EXIT_FAILURE);
-	data->ray->angle = data->player->angle - (data->FOV  / 2);
-	// data->rays->num_rays = data->win_width;
+	data->rays->angle = data->player->angle - (data->FOV  / 2);
+	data->rays->num_rays = data->win_width;
 	data->walls = malloc(sizeof(t_walls));
 	if (!data->walls)
 		exit(EXIT_FAILURE);

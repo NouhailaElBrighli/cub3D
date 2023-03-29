@@ -18,6 +18,7 @@ void	render_2D(t_data *data)
 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
 	data->ptr->img = mlx_new_image(data->ptr->mlx, data->win_width, data->win_height);
 	data->ptr->addr = mlx_get_data_addr(data->ptr->img , &(data->ptr->bits_per_pixel), &(data->ptr->line_length), &(data->ptr->endian));
+	DrawRays(data);
 	row = data->index;
 	while (data->map[row])
 	{
@@ -25,8 +26,7 @@ void	render_2D(t_data *data)
 		row++;
 	}
 	DrawCircle(data, data->player->x, data->player->y, data->player->radius);
-	// DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, );
-	DrawRays(data);
+	DrawLine(data, data->player->angle * M_PI / 180 ,data->player->x, data->player->y, 1);
 	mlx_put_image_to_window(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
