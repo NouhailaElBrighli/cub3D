@@ -24,6 +24,7 @@ SRC =	main.c\
 		execution/utils.c\
 		execution/drawing.c\
 		execution/hook.c\
+		execution/raycasting.c\
 
 OBJ = $(SRC:.c=.o)
 

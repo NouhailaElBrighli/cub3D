@@ -15,7 +15,7 @@ void	Draw_Wall_3D(t_data *data, double len)
 	double	exact_len;
 	double angle;
 
-	angle = (data->rays->angle - data->player->angle) * M_PI / 180;
+	angle = (data->ray->angle - data->player->angle) * M_PI / 180;
 	// printf("exact len == %f, len == %f\n", exact_len, len);
 	exact_len = cos(angle) * len;
 	if (exact_len == 0)
@@ -100,12 +100,12 @@ void	DrawRays(t_data *data)
 	int i;
 
 	i = 0;
-	data->rays->angle = data->player->angle - ((double)data->FOV / 2);
-	while (i < data->rays->num_rays)
+	data->ray->angle = data->player->angle - ((double)data->FOV / 2);
+	while (i < (double)data->win_width)
 	{
-		DrawLine(data, data->rays->angle * M_PI / 180, data->player->x, data->player->y);
+		DrawLine(data, data->ray->angle * M_PI / 180, data->player->x, data->player->y);
 		// Draw_Wall_3D(data, data->rays->distance); // uncomment this
-		data->rays->angle += (double)data->FOV / data->rays->num_rays; //typecast obligator
+		data->ray->angle += (double)data->FOV / (double)data->win_width; //typecast obligator
 		i++;
 	}
 	data->walls->x_start = 1;

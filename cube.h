@@ -60,18 +60,15 @@ typedef struct s_walls
 	int	y_start;
 }t_walls;
 
-typedef struct s_rays
+typedef struct s_ray
 {
 	double	angle;
-	double	wallHitX;
-    double	wallHitY;
     double	distance;
-    // int		wasHitVertical;
-    // int		wallHitContent;
-	int		num_rays;
-	int		ray_nbr;
-	double	len;
-}t_rays;
+	int		rayUp;
+	int		rayDown;
+	int		rayLeft;
+	int		rayRight;
+}t_ray;
 
 typedef struct	s_data
 {
@@ -86,7 +83,7 @@ typedef struct	s_data
 	int				long_line;
 	int				size;
 	t_cub3d			*ptr;
-	t_rays			*rays;
+	t_ray			*ray;
 	t_walls			*walls;
 	int				FOV;
 	int				move_left;
@@ -101,7 +98,8 @@ typedef struct	s_data
 	int				win_height;
 }t_data;
 
-enum {
+enum
+{
 	UP,
 	DOWN,
 	LEFT,
