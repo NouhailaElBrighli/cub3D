@@ -29,7 +29,7 @@ int		ft_close(t_data *data)
 	exit(0);
 }
 
-double	normalizeAngle( double rayAngle)
+double	normalizeAngle(double rayAngle)
 {
 	rayAngle = remainder(rayAngle, M_PI * 2);
 	if (rayAngle < 0)
@@ -37,7 +37,7 @@ double	normalizeAngle( double rayAngle)
 	return (rayAngle);
 }
 
-double distanceBetweenPoints(double x1, double y1, double x2, double y2)
+double find_distance(double x1, double y1, double x2, double y2)
 {
     return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
 }
@@ -48,11 +48,8 @@ typedef struct s_point
 	double y;
 }t_point;
 
-
 void horizontal_intersection(t_data *data, double rayAngle, t_point *h_p)
 {
-	// TODO horizontal_intersection
-
 	double 	xstep;
 	double 	ystep;
 	double	xintercept;
@@ -61,12 +58,8 @@ void horizontal_intersection(t_data *data, double rayAngle, t_point *h_p)
 	int		isRayFacingDown;
 	int		isRayFacingLeft;
 	int		isRayFacingRight;
-	double	horzWallHitX = 0;
-    double	horzWallHitY = 0;
-	int foundHorzWallHit = 0;
 
 	rayAngle = normalizeAngle(rayAngle);
-	
 	isRayFacingDown = rayAngle > 0 && rayAngle < M_PI;
 	isRayFacingUp   = !isRayFacingDown;
 	isRayFacingRight = (rayAngle < (0.5 * M_PI)) || (rayAngle > (1.5 * M_PI));
@@ -75,7 +68,6 @@ void horizontal_intersection(t_data *data, double rayAngle, t_point *h_p)
 	// find our first intersection 
 	yintercept = floor(data->player->y / data->ptr->tile_size) * data->ptr->tile_size;
 	yintercept += isRayFacingDown ? data->ptr->tile_size : 0;
-	
 	xintercept = data->player->x + ((yintercept - data->player->y) / tan(rayAngle));
 
 	ystep = data->ptr->tile_size;
@@ -103,9 +95,6 @@ void horizontal_intersection(t_data *data, double rayAngle, t_point *h_p)
 		}
 		if (data->map[b + data->index][a] == '1')
 		{
-			horzWallHitX = nextHorzTouchX;
-            horzWallHitY = nextHorzTouchY;
-			foundHorzWallHit = 1;
 			break;
 		}
 		else
@@ -128,9 +117,7 @@ void vertical_intersection(t_data *data, double rayAngle, t_point *v_p)
 	int		isRayFacingDown;
 	int		isRayFacingLeft;
 	int		isRayFacingRight;
-	int 	foundVertWallHit = 0;
-	double vertWallHitX = 0;
-    double vertWallHitY = 0;
+
 	rayAngle = normalizeAngle(rayAngle);
 	
 	isRayFacingDown = rayAngle > 0 && rayAngle < M_PI;
@@ -169,9 +156,6 @@ void vertical_intersection(t_data *data, double rayAngle, t_point *v_p)
 		}
 		if (data->map[b + data->index][a] == '1')
 		{
-			vertWallHitX = nextVertTouchX;
-            vertWallHitY = nextVertTouchY;
-			foundVertWallHit = 1;
 			break;
 		} 
 		else
@@ -186,27 +170,27 @@ void vertical_intersection(t_data *data, double rayAngle, t_point *v_p)
 
 void	get_xend_yend(t_data *data, double *x_end, double *y_end, double rayAngle)
 {
-	t_point	v_p;
-	t_point	h_p;
 	double	horizontal_distance;
 	double	vertical_distance;
+	t_point	v_p;
+	t_point	h_p;
 
+	horizontal_distance = 0;
+	vertical_distance = 0;
 	horizontal_intersection(data, rayAngle, &h_p);
 	vertical_intersection(data, rayAngle, &v_p);
-	horizontal_distance = distanceBetweenPoints(data->player->x, data->player->y, h_p.x, h_p.y);
-    vertical_distance = distanceBetweenPoints(data->player->x, data->player->y, v_p.x, v_p.y);
+	horizontal_distance = find_distance(data->player->x, data->player->y, h_p.x, h_p.y);
+    vertical_distance = find_distance(data->player->x, data->player->y, v_p.x, v_p.y);
     if (vertical_distance < horizontal_distance)
 	{
 		*x_end = v_p.x;
 		*y_end = v_p.y;
 		data->rays->distance = vertical_distance;
-		// fprintf(stderr, "distance == %f", data->rays->distance);
     }
 	else
 	{
 		*x_end = h_p.x;
 		*y_end = h_p.y;
 		data->rays->distance = horizontal_distance;
-		// fprintf(stderr, "distance == %f", data->rays->distance);
     }
 }

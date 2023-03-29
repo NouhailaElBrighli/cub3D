@@ -32,10 +32,6 @@ void	DrawLine(t_data *data,  double angle ,double x_start, double y_start)
 {
 	double x_end = 0;
 	double y_end = 0;
-	
-	// data->rays->len = get_exact_length_of_the_line(data, angle, x_start, y_start);
-	// x_end = x_start + (cos(angle) * data->rays->len);
-	// y_end = y_start + (sin(angle) * data->rays->len);
 
 	get_xend_yend(data, &x_end, &y_end, angle);
 
@@ -57,11 +53,10 @@ void	DrawLine(t_data *data,  double angle ,double x_start, double y_start)
 
     for (int i = 0; i <= step; i++)
 	{
-		my_mlx_pixel_put(data, round(x), round(y), 0xE24666); //don't round the value
+		my_mlx_pixel_put(data, round(x), round(y), 0xE24666);
         x += x_incr;
         y += y_incr;
     }
-	// return (data->rays->len);
 }
 
 void	DrawCircle(t_data *data, double x, double y, double r)
