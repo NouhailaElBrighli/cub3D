@@ -3,15 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 06:58:29 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 06:10:39 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 # define CUBE_H
+
+typedef struct s_drawline_data
+{
+	double	x_incr;
+	double	y_incr;
+	double	x_end;
+	double	y_end;
+	int		step;
+	double	dy;
+	double	dx;
+	double	x;
+	double	y;
+}t_drawline_data;
 
 enum
 {
@@ -81,6 +94,10 @@ typedef struct s_ray
 	int		ray_down;
 	int		ray_left;
 	int		ray_right;
+	int		vertical_hit;
+	int		horizontal_hit;
+	int		x_hit;
+	int		y_hit;
 }t_ray;
 
 typedef struct s_data
@@ -125,17 +142,5 @@ enum
 	RIGHT,
 };
 
-typedef struct s_drawline_data
-{
-	double	x_incr;
-	double	y_incr;
-	double	x_end;
-	double	y_end;
-	int		step;
-	double	dy;
-	double	dx;
-	double	x;
-	double	y;
-}t_drawline_data;
 
 #endif

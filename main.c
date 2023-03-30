@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:25:55 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 03:36:08 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/29 22:45:54 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 		exit(EXIT_SUCCESS);
 	data = malloc(sizeof(t_data));
 	if (!data)
-		exit(EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	init_identifier(data);
 	parsing(av[1], data);
 	execution(data);

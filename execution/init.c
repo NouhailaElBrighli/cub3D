@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 08:15:33 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 06:11:39 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,28 @@ void	init(t_data *data)
 {
 	init_move_and_rot(data);
 	init_player_angle(data->player);
+	data->ray = malloc(sizeof(t_ray));
+	if (!data->ray)
+		exit(EXIT_FAILURE);
+	data->walls = malloc(sizeof(t_walls));
+	if (!data->walls)
+		exit(EXIT_FAILURE);
 	data->size = data->end_of_map - data->index + 1;
 	data->ptr->tile_size = 40;
 	data->fov = 60;
-	data->player->speed = 4;
+	data->player->speed = 5;
 	data->win_height = data->size * data->ptr->tile_size;
 	data->win_width = data->long_line * data->ptr->tile_size;
-	data->scale = 1;
+	data->scale = 0.2;
 	data->dis_3d = (double)data->win_width
 		/ (2 * tan((double)data->fov * M_PI / 180));
 }
 
 void	init_rays_and_walls(t_data *data)
 {
-	data->ray = malloc(sizeof(t_ray));
-	if (!data->ray)
-		exit(EXIT_FAILURE);
+	data->ray->vertical_hit = 0;
+	data->ray->horizontal_hit = 0;
 	data->ray->angle = data->player->angle - (data->fov / 2);
-	data->walls = malloc(sizeof(t_walls));
-	if (!data->walls)
-		exit(EXIT_FAILURE);
 	data->walls->x_start = 0;
 	data->walls->y_start = 0;
 }

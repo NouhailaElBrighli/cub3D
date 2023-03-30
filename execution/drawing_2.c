@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 04:23:41 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 08:53:31 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 06:34:17 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	drawline(t_data *data, double angle, double x_start, double y_start, int fl
 	i = 0;
 	while (i <= line.step)
 	{
-		if (flag == 1)
+		if (flag == 0)
 			my_mlx_pixel_put(data, round(line.x), round(line.y), 0xE24666);
 		line.x += line.x_incr;
 		line.y += line.y_incr;
@@ -81,7 +81,7 @@ void	draw_walls(t_data *data, char *row, int nbr_row)
 				while (y < data->ptr->tile_size)
 				{
 					my_mlx_pixel_put(data, x + (i * data->ptr->tile_size),
-						y + (nbr_row * data->ptr->tile_size), 0x000000);
+						y + (nbr_row * data->ptr->tile_size), 0xFFFFFF);
 					y++;
 				}
 				x++;
@@ -101,10 +101,12 @@ void	draw_rays(t_data *data)
 	{
 		drawline(data, data->ray->angle * M_PI / \
 		180, data->player->x, data->player->y, 0);
-		// draw_wall_3d(data, data->ray->distance);
+		draw_wall_3d(data, data->ray->distance);
 		data->ray->angle += (double)data->fov / \
 		(double)data->win_width;
 		i++;
+		data->ray->vertical_hit = 0;
+		data->ray->horizontal_hit = 0;
 	}
 	data->walls->x_start = 1;
 }
@@ -127,7 +129,7 @@ void	draw_player(t_data *data, char *row, int nbr_row)
 			(data, data->player->x, data->player->y, data->player->radius);
 			drawline
 			(data, data->player->angle * M_PI / 180,
-			data->player->x, data->player->y, 0);
+			data->player->x, data->player->y, 1);
 			draw_rays(data);
 			break ;
 		}

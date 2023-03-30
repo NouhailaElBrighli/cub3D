@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:36:37 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 04:20:49 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 05:56:37 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,6 @@ int	check_invalid_moves(t_data *data)
 		(data->rot_left == 1 && data->rot_right == 1))
 		return (0);
 	return (1);
-}
-
-int	get_height(t_data *data)
-{
-	int	count;
-
-	count = data->index;
-	while (data->map[count])
-		count++;
-	count -= data->index;
-	return (count);
 }
 
 void	scale(t_data *data)

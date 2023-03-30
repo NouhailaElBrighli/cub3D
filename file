@@ -1,0 +1,5 @@
+while [ 1 ]
+do 
+    leaks cub3D | grep "leaks for"
+    sleep 1
+done

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:50:46 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 04:38:37 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 06:39:40 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	render_2d(t_data *data)
 {
 	int		row;
 
+	mlx_destroy_image(data->ptr->mlx, data->ptr->img);
 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
 	data->ptr->img = mlx_new_image
 		(data->ptr->mlx, data->win_width, data->win_height);
@@ -73,8 +74,9 @@ void	execution(t_data *data)
 	data->ptr = malloc(sizeof(t_cub3d));
 	data->ptr->mlx = mlx_init();
 	if (!data->ptr->mlx)
-		return ;
+		exit(EXIT_FAILURE);
 	init(data);
+	data->ptr->tile_size *= data->scale;
 	data->ptr->win = mlx_new_window
 		(data->ptr->mlx, data->win_width, data->win_height, "cub3d");
 	data->ptr->img = mlx_new_image
@@ -82,7 +84,6 @@ void	execution(t_data *data)
 	data->ptr->addr = mlx_get_data_addr
 		(data->ptr->img, &(data->ptr->bits_per_pixel),
 			&(data->ptr->line_length), &(data->ptr->endian));
-	data->ptr->tile_size *= data->scale;
 	draw_2dmap(data);
 	mlx_hook(data->ptr->win, ON_DESTROY, 1L << 0, ft_close, data);
 	mlx_hook(data->ptr->win, KEY_PRESS, 0, key_press, data);

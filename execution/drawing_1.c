@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:12:00 by namine            #+#    #+#             */
-/*   Updated: 2023/03/29 04:27:51 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 06:21:35 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,24 @@ int	create_trgb(int t, int r, int g, int b)
 
 void	draw_line_of_wall(t_data *data, int y_start, int x_start, int y_end)
 {
+	int	color = 0xFFFFFF;
+	if (data->ray->horizontal_hit == 1)
+	{
+		if (data->player->y > data->ray->y_hit)
+			color = 0xdf83e2;
+		else
+			color = 0x8883fd;
+	}
+	else
+	{
+		if (data->player->x > data->ray->x_hit)
+			color = 0x7cff47;
+		else
+			color = 0xff0001;
+	}
 	while (y_start < y_end)
 	{
-		my_mlx_pixel_put(data, x_start, y_start, 0xFFFFFF);
+		my_mlx_pixel_put(data, x_start, y_start, color);
 		y_start++;
 	}
 }
