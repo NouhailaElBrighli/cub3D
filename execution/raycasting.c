@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 05:52:19 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 06:11:16 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:53:07 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,19 +135,18 @@ void	get_xend_yend(t_data *data, double *x_end, double *y_end, double ray_angle)
 	{
 		*x_end = v_p.x;
 		*y_end = v_p.y;
-		data->ray->x_hit = *x_end;
-		data->ray->y_hit = *y_end;
-		data->ray->vertical_hit = 1;
+		data->ray->flag = 'v';
+		data->ray->x = *x_end;
+		data->ray->y = *y_end;
 		data->ray->distance = vertical_distance;
 	}
 	else
 	{
 		*x_end = h_p.x;
 		*y_end = h_p.y;
-		data->ray->x_hit = *x_end;
-		data->ray->y_hit = *y_end;
-		data->ray->horizontal_hit = 1;
+		data->ray->flag = 'h';
+		data->ray->x = *x_end;
+		data->ray->y = *y_end;
 		data->ray->distance = horizontal_distance;
 	}
 }
-

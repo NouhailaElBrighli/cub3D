@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:53:28 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/30 06:11:23 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:58:35 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ void	init_move_and_rot(t_data *data);
 void	casting_rays(t_data *data);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw_circle(t_data *data, double x, double y, double r);
-void	drawline(t_data *data, double angle, double x_start,
-			double y_start, int flag);
+void	drawline(t_data *data, double angle, int flag);
 void	draw_walls(t_data *data, char *row, int nbr_row);
 void	draw_rays(t_data *data);
 void	draw_player(t_data *data, char *row, int nbr_row);

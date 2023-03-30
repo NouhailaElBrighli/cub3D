@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:50:46 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 06:39:40 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:58:00 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	render_2d(t_data *data)
 		row++;
 	}
 	draw_circle(data, data->player->x, data->player->y, data->player->radius);
-	drawline(data, data->player->angle * M_PI / 180,
-		data->player->x, data->player->y, 1);
+	drawline(data, data->player->angle * M_PI / 180, 1);
 	mlx_put_image_to_window
 	(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }

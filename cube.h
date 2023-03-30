@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 06:10:39 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:51:19 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUBE_H
 # define CUBE_H
-
-typedef struct s_drawline_data
-{
-	double	x_incr;
-	double	y_incr;
-	double	x_end;
-	double	y_end;
-	int		step;
-	double	dy;
-	double	dx;
-	double	x;
-	double	y;
-}t_drawline_data;
 
 enum
 {
@@ -94,11 +81,23 @@ typedef struct s_ray
 	int		ray_down;
 	int		ray_left;
 	int		ray_right;
-	int		vertical_hit;
-	int		horizontal_hit;
-	int		x_hit;
-	int		y_hit;
+	char	flag;
+	double x;
+	double y;
 }t_ray;
+
+typedef struct s_textures
+{
+	void*			img_texture;
+	int				img_height;
+	int				img_width;
+	char			*addr;
+	int				bits_per_pixel;
+	int				line_length;
+	void			*mlx;
+	int				endian;
+	
+}t_textures;
 
 typedef struct s_data
 {
@@ -126,13 +125,21 @@ typedef struct s_data
 	double			dis_3d;
 	int				win_width;
 	int				win_height;
+	t_textures		*textures;
 }t_data;
+
 
 typedef struct s_point
 {
 	double	x;
 	double	y;
 }t_point;
+
+typedef struct s_integer_point
+{
+	int	x;
+	int	y;
+}t_integer_point;
 
 enum
 {
@@ -142,5 +149,17 @@ enum
 	RIGHT,
 };
 
+typedef struct s_drawline_data
+{
+	double	x_incr;
+	double	y_incr;
+	double	x_end;
+	double	y_end;
+	int		step;
+	double	dy;
+	double	dx;
+	double	x;
+	double	y;
+}t_drawline_data;
 
 #endif
