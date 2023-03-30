@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 07:32:26 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:16:46 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init(t_data *data)
 	data->textures = malloc(sizeof(t_textures));
 	if (!data->textures)
 		exit(EXIT_FAILURE);
-	data->textures->img_texture = mlx_xpm_file_to_image(data->ptr->mlx, "textures/namine1680161344.xpm", &(data->textures->img_width), &(data->textures->img_height));
+	data->textures->img_texture = mlx_xpm_file_to_image(data->ptr->mlx, "textures/IMG-20221123-WA0067-_1_.xpm", &(data->textures->img_width), &(data->textures->img_height));
 	if (data->textures->img_texture)
 		data->textures->addr = mlx_get_data_addr(data->textures->img_texture, &(data->textures->bits_per_pixel), &(data->textures->line_length), &(data->textures->endian));
 	data->ray = malloc(sizeof(t_ray));

@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:12:00 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 07:06:40 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 17:22:08 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,23 @@ int	create_trgb(int t, int r, int g, int b)
 
 int	my_mlx_pixel_get_color(t_textures *textures, int x, int y)
 {
-	char	*dst = NULL;
+	char	*dst;
 
+	dst = NULL;
 	if (x >= 0 && x < 40 && y >= 0 && y < 40)
 	{
 		dst = textures->addr + \
 			(y * textures->line_length + x * (textures->bits_per_pixel / 8));
-		// *(unsigned int *)dst = color;
 	}
 	return (*(unsigned int *)dst);
 }
 
 void	draw_line_of_wall(t_data *data, int y_start, int x_start, int y_end)
 {
-	int offset_x;
-	int offset_y = 0;
+	int	offset_x;
+	int	offset_y;
 
+	offset_y = 0;
 	if (data->ray->flag == 'v')
 	{
 		offset_x = (int)data->ray->y % data->ptr->tile_size;
@@ -45,14 +46,13 @@ void	draw_line_of_wall(t_data *data, int y_start, int x_start, int y_end)
 	}
 	while (y_start < y_end)
 	{
-		my_mlx_pixel_put(data, x_start, y_start, my_mlx_pixel_get_color(data->textures, offset_x, offset_y * (data->ptr->tile_size / data->walls->height)));
+		my_mlx_pixel_put(data, x_start, y_start, my_mlx_pixel_get_color
+			(data->textures, offset_x, offset_y * \
+			(data->ptr->tile_size / data->walls->height)));
 		offset_y++;
 		y_start++;
 	}
-	// fprintf(stdout, "offset y %d\n", offset_y);
-	// fprintf(stdout, "offset x %d\n", offset_x);
 }
-
 
 void	draw_line_ceiling(t_data *data, int y_start, int x_start)
 {
@@ -84,13 +84,7 @@ void	draw_wall_3d(t_data *data, double len)
 	double	exact_len;
 	int		y_end;
 	double	angle;
-	
-	//--
-	// data->textures = malloc(sizeof(t_textures));
-	// data->textures->img_texture = mlx_xpm_file_to_image(data->ptr->mlx, "textures/images.xpm", &(data->textures->img_width), &(data->textures->img_height));
-	// if (data->textures->img_texture)
-	// 	data->textures->addr = mlx_get_data_addr(data->textures->img_texture, &(data->textures->bits_per_pixel), &(data->textures->line_length), &(data->textures->endian));
-	// --
+
 	angle = (data->ray->angle - data->player->angle) * M_PI / 180;
 	exact_len = cos(angle) * len;
 	data->walls->height = \
