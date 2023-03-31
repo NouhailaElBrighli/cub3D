@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 04:23:41 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 01:00:17 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 04:08:39 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,79 +15,9 @@
 void	drawline(t_data *data, double angle, int flag)
 {
 	t_drawline_data	line;
-	int				i;
 
-	line.x_end = 0;
-	line.y_end = 0;
+	(void)flag;
 	get_xend_yend(data, &line.x_end, &line.y_end, angle);
-	line.dy = line.y_end - data->player->y;
-	line.dx = line.x_end - data->player->x;
-	if (fabs(line.dx) > fabs(line.dy))
-		line.step = fabs(line.dx);
-	else
-		line.step = fabs(line.dy);
-	line.x_incr = line.dx / line.step;
-	line.y_incr = line.dy / line.step;
-	line.x = data->player->x;
-	line.y = data->player->y;
-	i = -1;
-	while (++i <= line.step)
-	{
-		if (flag == 1)
-			my_mlx_pixel_put(data, round(line.x), round(line.y), 0xE24666);
-		line.x += line.x_incr;
-		line.y += line.y_incr;
-	}
-}
-
-void	draw_circle(t_data *data, double x, double y, double r)
-{
-	int	angle;
-	int	x1;
-	int	y1;
-	int	i;
-
-	while (r != 0)
-	{
-		i = 0;
-		while (i < 360)
-		{
-			angle = i;
-			x1 = (int)(r * cos(angle * M_PI / 180));
-			y1 = (int)(r * sin(angle * M_PI / 180));
-			my_mlx_pixel_put(data, x + x1, y + y1, 0xE24666);
-			i++;
-		}
-		r -= 0.5;
-	}
-}
-
-void	draw_walls(t_data *data, char *row, int nbr_row)
-{
-	int	i;
-	int	x;
-	int	y;
-
-	i = 0;
-	while (row[i] != '\0')
-	{
-		if (row[i] == '1')
-		{
-			x = 0;
-			while (x < data->ptr->tile_size)
-			{
-				y = 0;
-				while (y < data->ptr->tile_size)
-				{
-					my_mlx_pixel_put(data, x + (i * data->ptr->tile_size),
-						y + (nbr_row * data->ptr->tile_size), 0xFFFFFF);
-					y++;
-				}
-				x++;
-			}
-		}
-		i++;
-	}
 }
 
 void	draw_rays(t_data *data)
@@ -100,34 +30,8 @@ void	draw_rays(t_data *data)
 	{
 		drawline(data, data->ray->angle * M_PI / 180, 0);
 		draw_wall_3d(data, data->ray->distance);
-		data->ray->angle += (double)data->fov / \
-		(double)data->win_width;
+		data->ray->angle += (double)data->fov / (double)data->win_width;
 		i++;
 	}
 	data->walls->x_start = 1;
-}
-
-void	draw_player(t_data *data, char *row, int nbr_row)
-{
-	int	i;
-
-	i = 0;
-	init_rays_and_walls(data);
-	while (row[i] != '\0')
-	{
-		if (is_player(row[i], data->player, 1) == 1)
-		{
-			init_player_coordinates
-			(data, (data->ptr->tile_size / 2) + (i * data->ptr->tile_size),
-			(data->ptr->tile_size / 2) + (nbr_row * data->ptr->tile_size));
-			scale(data);
-			// draw_circle
-			// (data, data->player->x, data->player->y, data->player->radius);
-			// drawline
-			// (data, data->player->angle * M_PI / 180, 1);
-			draw_rays(data);
-			break ;
-		}
-		i++;
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_vars.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:51:43 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/29 07:06:01 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 04:08:48 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	init_identifier(t_data *data)
 	data->id = malloc(sizeof(t_identifier));
 	if (!data->id)
 		exit(EXIT_FAILURE);
-	data->id->NO = 0;
-	data->id->SO = 0;
-	data->id->EA = 0;
-	data->id->WE = 0;
-	data->id->F = 0;
-	data->id->C = 0;
+	data->id->no = 0;
+	data->id->so = 0;
+	data->id->ea = 0;
+	data->id->we = 0;
+	data->id->f = 0;
+	data->id->c = 0;
 }
 
 void	init_player(t_data *data)

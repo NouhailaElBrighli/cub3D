@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:12:00 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 17:22:08 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 04:08:48 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ void	draw_wall_3d(t_data *data, double len)
 
 	angle = (data->ray->angle - data->player->angle) * M_PI / 180;
 	exact_len = cos(angle) * len;
-	data->walls->height = \
-	(((double)data->ptr->tile_size * data->dis_3d) / exact_len);
+	data->walls->height = (((double)data->ptr->tile_size *  data->dis_3d) / exact_len);
 	data->walls->y_start = (data->win_height / 2) - (data->walls->height / 2);
 	y_end = data->walls->y_start + data->walls->height;
 	draw_line_of_wall

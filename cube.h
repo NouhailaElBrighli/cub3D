@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 06:51:19 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 04:11:27 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,17 @@ enum
 {
 	KEY_PRESS = 2,
 	KEY_RELEASE = 3,
-	ON_MOUSEDOWN = 4,
-	ON_MOUSEUP = 5,
-	ON_MOUSEMOVE = 6,
-	ON_EXPOSE = 12,
 	ON_DESTROY = 17
 };
 
 typedef struct s_identifier
 {
-	int	NO;
-	int	SO;
-	int	WE;
-	int	EA;
-	int	F;
-	int	C;
+	int	no;
+	int	so;
+	int	we;
+	int	ea;
+	int	f;
+	int	c;
 }t_identifier;
 
 typedef struct s_type
@@ -82,13 +78,13 @@ typedef struct s_ray
 	int		ray_left;
 	int		ray_right;
 	char	flag;
-	double x;
-	double y;
+	double	x;
+	double	y;
 }t_ray;
 
 typedef struct s_textures
 {
-	void*			img_texture;
+	void			*img_texture;
 	int				img_height;
 	int				img_width;
 	char			*addr;
@@ -96,7 +92,6 @@ typedef struct s_textures
 	int				line_length;
 	void			*mlx;
 	int				endian;
-	
 }t_textures;
 
 typedef struct s_data
@@ -127,7 +122,6 @@ typedef struct s_data
 	int				win_height;
 	t_textures		*textures;
 }t_data;
-
 
 typedef struct s_point
 {

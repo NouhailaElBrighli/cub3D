@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 01:26:53 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 04:08:39 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,12 @@ void	init(t_data *data)
 	data->textures = malloc(sizeof(t_textures));
 	if (!data->textures)
 		exit(EXIT_FAILURE);
-	
 	data->textures->img_texture = mlx_xpm_file_to_image(data->ptr->mlx, "textures/21-E-25j4KL._AC_SX425_.xpm", &(data->textures->img_width), &(data->textures->img_height));
 	if (!data->textures->img_texture)
 		exit(EXIT_FAILURE);
 	data->textures->addr = mlx_get_data_addr(data->textures->img_texture, &(data->textures->bits_per_pixel), &(data->textures->line_length), &(data->textures->endian));
 	if (!data->textures->addr)
 		exit(EXIT_FAILURE);
-	
 	data->ray = malloc(sizeof(t_ray));
 	if (!data->ray)
 		exit(EXIT_FAILURE);
@@ -67,14 +65,11 @@ void	init(t_data *data)
 	data->size = data->end_of_map - data->index + 1;
 	data->ptr->tile_size = 40;
 	data->fov = 60;
-	data->player->speed = 4;
-	// data->win_height = 700;
-	// data->win_width = 1600;
-	data->win_height = data->size * data->ptr->tile_size;
-	data->win_width = data->long_line * data->ptr->tile_size;
-	data->scale = 1;
-	data->dis_3d = (double)data->win_width
-		/ (2 * tan((double)data->fov * M_PI / 180));
+	data->player->speed = 1;
+	data->win_height = 600;
+	data->win_width = 1200;
+	data->scale = 0.4;
+	data->dis_3d = (double)data->win_width / (2 * tan((double)data->fov * M_PI / 180));
 }
 
 void	init_rays_and_walls(t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:50:46 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 23:07:50 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 04:02:43 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,35 +37,32 @@ void	render_2d(t_data *data)
 			&(data->ptr->line_length), &(data->ptr->endian));
 	draw_rays(data);
 	row = data->index;
-	// while (data->map[row])
-	// {
-	// 	draw_walls(data, data->map[row], row - data->index);
-	// 	row++;
-	// }
-	// draw_circle(data, data->player->x, data->player->y, data->player->radius);
-	// drawline(data, data->player->angle * M_PI / 180, 1);
 	mlx_put_image_to_window
 	(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
-void	draw_2dmap(t_data *data)
+void	get_player_coordinates(t_data *data)
 {
 	int	row;
+	int	j;
 
 	row = data->index;
 	while (data->map[row] && row <= data->end_of_map)
-	{
-		draw_player(data, data->map[row], row - data->index);
+	{	
+		j = 0;
+		while (data->map[row][j])
+		{
+			if (is_player(data->map[row][j], data->player, 1))
+			{
+				init_player_coordinates(data, (data->ptr->tile_size / 2)
+					+ (j * data->ptr->tile_size), (data->ptr->tile_size / 2)
+					+ ((row - data->index) * data->ptr->tile_size));
+				break ;
+			}
+			j++;
+		}
 		row++;
 	}
-	// row = data->index;
-	// while (data->map[row] && row <= data->end_of_map)
-	// {
-	// 	draw_walls(data, data->map[row], row - data->index);
-	// 	row++;
-	// }
-	mlx_put_image_to_window
-	(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
 
 void	execution(t_data *data)
@@ -83,7 +80,11 @@ void	execution(t_data *data)
 	data->ptr->addr = mlx_get_data_addr
 		(data->ptr->img, &(data->ptr->bits_per_pixel),
 			&(data->ptr->line_length), &(data->ptr->endian));
-	draw_2dmap(data);
+	init_rays_and_walls(data);
+	get_player_coordinates(data);
+	draw_rays(data);
+	mlx_put_image_to_window
+	(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 	mlx_hook(data->ptr->win, ON_DESTROY, 1L << 0, ft_close, data);
 	mlx_hook(data->ptr->win, KEY_PRESS, 0, key_press, data);
 	mlx_hook(data->ptr->win, KEY_RELEASE, 0, key_release, data);
