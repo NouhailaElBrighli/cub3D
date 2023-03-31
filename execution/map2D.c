@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:50:46 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 17:17:14 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 21:48:03 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,46 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
+
+void	draw(t_data *data, int x_start, int y_start)
+{
+	int x = 0;
+	int y = 0;
+	(void)x_start;
+
+	int save_x;
+	int save_y;
+	save_x = x_start;
+	save_y = y_start;
+	while (x < 40)
+	{
+		y = 0;
+		y_start = save_y;
+		while (y < 40)
+		{
+			if (data->map[(int)(x_start / 40)][(int)(y_start / 40)] == '1')
+				my_mlx_pixel_put(data, x, y, 0xFFFFFF);
+			y_start++;
+			y++;
+		}
+		x_start++;
+		x++;
+	}
+}
+
+// void	draw_mini_map(t_data *data)
+// {
+// 	int x_start;
+// 	int y_start;
+
+// 	x_start = (((int)data->player->x / data->ptr->tile_size) * data->ptr->tile_size) - data->ptr->tile_size;
+// 	y_start = (((int)data->player->y / data->ptr->tile_size) * data->ptr->tile_size) - data->ptr->tile_size;
+// 	draw(data, x_start, y_start);
+// }
+
 void	render_2d(t_data *data)
 {
-	int		row;
+	// int		row;
 
 	mlx_destroy_image(data->ptr->mlx, data->ptr->img);
 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
@@ -36,14 +73,15 @@ void	render_2d(t_data *data)
 		(data->ptr->img, &(data->ptr->bits_per_pixel),
 			&(data->ptr->line_length), &(data->ptr->endian));
 	draw_rays(data);
-	row = data->index;
-	while (data->map[row])
-	{
-		draw_walls(data, data->map[row], row - data->index);
-		row++;
-	}
-	draw_circle(data, data->player->x, data->player->y, data->player->radius);
-	drawline(data, data->player->angle * M_PI / 180, 1);
+	// draw_mini_map(data);
+	// row = data->index;
+	// while (data->map[row])
+	// {
+		// draw_walls(data, data->map[row], row - data->index);
+	// 	row++;
+	// }
+	// draw_circle(data, data->player->x, data->player->y, data->player->radius);
+	// drawline(data, data->player->angle * M_PI / 180, 1);
 	mlx_put_image_to_window
 	(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }
@@ -58,12 +96,12 @@ void	draw_2dmap(t_data *data)
 		draw_player(data, data->map[row], row - data->index);
 		row++;
 	}
-	row = data->index;
-	while (data->map[row] && row <= data->end_of_map)
-	{
-		draw_walls(data, data->map[row], row - data->index);
-		row++;
-	}
+	// row = data->index;
+	// while (data->map[row] && row <= data->end_of_map)
+	// {
+	// 	draw_walls(data, data->map[row], row - data->index);
+	// 	row++;
+	// }
 	mlx_put_image_to_window
 	(data->ptr->mlx, data->ptr->win, data->ptr->img, 0, 0);
 }

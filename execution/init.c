@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 17:16:46 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 22:05:16 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	init(t_data *data)
 	data->textures = malloc(sizeof(t_textures));
 	if (!data->textures)
 		exit(EXIT_FAILURE);
+	data->mini_map = malloc(sizeof(t_mini_map));
+	if (!data->mini_map)
+		exit(EXIT_FAILURE);
 	data->textures->img_texture = mlx_xpm_file_to_image(data->ptr->mlx, "textures/IMG-20221123-WA0067-_1_.xpm", &(data->textures->img_width), &(data->textures->img_height));
 	if (data->textures->img_texture)
 		data->textures->addr = mlx_get_data_addr(data->textures->img_texture, &(data->textures->bits_per_pixel), &(data->textures->line_length), &(data->textures->endian));
@@ -63,9 +66,9 @@ void	init(t_data *data)
 	data->ptr->tile_size = 40;
 	data->fov = 60;
 	data->player->speed = 10;
-	data->win_height = data->size * data->ptr->tile_size;
-	data->win_width = data->long_line * data->ptr->tile_size;
-	data->scale = 0.2;
+	data->win_height = 800;
+	data->win_width = 1800;
+	data->scale = 1;
 	data->dis_3d = (double)data->win_width
 		/ (2 * tan((double)data->fov * M_PI / 180));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 04:23:41 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 06:57:31 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/30 21:00:56 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	draw_player(t_data *data, char *row, int nbr_row)
 			draw_circle
 			(data, data->player->x, data->player->y, data->player->radius);
 			drawline
-			(data, data->player->angle * M_PI / 180, 1);
+			(data, data->player->angle * M_PI / 180, 0);
 			draw_rays(data);
 			break ;
 		}
