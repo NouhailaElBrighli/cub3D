@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 04:23:41 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 23:07:38 by namine           ###   ########.fr       */
+/*   Updated: 2023/03/31 01:00:17 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,6 @@ void	draw_player(t_data *data, char *row, int nbr_row)
 			init_player_coordinates
 			(data, (data->ptr->tile_size / 2) + (i * data->ptr->tile_size),
 			(data->ptr->tile_size / 2) + (nbr_row * data->ptr->tile_size));
-			fprintf(stderr, "data->player->x %f\n", data->player->x);
-			fprintf(stderr, "data->player->y %f\n", data->player->y);
 			scale(data);
 			// draw_circle
 			// (data, data->player->x, data->player->y, data->player->radius);
