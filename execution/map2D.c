@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map2D.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:50:46 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 21:48:03 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:07:50 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,46 +24,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	}
 }
 
-
-void	draw(t_data *data, int x_start, int y_start)
-{
-	int x = 0;
-	int y = 0;
-	(void)x_start;
-
-	int save_x;
-	int save_y;
-	save_x = x_start;
-	save_y = y_start;
-	while (x < 40)
-	{
-		y = 0;
-		y_start = save_y;
-		while (y < 40)
-		{
-			if (data->map[(int)(x_start / 40)][(int)(y_start / 40)] == '1')
-				my_mlx_pixel_put(data, x, y, 0xFFFFFF);
-			y_start++;
-			y++;
-		}
-		x_start++;
-		x++;
-	}
-}
-
-// void	draw_mini_map(t_data *data)
-// {
-// 	int x_start;
-// 	int y_start;
-
-// 	x_start = (((int)data->player->x / data->ptr->tile_size) * data->ptr->tile_size) - data->ptr->tile_size;
-// 	y_start = (((int)data->player->y / data->ptr->tile_size) * data->ptr->tile_size) - data->ptr->tile_size;
-// 	draw(data, x_start, y_start);
-// }
-
 void	render_2d(t_data *data)
 {
-	// int		row;
+	int		row;
 
 	mlx_destroy_image(data->ptr->mlx, data->ptr->img);
 	mlx_clear_window(data->ptr->mlx, data->ptr->win);
@@ -73,11 +36,10 @@ void	render_2d(t_data *data)
 		(data->ptr->img, &(data->ptr->bits_per_pixel),
 			&(data->ptr->line_length), &(data->ptr->endian));
 	draw_rays(data);
-	// draw_mini_map(data);
-	// row = data->index;
+	row = data->index;
 	// while (data->map[row])
 	// {
-		// draw_walls(data, data->map[row], row - data->index);
+	// 	draw_walls(data, data->map[row], row - data->index);
 	// 	row++;
 	// }
 	// draw_circle(data, data->player->x, data->player->y, data->player->radius);

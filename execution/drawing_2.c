@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 04:23:41 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 21:00:56 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 23:07:38 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	draw_rays(t_data *data)
 
 	i = 0;
 	data->ray->angle = data->player->angle - ((double)data->fov / 2);
-	while (i < (double)data->win_width)
+	while (i < data->win_width)
 	{
 		drawline(data, data->ray->angle * M_PI / 180, 0);
 		draw_wall_3d(data, data->ray->distance);
@@ -120,11 +120,13 @@ void	draw_player(t_data *data, char *row, int nbr_row)
 			init_player_coordinates
 			(data, (data->ptr->tile_size / 2) + (i * data->ptr->tile_size),
 			(data->ptr->tile_size / 2) + (nbr_row * data->ptr->tile_size));
+			fprintf(stderr, "data->player->x %f\n", data->player->x);
+			fprintf(stderr, "data->player->y %f\n", data->player->y);
 			scale(data);
-			draw_circle
-			(data, data->player->x, data->player->y, data->player->radius);
-			drawline
-			(data, data->player->angle * M_PI / 180, 0);
+			// draw_circle
+			// (data, data->player->x, data->player->y, data->player->radius);
+			// drawline
+			// (data, data->player->angle * M_PI / 180, 1);
 			draw_rays(data);
 			break ;
 		}

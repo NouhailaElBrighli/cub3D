@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/30 18:08:05 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/30 06:51:19 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,15 +99,6 @@ typedef struct s_textures
 	
 }t_textures;
 
-typedef struct s_mini_map
-{
-	void	*img;
-	char	*addr;
-	int	bits_per_pixel;
-	int	line_length;
-	int	endian;
-}t_mini_map;
-
 typedef struct s_data
 {
 	char			**map;
@@ -135,7 +126,6 @@ typedef struct s_data
 	int				win_width;
 	int				win_height;
 	t_textures		*textures;
-	t_mini_map		*mini_map;
 }t_data;
 
 
