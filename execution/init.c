@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 04:08:39 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/31 06:13:31 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,66 @@ void	init(t_data *data)
 {
 	init_move_and_rot(data);
 	init_player_angle(data->player);
-	data->textures = malloc(sizeof(t_textures));
-	if (!data->textures)
+	data->north_textures = malloc(sizeof(t_textures));
+	if (!data->north_textures)
 		exit(EXIT_FAILURE);
-	data->textures->img_texture = mlx_xpm_file_to_image(data->ptr->mlx, "textures/21-E-25j4KL._AC_SX425_.xpm", &(data->textures->img_width), &(data->textures->img_height));
-	if (!data->textures->img_texture)
+	data->south_textures = malloc(sizeof(t_textures));
+	if (!data->south_textures)
 		exit(EXIT_FAILURE);
-	data->textures->addr = mlx_get_data_addr(data->textures->img_texture, &(data->textures->bits_per_pixel), &(data->textures->line_length), &(data->textures->endian));
-	if (!data->textures->addr)
+	fprintf(stderr, "WAAAAAAA\n");
+	data->east_textures = malloc(sizeof(t_textures));
+	if (!data->east_textures)
+		exit(EXIT_FAILURE);
+	data->west_textures = malloc(sizeof(t_textures));
+	if (!data->west_textures)
+		exit(EXIT_FAILURE);
+	data->north_textures->img = mlx_xpm_file_to_image(data->ptr->mlx,
+	"textures/1.xpm",
+	&(data->north_textures->img_width),
+	&(data->north_textures->img_height));
+	if (!data->north_textures->img)
+		exit(EXIT_FAILURE);
+	data->north_textures->addr = mlx_get_data_addr(data->north_textures->img,
+													&(data->north_textures->bits_per_pixel),
+													&(data->north_textures->line_length),
+													&(data->north_textures->endian));
+	if (!data->north_textures->addr)
+		exit(EXIT_FAILURE);
+	data->south_textures->img = mlx_xpm_file_to_image(data->ptr->mlx,
+														"textures/2.xpm",
+														&(data->south_textures->img_width),
+														&(data->south_textures->img_height));
+	if (!data->south_textures->img)
+		exit(EXIT_FAILURE);
+	data->south_textures->addr = mlx_get_data_addr(data->south_textures->img,
+													&(data->south_textures->bits_per_pixel),
+													&(data->south_textures->line_length),
+													&(data->south_textures->endian));
+	if (!data->south_textures->addr)
+		exit(EXIT_FAILURE);
+	data->east_textures->img = mlx_xpm_file_to_image(data->ptr->mlx,
+														"textures/3.xpm",
+														&(data->east_textures->img_width),
+														&(data->east_textures->img_height));
+	if (!data->east_textures->img)
+		exit(EXIT_FAILURE);
+	data->east_textures->addr = mlx_get_data_addr(data->east_textures->img,
+													&(data->east_textures->bits_per_pixel),
+													&(data->east_textures->line_length),
+													&(data->east_textures->endian));
+	if (!data->east_textures->addr)
+		exit(EXIT_FAILURE);
+	data->west_textures->img = mlx_xpm_file_to_image(data->ptr->mlx,
+														"textures/4.xpm",
+														&(data->west_textures->img_width),
+														&(data->west_textures->img_height));
+	if (!data->west_textures->img)
+		exit(EXIT_FAILURE);
+	data->west_textures->addr = mlx_get_data_addr(data->west_textures->img,
+													&(data->west_textures->bits_per_pixel),
+													&(data->west_textures->line_length),
+													&(data->west_textures->endian));
+	if (!data->west_textures->addr)
 		exit(EXIT_FAILURE);
 	data->ray = malloc(sizeof(t_ray));
 	if (!data->ray)
@@ -63,13 +115,14 @@ void	init(t_data *data)
 	if (!data->walls)
 		exit(EXIT_FAILURE);
 	data->size = data->end_of_map - data->index + 1;
-	data->ptr->tile_size = 40;
+	data->ptr->tile_size = 65;
 	data->fov = 60;
 	data->player->speed = 1;
 	data->win_height = 600;
 	data->win_width = 1200;
 	data->scale = 0.4;
-	data->dis_3d = (double)data->win_width / (2 * tan((double)data->fov * M_PI / 180));
+	data->dis_3d = (double)data->win_width / (2 * tan((double)data->fov * M_PI
+				/ 180));
 }
 
 void	init_rays_and_walls(t_data *data)

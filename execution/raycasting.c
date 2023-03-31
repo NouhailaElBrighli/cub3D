@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 05:52:19 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 04:08:39 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/31 05:54:11 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	set_ray_direction(t_data *data, double ray_angle)
 {
 	data->ray->ray_down = ((ray_angle > 0) && (ray_angle < M_PI));
 	data->ray->ray_up = !data->ray->ray_down;
-	data->ray->ray_right = ((ray_angle < 90 * (M_PI / 180)) || \
-		(ray_angle > (270 * (M_PI / 180))));
+	data->ray->ray_right = ((ray_angle < 90 * (M_PI / 180)) ||
+							(ray_angle > (270 * (M_PI / 180))));
 	data->ray->ray_left = !data->ray->ray_right;
 }
 
@@ -55,13 +55,12 @@ void	horizontal_intersection(t_data *data, double ray_angle, t_point *h_p)
 	ystep = data->ptr->tile_size;
 	ystep *= data->ray->ray_up ? -1 : 1;
 	xstep = data->ptr->tile_size / tan(ray_angle);
-	xstep *= (data->ray->ray_left && xstep > 0) ? - 1 : 1;
-	xstep *= (data->ray->ray_right && xstep < 0) ? - 1 : 1;
-	while (x >= 0 && x <= data->win_width
-		&& y >= 0 && y <= data->win_height)
+	xstep *= (data->ray->ray_left && xstep > 0) ? -1 : 1;
+	xstep *= (data->ray->ray_right && xstep < 0) ? -1 : 1;
+	while (x >= 0 && x <= data->win_width && y >= 0 && y <= data->win_height)
 	{
 		xto_check = x;
-		yto_check = (y + (data->ray->ray_up ? - 1 : 0));
+		yto_check = (y + (data->ray->ray_up ? -1 : 0));
 		a = xto_check / data->ptr->tile_size;
 		b = yto_check / data->ptr->tile_size;
 		if ((b >= data->size) || (a >= ft_strlen(data->map[b + data->index])))
@@ -118,7 +117,8 @@ void	vertical_intersection(t_data *data, double ray_angle, t_point *v_p)
 	v_p->y = y;
 }
 
-void	get_xend_yend(t_data *data, double *x_end, double *y_end, double ray_angle)
+void	get_xend_yend(t_data *data, double *x_end, double *y_end,
+		double ray_angle)
 {
 	double	horizontal_distance;
 	double	vertical_distance;
@@ -129,8 +129,10 @@ void	get_xend_yend(t_data *data, double *x_end, double *y_end, double ray_angle)
 	vertical_distance = 0;
 	horizontal_intersection(data, ray_angle, &h_p);
 	vertical_intersection(data, ray_angle, &v_p);
-	horizontal_distance = find_distance(data->player->x, data->player->y, h_p.x, h_p.y);
-	vertical_distance = find_distance(data->player->x, data->player->y, v_p.x, v_p.y);
+	horizontal_distance = find_distance(data->player->x, data->player->y, h_p.x,
+			h_p.y);
+	vertical_distance = find_distance(data->player->x, data->player->y, v_p.x,
+			v_p.y);
 	if (vertical_distance < horizontal_distance)
 	{
 		*x_end = v_p.x;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 04:11:27 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/03/31 05:19:28 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_ray
 
 typedef struct s_textures
 {
-	void			*img_texture;
+	void			*img;
 	int				img_height;
 	int				img_width;
 	char			*addr;
@@ -120,8 +120,12 @@ typedef struct s_data
 	double			dis_3d;
 	int				win_width;
 	int				win_height;
-	t_textures		*textures;
+	t_textures		*north_textures;
+	t_textures		*south_textures;
+	t_textures		*east_textures;
+	t_textures		*west_textures;
 }t_data;
+
 
 typedef struct s_point
 {
