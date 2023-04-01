@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:36:37 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 05:54:15 by namine           ###   ########.fr       */
+/*   Updated: 2023/04/01 03:30:38 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,25 @@ int	sum_move_rot(t_data *data)
 
 int	check_invalid_moves(t_data *data)
 {
-	if ((data->move_up == 1 && data->move_down == 1) ||
-		(data->move_right == 1 && data->move_left == 1) ||
+	if ((data->move_up == 1 && data->move_down == 1) || \
+		(data->move_right == 1 && data->move_left == 1) || \
 		(data->rot_left == 1 && data->rot_right == 1))
 		return (0);
 	return (1);
 }
 
-void	scale(t_data *data)
-{
-	data->player->radius *= data->scale;
-	data->player->speed *= data->scale;
-}
-
 int	ft_close(t_data *data)
 {
 	mlx_destroy_window(data->ptr->mlx, data->ptr->win);
-	exit(0);
+	exit(EXIT_FAILURE);
+}
+
+double	normalize_angle(double ray_angle)
+{
+	ray_angle = remainder(ray_angle, M_PI * 2);
+	if (ray_angle <= 0)
+	{
+		ray_angle += (M_PI * 2);
+	}
+	return (ray_angle);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:59:43 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 05:53:31 by namine           ###   ########.fr       */
+/*   Updated: 2023/04/01 04:17:12 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	key_press(int keycode, t_data *data)
 void	check_wall_collisions(t_data *data, t_point p, t_point p_next)
 {
 	t_integer_point	p_in_map;
-	t_point			p_max;
 
 	p_in_map.x = (int)p_next.x / data->ptr->tile_size;
 	p_in_map.y = ((int)p_next.y / data->ptr->tile_size);
@@ -61,38 +60,14 @@ void	check_wall_collisions(t_data *data, t_point p, t_point p_next)
 	{
 		p_in_map.x = (int)data->player->x / data->ptr->tile_size;
 		p_in_map.y = ((int)data->player->y / data->ptr->tile_size);
-		if (data->map[p_in_map.y + 1 + data->index][p_in_map.x] == '1'
-			&& data->map[p_in_map.y + data->index][p_in_map.x + 1] == '1')
-		{
-			p_max.x = ((p_in_map.x + 1) * data->ptr->tile_size - 5);
-			p_max.y = ((p_in_map.y + 1) * data->ptr->tile_size - 5);
-			if ((int)p.x > p_max.x && (int)p.y > p_max.y)
-				return ;
-		}
-		if (data->map[p_in_map.y - 1 + data->index][p_in_map.x] == '1'
-			&& data->map[p_in_map.y + data->index][p_in_map.x - 1] == '1')
-		{
-			p_max.x = (p_in_map.x * data->ptr->tile_size + 5);
-			p_max.y = (p_in_map.y * data->ptr->tile_size + 5);
-			if ((int)p.x < p_max.x && (int)p.y < p_max.y)
-				return ;
-		}
-		if (data->map[p_in_map.y + data->index][p_in_map.x - 1] == '1'
-			&& data->map[p_in_map.y + 1 + data->index][p_in_map.x] == '1')
-		{
-			p_max.x = (p_in_map.x) * data->ptr->tile_size + 5;
-			p_max.y = (p_in_map.y + 1) * data->ptr->tile_size - 5;
-			if ((int)p.x < p_max.x && (int)p.y > p_max.y)
-				return ;
-		}
-		if (data->map[p_in_map.y - 1 + data->index][p_in_map.x] == '1'
-			&& data->map[p_in_map.y + data->index][p_in_map.x + 1] == '1')
-		{
-			p_max.x = (p_in_map.x + 1) * data->ptr->tile_size - 5;
-			p_max.y = p_in_map.y * data->ptr->tile_size + 5;
-			if ((int)p.x > p_max.x && (int)p.y < p_max.y)
-				return ;
-		}
+		if (check_corner_1(data, p_in_map, p))
+			return ;
+		if (check_corner_2(data, p_in_map, p))
+			return ;
+		if (check_corner_3(data, p_in_map, p))
+			return ;
+		if (check_corner_4(data, p_in_map, p))
+			return ;
 	}
 	data->player->x = p.x;
 	data->player->y = p.y;
@@ -116,6 +91,14 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 	p.y = data->player->y + (sin(angle) * data->player->speed);
 	p_next.x = p.x + (cos(angle) * data->player->speed);
 	p_next.y = p.y + (sin(angle) * data->player->speed);
+	p_next.x = p_next.x + (cos(angle) * data->player->speed);
+	p_next.y = p_next.y + (sin(angle) * data->player->speed);
+	p_next.x = p_next.x + (cos(angle) * data->player->speed);
+	p_next.y = p_next.y + (sin(angle) * data->player->speed);
+	p_next.x = p_next.x + (cos(angle) * data->player->speed);
+	p_next.y = p_next.y + (sin(angle) * data->player->speed);
+	p_next.x = p_next.x + (cos(angle) * data->player->speed);
+	p_next.y = p_next.y + (sin(angle) * data->player->speed);
 	check_wall_collisions(data, p, p_next);
 }
 

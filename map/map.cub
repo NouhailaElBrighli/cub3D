@@ -1,8 +1,8 @@
 
-NO ./textures/81Ko1HVuoKL._AC_SX425_.xpm
-SO ./textures/81Ko1HVuoKL._AC_SX425_.xpm
-WE ./textures/81Ko1HVuoKL._AC_SX425_.xpm
-EA ./textures/81Ko1HVuoKL._AC_SX425_.xpm
+NO ./textures/north.xpm
+SO ./textures/south.xpm
+WE ./textures/west.xpm
+EA ./textures/east.xpm
 
         F       221,241,11
                 

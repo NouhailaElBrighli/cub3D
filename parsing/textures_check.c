@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:19:17 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/31 04:08:48 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:27:59 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_check_successive(char *s, t_data *data)
 	while (s[i])
 	{
 		if (s[i] == ',' && s[i + 1] == ',')
-			ft_error(data, "Error here\n");
+			ft_error(data, "Error\n");
 		i++;
 	}
 }

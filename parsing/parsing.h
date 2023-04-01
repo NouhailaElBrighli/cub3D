@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:53:28 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/30 17:05:02 by namine           ###   ########.fr       */
+/*   Updated: 2023/04/01 03:23:08 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,17 @@ void	init_rays_and_walls(t_data *data);
 void	get_xend_yend(t_data *data, double *x_end, double *y_end,
 			double ray_angle);
 void	draw_wall_3d(t_data *data, double len);
+int		create_trgb(int t, int r, int g, int b);
+int		my_mlx_pixel_get_color(t_textures *textures, int x, int y);
+void	choose_texture(t_data *data, t_textures **tmp);
+int		check_corner_1(t_data *data, t_integer_point p_in_map, t_point p);
+int		check_corner_2(t_data *data, t_integer_point p_in_map, t_point p);
+int		check_corner_3(t_data *data, t_integer_point p_in_map, t_point p);
+int		check_corner_4(t_data *data, t_integer_point p_in_map, t_point p);
+void	init_textures(t_data *data);
+double	normalize_angle(double ray_angle);
+void	horizontal_intersection(t_data *data, double ray_angle, t_point *h_p);
+void	set_ray_direction(t_data *data, double ray_angle);
+void	vertical_intersection(t_data *data, double ray_angle, t_point *v_p);
+
 #endif

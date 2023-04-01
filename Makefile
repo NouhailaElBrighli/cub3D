@@ -2,7 +2,7 @@ NAME = cub3D
 
 CC = gcc
 
-CFLAGS =  -Wall -Wextra -Werror -fsanitize=address -g3
+CFLAGS =  -Wall -Wextra -Werror #-fsanitize=address -g3
 
 SRC =	main.c\
 		parsing/parsing.c\
@@ -25,6 +25,11 @@ SRC =	main.c\
 		execution/drawing_2.c\
 		execution/hook.c\
 		execution/raycasting.c\
+		execution/drawing_utils.c\
+		execution/map_collision.c\
+		execution/init_textures.c\
+		execution/raycasting_utils1.c\
+		execution/raycasting_utils2.c\
 
 OBJ = $(SRC:.c=.o)
 

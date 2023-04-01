@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:45:28 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/31 04:07:24 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:27:21 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_t_player(t_data *data)
 	sum = data->player->direction->nort + data->player->direction->east
 		+ data->player->direction->south + data->player->direction->west;
 	if (sum != 1)
-		ft_error(data, "Player Error\n");
+		ft_error(data, "Error\n");
 }
 
 void	check_for_player(t_data *data)

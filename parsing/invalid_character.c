@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:35:32 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/28 20:44:53 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/01 03:27:51 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	check_end_of_map(t_data *data, int i)
 			{
 				if (data->map[i][j] != '\t' && data->map[i][j] != ' '
 				&& data->map[i][j] != '\n')
-					ft_error(data, "invalid character\n");
+					ft_error(data, "Error\n");
 				j++;
 			}
 		}
@@ -101,7 +101,7 @@ void	check_invalid_character(t_data *data)
 			while (data->map[i][j])
 			{
 				if (is_valid(data->map[i][j]) == -1 || data->map[i][j] == '\t')
-					ft_error(data, "invalid character\n");
+					ft_error(data, "Error\n");
 				j++;
 			}
 		}

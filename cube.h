@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cube.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/03/31 05:19:28 by namine           ###   ########.fr       */
+/*   Updated: 2023/04/01 03:30:14 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct s_data
 	int				move_down;
 	int				rot_left;
 	int				rot_right;
-	double			scale;
 	double			dis_3d;
 	int				win_width;
 	int				win_height;
@@ -125,7 +124,6 @@ typedef struct s_data
 	t_textures		*east_textures;
 	t_textures		*west_textures;
 }t_data;
-
 
 typedef struct s_point
 {
