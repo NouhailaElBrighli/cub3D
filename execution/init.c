@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:58:42 by namine            #+#    #+#             */
-/*   Updated: 2023/04/01 04:16:40 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/01 21:15:30 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	init(t_data *data)
 	data->ptr->tile_size = 40;
 	data->fov = 60;
 	data->player->speed = 5;
-	data->win_height = data->size * data->ptr->tile_size;
-	data->win_width = data->long_line * data->ptr->tile_size;
+	data->fake_win_height = data->size * data->ptr->tile_size;
+	data->fake_win_width = data->long_line * data->ptr->tile_size;
+	data->win_height = 800;
+	data->win_width = 1500;
 	data->dis_3d = (double)data->win_width / (2 * tan(30 * M_PI
 				/ 180));
 }

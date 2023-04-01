@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:12:01 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/04/01 03:17:07 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/01 21:16:45 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	horizontal_intersection(t_data *data, double ray_angle, t_point *h_p)
 	step.x = 0;
 	step.y = 0;
 	step = find_step(step, data, ray_angle);
-	while (x >= 0 && x <= data->win_width && y >= 0 && y <= data->win_height)
+	while (x >= 0 && x <= data->fake_win_width && y >= 0 && y <= data->fake_win_height)
 	{
 		i = x;
 		set_j(data, y, &j);

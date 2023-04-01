@@ -6,7 +6,7 @@
 /*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:24:35 by namine            #+#    #+#             */
-/*   Updated: 2023/04/01 03:30:14 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/01 21:14:17 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ typedef struct s_data
 	double			dis_3d;
 	int				win_width;
 	int				win_height;
+	int				fake_win_width;
+	int				fake_win_height;
 	t_textures		*north_textures;
 	t_textures		*south_textures;
 	t_textures		*east_textures;
