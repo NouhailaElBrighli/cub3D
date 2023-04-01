@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 20:13:39 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/03/30 22:21:48 by namine           ###   ########.fr       */
+/*   Updated: 2023/04/01 05:02:55 by nel-brig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_file(char *s)
 	cmp = ft_strlen(s) - 4;
 	if (ft_strncmp(&s[cmp], ".cub", ft_strlen((&s[cmp]))) != 0)
 	{
-		printf("Invalid Extention\n");
+		write(2, "Error\n", 7);
 		return (1);
 	}
 	fd = open(s, O_RDONLY);
