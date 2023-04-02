@@ -6,7 +6,7 @@
 /*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:59:43 by namine            #+#    #+#             */
-/*   Updated: 2023/04/02 00:35:22 by namine           ###   ########.fr       */
+/*   Updated: 2023/04/02 05:48:17 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,22 @@ int	key_press(int keycode, t_data *data)
 	return (0);
 }
 
-void	check_wall_collisions(t_data *data, t_point p, t_point p_next)
+void	check_wall_collisions(t_data *data, t_point p, double angle)
 {
 	t_integer_point	p_in_map;
 
-	p_in_map.x = (int)p_next.x / data->ptr->tile_size;
-	p_in_map.y = ((int)p_next.y / data->ptr->tile_size);
-	if (data->map[p_in_map.y + data->index][p_in_map.x] == '1')
-		return ;
-	else
-	{
-		p_in_map.x = (int)data->player->x / data->ptr->tile_size;
-		p_in_map.y = ((int)data->player->y / data->ptr->tile_size);
-		if (check_corner_1(data, p_in_map, p))
-			return ;
-		if (check_corner_2(data, p_in_map, p))
-			return ;
-		if (check_corner_3(data, p_in_map, p))
-			return ;
-		if (check_corner_4(data, p_in_map, p))
-			return ;
-	}
-	data->player->x = p.x;
-	data->player->y = p.y;
+	p_in_map.x = (int)p.x / data->ptr->tile_size;
+	int x = (int)data->player->x / data->ptr->tile_size;
+	p_in_map.y = ((int)p.y / data->ptr->tile_size);
+	int y = ((int)data->player->y / data->ptr->tile_size);
+	if (data->map[p_in_map.y + data->index][x] != '1')
+		data->player->y = p.y - (sin(angle) * 40);
+	if (data->map[y + data->index][p_in_map.x] != '1')
+		data->player->x = p.x - (cos(angle) * 40);
 }
 
 void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 {
-	t_point	p_next;
 	t_point	p;
 	double	angle;
 
@@ -87,12 +75,11 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 		angle = (data->player->angle + 90) * M_PI / 180;
 	else
 		angle = (data->player->angle - 90) * M_PI / 180;
-	p.x = data->player->x + (cos(angle) * data->player->speed);
-	p.y = data->player->y + (sin(angle) * data->player->speed);
-	p_next.x = p.x + (cos(angle) * (data->player->speed + 20));
-	p_next.y = p.y + (sin(angle) * (data->player->speed + 20));
-	check_wall_collisions(data, p, p_next);
+	p.x = data->player->x + (cos(angle) * (data->player->speed + 50));
+	p.y = data->player->y + (sin(angle) * (data->player->speed + 50));
+	check_wall_collisions(data, p, angle);
 }
+
 
 int	render_next_frame(t_data *data)
 {
