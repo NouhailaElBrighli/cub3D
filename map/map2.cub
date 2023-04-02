@@ -1,12 +1,12 @@
-NO ./textures/1.xpm
-SO ./textures/2.xpm
-WE ./textures/3.xpm
-EA ./textures/4.xpm
+NO ./textures/3.xpm
+SO ./textures/7.xpm
+WE ./textures/4.xpm
+EA ./textures/5.xpm
 
 
 F 120,24,74
 C 224,176,255
 
-111
+ 1
 1N1
-111
+ 1

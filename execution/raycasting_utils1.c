@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:12:01 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/04/01 21:16:45 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/02 00:10:37 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ void	horizontal_intersection(t_data *data, double ray_angle, t_point *h_p)
 	{
 		i = x;
 		set_j(data, y, &j);
-		if (((int)j / 40 >= data->size) || ((int)i / 40 >= \
-			ft_strlen(data->map[(int)j / 40 + data->index]))
-			|| data->map[(int)j / 40 + data->index][(int)i / 40] == '1')
+		if (((int)j / 65 >= data->size) || ((int)i / 65 >= \
+			ft_strlen(data->map[(int)j / 65 + data->index]))
+			|| data->map[(int)j / 65 + data->index][(int)i / 65] == '1')
 			break ;
 		else
 			set_coordinates(&x, &y, step);

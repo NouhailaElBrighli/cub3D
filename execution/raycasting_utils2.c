@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 03:14:31 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/04/01 21:17:03 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/02 00:10:37 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	set_x_y_v(t_data *data, double *x, double *y, double ray_angle)
 {
 	*x = floor(data->player->x / data->ptr->tile_size) * data->ptr->tile_size;
 	if (data->ray->ray_right)
-		*x = *x + 40;
+		*x = *x + 65;
 	*y = data->player->y + ((*x - data->player->x) * tan(ray_angle));
 }
 
@@ -63,9 +63,9 @@ void	vertical_intersection(t_data *data, double ray_angle, t_point *v_p)
 	{
 		j = y;
 		set_i_v(data, x, &i);
-		if (((int)j / 40 >= data->size) || ((int)i / 40 >= \
-			ft_strlen(data->map[(int)j / 40 + data->index])) || \
-			(data->map[(int)j / 40 + data->index][(int)i / 40] == '1'))
+		if (((int)j / 65 >= data->size) || ((int)i / 65 >= \
+			ft_strlen(data->map[(int)j / 65 + data->index])) || \
+			(data->map[(int)j / 65 + data->index][(int)i / 65] == '1'))
 			break ;
 		else
 			set_coordinates_v(&x, &y, step);

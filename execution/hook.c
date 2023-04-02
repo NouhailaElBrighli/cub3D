@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 03:59:43 by namine            #+#    #+#             */
-/*   Updated: 2023/04/01 04:17:12 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/02 00:35:22 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,8 @@ void	set_player_coordinates_and_check_collision(t_data *data, int flag)
 		angle = (data->player->angle - 90) * M_PI / 180;
 	p.x = data->player->x + (cos(angle) * data->player->speed);
 	p.y = data->player->y + (sin(angle) * data->player->speed);
-	p_next.x = p.x + (cos(angle) * data->player->speed);
-	p_next.y = p.y + (sin(angle) * data->player->speed);
-	p_next.x = p_next.x + (cos(angle) * data->player->speed);
-	p_next.y = p_next.y + (sin(angle) * data->player->speed);
-	p_next.x = p_next.x + (cos(angle) * data->player->speed);
-	p_next.y = p_next.y + (sin(angle) * data->player->speed);
-	p_next.x = p_next.x + (cos(angle) * data->player->speed);
-	p_next.y = p_next.y + (sin(angle) * data->player->speed);
-	p_next.x = p_next.x + (cos(angle) * data->player->speed);
-	p_next.y = p_next.y + (sin(angle) * data->player->speed);
+	p_next.x = p.x + (cos(angle) * (data->player->speed + 20));
+	p_next.y = p.y + (sin(angle) * (data->player->speed + 20));
 	check_wall_collisions(data, p, p_next);
 }
 
@@ -107,9 +99,9 @@ int	render_next_frame(t_data *data)
 	if (sum_move_rot(data) == 0 || check_invalid_moves(data) == 0)
 		return (0);
 	if (data->rot_right == 1)
-		data->player->angle -= 3;
+		data->player->angle -= 5;
 	else if (data->rot_left == 1)
-		data->player->angle += 3;
+		data->player->angle += 5;
 	if (data->move_up == 1)
 		set_player_coordinates_and_check_collision(data, UP);
 	else if (data->move_down == 1)

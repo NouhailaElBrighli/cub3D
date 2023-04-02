@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-brig <nel-brig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: namine <namine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 00:35:09 by nel-brig          #+#    #+#             */
-/*   Updated: 2023/04/01 00:47:32 by nel-brig         ###   ########.fr       */
+/*   Updated: 2023/04/02 00:10:37 by namine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	my_mlx_pixel_get_color(t_textures *textures, int x, int y)
 	char	*dst;
 
 	dst = NULL;
-	if (x >= 0 && x < 40 && y >= 0 && y < 40)
+	if (x >= 0 && x < 65 && y >= 0 && y < 65)
 	{
 		dst = textures->addr + \
 			(y * textures->line_length + x * (textures->bits_per_pixel / 8));
